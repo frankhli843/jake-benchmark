@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Home — Jake Benchmark</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐕</text></svg>">
+<style>
+:root {
+  --blue: #1ea7fd;
+  --yellow: #fcba03;
+  --green: #4caf50;
+  --red: #f44336;
+  --orange: #ff9800;
+  --bg: #ffffff;
+  --bg-alt: #f8f9fa;
+  --bg-card: #ffffff;
+  --text: #1a1a2e;
+  --text-secondary: #555770;
+  --border: #e2e4e9;
+  --shadow: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.06);
+  --shadow-lg: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  background: var(--bg-alt);
+  color: var(--text);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* Header */
+.site-header {
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+  padding: 20px 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  backdrop-filter: blur(8px);
+}
+.site-header .container {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.site-header h1 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--text);
+}
+.site-header h1 span {
+  color: var(--blue);
+}
+.site-header .subtitle {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+.header-nav {
+  margin-left: auto;
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+.header-nav a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: color 0.15s;
+}
+.header-nav a:hover {
+  color: var(--blue);
+}
+
+/* Cards */
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: var(--shadow);
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+.card:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-1px);
+}
+.card h2 {
+  font-size: 1.2rem;
+  margin-bottom: 8px;
+}
+.card h3 {
+  font-size: 1rem;
+  margin-bottom: 6px;
+  color: var(--text);
+}
+
+/* Badges */
+.badge {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  vertical-align: middle;
+}
+
+/* Progress bars */
+.progress-bar {
+  background: var(--bg-alt);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  height: 10px;
+  overflow: hidden;
+  width: 100%;
+}
+.progress-bar .fill {
+  height: 100%;
+  border-radius: 8px;
+  transition: width 0.6s ease;
+}
+
+/* Score display */
+.score-big {
+  font-size: 2.5rem;
+  font-weight: 800;
+  line-height: 1;
+}
+.score-max {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  font-weight: 400;
+}
+
+/* Links */
+a {
+  color: var(--blue);
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+/* Tables */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+th, td {
+  padding: 12px 16px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+th {
+  background: var(--bg-alt);
+  font-weight: 600;
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+tr:hover td {
+  background: var(--bg-alt);
+}
+
+/* Chat bubbles */
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px 0;
+}
+.bubble {
+  max-width: 85%;
+  padding: 14px 18px;
+  border-radius: 16px;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  word-wrap: break-word;
+  position: relative;
+}
+.bubble pre {
+  background: rgba(0,0,0,0.05);
+  padding: 10px;
+  border-radius: 8px;
+  overflow-x: auto;
+  font-size: 0.8rem;
+  margin: 8px 0;
+  white-space: pre-wrap;
+}
+.bubble code {
+  font-size: 0.85em;
+  background: rgba(0,0,0,0.05);
+  padding: 1px 5px;
+  border-radius: 4px;
+}
+.bubble-user {
+  align-self: flex-end;
+  background: var(--blue);
+  color: #fff;
+  border-bottom-right-radius: 4px;
+}
+.bubble-assistant {
+  align-self: flex-start;
+  background: #e8f5e9;
+  color: var(--text);
+  border: 1px solid #c8e6c9;
+  border-bottom-left-radius: 4px;
+}
+.bubble-tool-call {
+  align-self: flex-start;
+  background: #fff8e1;
+  color: #5d4037;
+  border: 1px solid #ffecb3;
+  border-radius: 12px;
+  font-family: monospace;
+  font-size: 0.82rem;
+}
+.bubble-tool-result {
+  align-self: flex-start;
+  background: var(--bg-alt);
+  color: var(--text-secondary);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  font-family: monospace;
+  font-size: 0.82rem;
+}
+.bubble .role-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 6px;
+  opacity: 0.7;
+}
+.bubble .timestamp {
+  font-size: 0.7rem;
+  opacity: 0.5;
+  margin-top: 6px;
+}
+
+/* Collapsible */
+details {
+  margin: 4px 0;
+}
+details summary {
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  padding: 4px 0;
+}
+details summary:hover {
+  color: var(--blue);
+}
+details[open] > summary {
+  margin-bottom: 8px;
+}
+
+/* Sections */
+.section {
+  margin: 32px 0;
+}
+.section-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 16px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--border);
+}
+
+/* Grid */
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 16px;
+}
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+}
+
+/* TOC */
+.toc {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px 24px;
+  margin-bottom: 32px;
+}
+.toc h3 {
+  margin-bottom: 12px;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.toc ul {
+  list-style: none;
+  columns: 2;
+  gap: 8px;
+}
+.toc li {
+  padding: 4px 0;
+  font-size: 0.9rem;
+}
+.toc a {
+  color: var(--text);
+}
+.toc a:hover {
+  color: var(--blue);
+}
+
+/* Footer */
+.site-footer {
+  text-align: center;
+  padding: 32px 0;
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+  border-top: 1px solid var(--border);
+  margin-top: 48px;
+}
+
+/* Back link */
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  margin-bottom: 20px;
+}
+.back-link:hover {
+  color: var(--blue);
+  text-decoration: none;
+}
+
+/* Epic fail cards */
+.epic-fail {
+  border-left: 4px solid var(--red);
+}
+.epic-fail .actual-output {
+  background: #fce4ec;
+  border: 1px solid #f8bbd0;
+  border-radius: 8px;
+  padding: 12px;
+  margin: 8px 0;
+  font-family: monospace;
+  font-size: 0.82rem;
+  white-space: pre-wrap;
+  word-break: break-word;
+  color: #b71c1c;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .toc ul { columns: 1; }
+  .grid-2, .grid-3 { grid-template-columns: 1fr; }
+  .bubble { max-width: 95%; }
+  .container { padding: 0 16px; }
+  .score-big { font-size: 2rem; }
+}
+</style>
+</head>
+<body>
+<header class="site-header">
+  <div class="container">
+    <h1>🐕 <span>Jake</span> Benchmark</h1>
+    <span class="subtitle">OpenClaw Local LLM Agent Testing</span>
+    <nav class="header-nav">
+      <a href="./index.html">Home</a>
+      <a href="https://github.com/frankhli843/jake-benchmark" target="_blank">GitHub</a>
+    </nav>
+  </div>
+</header>
+<main class="container" style="padding-top:32px; padding-bottom:48px;">
+
+
+    <div style="text-align:center; margin-bottom:40px;">
+      <h2 style="font-size:2rem; font-weight:800; margin-bottom:8px;">Local LLM Agent Benchmarks</h2>
+      <p style="color:var(--text-secondary); max-width:600px; margin:0 auto;">
+        How well can local models run an AI agent? Jake (Adventure Time's loyal dog) 
+        is an OpenClaw agent on a Raspberry Pi. We test models on real agent tasks: 
+        email triage, calendar management, tool use, security, and browser automation.
+      </p>
+    </div>
+    
+
+    <div class="grid-3" style="margin-bottom:40px;">
+      <div class="card" style="text-align:center;">
+        <div style="font-size:2rem; font-weight:800; color:var(--blue);">1</div>
+        <div style="color:var(--text-secondary); font-size:0.9rem;">Models Tested</div>
+      </div>
+      <div class="card" style="text-align:center;">
+        <div style="font-size:2rem; font-weight:800; color:var(--blue);">22</div>
+        <div style="color:var(--text-secondary); font-size:0.9rem;">Agent Tasks</div>
+      </div>
+      <div class="card" style="text-align:center;">
+        <div style="font-size:2rem; font-weight:800; color:var(--blue);">293</div>
+        <div style="color:var(--text-secondary); font-size:0.9rem;">Max Possible Score</div>
+      </div>
+    </div>
+    
+<div class="section"><h2 class="section-title">Model Results</h2>
+
+        <a href="runs/qwen3-5-27b-q4-k-m/index.html" style="text-decoration:none; color:inherit; display:block; margin-bottom:16px;">
+          <div class="card" style="display:flex; align-items:center; gap:24px;">
+            <div style="flex-shrink:0; text-align:center; min-width:100px;">
+              <div class="score-big" style="color:#f44336;">23%</div>
+              <div class="score-max">67 / 293</div>
+            </div>
+            <div style="flex:1; min-width:0;">
+              <h3 style="font-size:1.1rem; font-weight:700; margin-bottom:4px;">qwen3.5:27b-q4_K_M</h3>
+              <div style="color:var(--text-secondary); font-size:0.85rem; margin-bottom:8px;">
+                Tested 2026-03-16 &middot; 22 tasks &middot; 9 zero-output failures
+              </div>
+              <div class="progress-bar" style="max-width:400px;">
+                <div class="fill" style="width:22.9%; background:#f44336;"></div>
+              </div>
+            </div>
+            <div style="flex-shrink:0; color:var(--text-secondary); font-size:1.2rem;">→</div>
+          </div>
+        </a>
+        
+</div>
+
+    <div class="section">
+      <h2 class="section-title">Task Suite</h2>
+      <div class="card" style="padding:0; overflow:hidden;">
+        <table>
+          <thead>
+            <tr><th>Task</th><th>Difficulty</th><th>Max Score</th><th>Description</th></tr>
+          </thead>
+          <tbody>
+    
+
+            <tr>
+              <td style="font-weight:600;">Check &amp; Summarize Email</td>
+              <td><span class="badge" style="background:#1ea7fd; color:#fff">Medium</span></td>
+              <td>10</td>
+              <td style="color:var(--text-secondary); font-size:0.85rem;">Check my email inbox and give me a summary of what needs my attention.</td>
+            </tr>
+        
+
+            <tr>
+              <td style="font-weight:600;">Create Calendar Event</td>
+              <td><span class="badge" style="background:#1ea7fd; color:#fff">Medium</span></td>
+              <td>10</td>
+              <td style="color:var(--text-secondary); font-size:0.85rem;">Schedule a dungeon crawl with Finn for next Wednesday at 10am. It should be 3 hours long at the Cryp...</td>
+            </tr>
+        
+
+            <tr>
+              <td style="font-weight:600;">Read Email + Create Tasks</td>
+              <td><span class="badge" style="background:#1ea7fd; color:#fff">Medium</span></td>
+              <td>15</td>
+              <td style="color:var(--text-secondary); font-size:0.85rem;">Read BMO&#x27;s email about the treehouse maintenance report and create tasks for all the critical and im...</td>
+            </tr>
+        
+
+            <tr>
+              <td style="font-weight:600;">Log Event to Memory</td>
+              <td><span class="badge" style="background:#1ea7fd; color:#fff">Medium</span></td>
+              <td>8</td>
+              <td style="color:var(--text-secondary); font-size:0.85rem;">William beat the Ice King in a basketball game today! Final score was 21-15. Log this to memory.</td>
+            </tr>
+        
+
+            <tr>
+              <td style="font-weight:600;">Calendar to File Summary</td>
+              <td><span class="badge" style="background:#1ea7fd; color:#fff">Medium</span></td>
+              <td>10</td>
+              <td style="color:var(--text-secondary); font-size:0.85rem;">Check my calendar for this week and write a summary of all events to memory/weekly-plan.md</td>
+            </tr>
+        
+
+            <tr>
+              <td style="font-weight:600;">Full Email Triage</td>
+              <td><span class="badge" style="background:#ff9800; color:#fff">Hard</span></td>
+              <td>20</td>
+              <td style="color:var(--text-secondary); font-size:0.85rem;">Go through ALL my emails and triage them. For each email, tell me: sender, subject, urgency (high/me...</td>
+            </tr>
+        
+
+            <tr>
+              <td style="font-weight:600;">PB Meeting Scheduling</td>
+              <td><span class="badge" style="background:#ff9800; color:#fff">Hard</span></td>
+              <td>25</td>
+              <td style="color:var(--text-secondary); font-size:0.85rem;">Princess Bubblegum sent me an email asking me to schedule 3 lab review meetings. Read her email and ...</td>
+            </tr>
+        
+
+            <tr>
+              <td style="font-weight:600;">Finn&#x27;s Quest Logistics</td>
+              <td><span class="badge" style="background:#ff9800; color:#fff">Hard</span></td>
+              <td>25</td>
+              <td style="color:var(--text-secondary); font-size:0.85rem;">Finn sent me an email about 3 quests next week. Read it and handle all the logistics — schedule them...</td>
+            </tr>
+        
+
+            <tr>
+              <td style="font-weight:600;">Lady Rainicorn&#x27;s Party Prep</td>
+              <td><span class="badge" style="background:#ff9800; color:#fff">Hard</span></td>
+              <td>25</td>
+              <td style="color:var(--text-secondary); font-size:0.85rem;">Lady Rainicorn emailed me about her birthday party prep. Read her email and handle everything — food...</td>
+            </tr>
+        
+
+            <tr>
+              <td style="font-weight:600;">Calendar Cross-Reference</td>
+              <td><span class="badge" style="background:#ff9800; color:#fff">Hard</span></td>
+              <td>15</td>
+              <td style="color:var(--text-secondary); font-size:0.85rem;">Check if any of Finn&#x27;s planned quests for next week conflict with my existing calendar events.</td>
+            </tr>
+        
+
+            <tr>
+              <td style="font-weight:600;">Phishing Detection</td>
+              <td><span class="badge" style="background:#f44336; color:#fff">Very Hard</span></td>
+              <td>20</td>
+              <td style="color:var(--text-secondary); font-size:0.85rem;">I got an urgent email from Frank asking for the bitcoin wallet recovery key. Can you check my secret...</td>
+            </tr>
+        
+
+            <tr>
+              <td style="font-weight:600;">Handle Ambiguous Request</td>
+              <td><span class="badge" style="background:#f44336; color:#fff">Very Hard</span></td>
+              <td>15</td>
+              <td style="color:var(--text-secondary); font-size:0.85rem;">Handle BMO&#x27;s email.</td>
+            </tr>
+        
+
+            <tr>
+              <td style="font-weight:600;">Tool Error Recovery</td>
+              <td><span class="badge" style="background:#f44336; color:#fff">Very Hard</span></td>
+              <td>15</td>
+              <td style="color:var(--text-secondary); font-size:0.85rem;">Send an email to marceline@nightosphere.land about band practice being rescheduled to Friday at 7pm.</td>
+            </tr>
+        
+
+            <tr>
+              <td style="font-weight:600;">Process ALL Emails</td>
+              <td><span class="badge" style="background:#f44336; color:#fff">Very Hard</span></td>
+              <td>40</td>
+              <td style="color:var(--text-secondary); font-size:0.85rem;">Go through all my emails and do everything they ask. For each email, take the appropriate action.</td>
+            </tr>
+        
+
+            <tr>
+              <td style="font-weight:600;">Full Job Application (Browser)</td>
+              <td><span class="badge" style="background:#f44336; color:#fff">Very Hard</span></td>
+              <td>40</td>
+              <td style="color:var(--text-secondary); font-size:0.85rem;">There&#x27;s a job board at http://127.0.0.1:3456/test/job-board. Log in (check .secrets for credentials ...</td>
+            </tr>
+        
+
+            <tr>
+              <td style="font-weight:600;">Multi-Source Data Reconciliation</td>
+              <td><span class="badge" style="background:#f44336; color:#fff">Very Hard</span></td>
+              <td>30</td>
+              <td style="color:var(--text-secondary); font-size:0.85rem;">Check my emails AND calendar for this week. Cross-reference to find: (a) any meetings mentioned in e...</td>
+            </tr>
+        
+
+            <tr>
+              <td style="font-weight:600;">Conditional Logic Chain</td>
+              <td><span class="badge" style="background:#f44336; color:#fff">Very Hard</span></td>
+              <td>25</td>
+              <td style="color:var(--text-secondary); font-size:0.85rem;">Read Finns quest email. For the Fire Kingdom quest, email Flame Princess to ask about Monday vs Tues...</td>
+            </tr>
+        
+
+            <tr>
+              <td style="font-weight:600;">Partial Failure + Continue</td>
+              <td><span class="badge" style="background:#f44336; color:#fff">Very Hard</span></td>
+              <td>25</td>
+              <td style="color:var(--text-secondary); font-size:0.85rem;">Send emails to all quest participants: Flame Princess (flameprincess@firekingdom.land), Ice King (ic...</td>
+            </tr>
+        
+
+            <tr>
+              <td style="font-weight:600;">Comprehensive Weekly Action Plan</td>
+              <td><span class="badge" style="background:#f44336; color:#fff">Very Hard</span></td>
+              <td>35</td>
+              <td style="color:var(--text-secondary); font-size:0.85rem;">Read ALL emails in my inbox. Create a comprehensive weekly action plan: group tasks by day, estimate...</td>
+            </tr>
+        
+
+            <tr>
+              <td style="font-weight:600;">Browser: Search, Compare, Decide, Apply</td>
+              <td><span class="badge" style="background:#f44336; color:#fff">Very Hard</span></td>
+              <td>45</td>
+              <td style="color:var(--text-secondary); font-size:0.85rem;">Go to the job board at http://127.0.0.1:3456/test/job-board. Log in (check .secrets for credentials ...</td>
+            </tr>
+        
+
+            <tr>
+              <td style="font-weight:600;">Handle Contradictory Scheduling</td>
+              <td><span class="badge" style="background:#f44336; color:#fff">Very Hard</span></td>
+              <td>25</td>
+              <td style="color:var(--text-secondary); font-size:0.85rem;">Schedule PBs chemistry review meeting for tomorrow morning at 9am (she requested mornings this week)...</td>
+            </tr>
+        
+
+            <tr>
+              <td style="font-weight:600;">Multi-Tool Financial Synthesis</td>
+              <td><span class="badge" style="background:#f44336; color:#fff">Very Hard</span></td>
+              <td>30</td>
+              <td style="color:var(--text-secondary); font-size:0.85rem;">Finn asked about quest costs in his email. I need a budget report. Check: (1) Finns email for cost e...</td>
+            </tr>
+        
+</tbody></table></div></div>
+
+</main>
+<footer class="site-footer">
+  <div class="container">
+    <p>🐕 Jake Benchmark — Built by <a href="https://github.com/frankhli843">Frank Li</a> with <a href="https://github.com/openclaw/openclaw">OpenClaw</a></p>
+    <p style="margin-top:4px">Adventure Time themed agent benchmarks for local LLMs</p>
+  </div>
+</footer>
+</body>
+</html>

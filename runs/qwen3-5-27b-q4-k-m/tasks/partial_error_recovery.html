@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Partial Failure + Continue — qwen3.5:27b-q4_K_M — Jake Benchmark</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐕</text></svg>">
+<style>
+:root {
+  --blue: #1ea7fd;
+  --yellow: #fcba03;
+  --green: #4caf50;
+  --red: #f44336;
+  --orange: #ff9800;
+  --bg: #ffffff;
+  --bg-alt: #f8f9fa;
+  --bg-card: #ffffff;
+  --text: #1a1a2e;
+  --text-secondary: #555770;
+  --border: #e2e4e9;
+  --shadow: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.06);
+  --shadow-lg: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  background: var(--bg-alt);
+  color: var(--text);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* Header */
+.site-header {
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+  padding: 20px 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  backdrop-filter: blur(8px);
+}
+.site-header .container {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.site-header h1 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--text);
+}
+.site-header h1 span {
+  color: var(--blue);
+}
+.site-header .subtitle {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+.header-nav {
+  margin-left: auto;
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+.header-nav a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: color 0.15s;
+}
+.header-nav a:hover {
+  color: var(--blue);
+}
+
+/* Cards */
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: var(--shadow);
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+.card:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-1px);
+}
+.card h2 {
+  font-size: 1.2rem;
+  margin-bottom: 8px;
+}
+.card h3 {
+  font-size: 1rem;
+  margin-bottom: 6px;
+  color: var(--text);
+}
+
+/* Badges */
+.badge {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  vertical-align: middle;
+}
+
+/* Progress bars */
+.progress-bar {
+  background: var(--bg-alt);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  height: 10px;
+  overflow: hidden;
+  width: 100%;
+}
+.progress-bar .fill {
+  height: 100%;
+  border-radius: 8px;
+  transition: width 0.6s ease;
+}
+
+/* Score display */
+.score-big {
+  font-size: 2.5rem;
+  font-weight: 800;
+  line-height: 1;
+}
+.score-max {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  font-weight: 400;
+}
+
+/* Links */
+a {
+  color: var(--blue);
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+/* Tables */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+th, td {
+  padding: 12px 16px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+th {
+  background: var(--bg-alt);
+  font-weight: 600;
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+tr:hover td {
+  background: var(--bg-alt);
+}
+
+/* Chat bubbles */
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px 0;
+}
+.bubble {
+  max-width: 85%;
+  padding: 14px 18px;
+  border-radius: 16px;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  word-wrap: break-word;
+  position: relative;
+}
+.bubble pre {
+  background: rgba(0,0,0,0.05);
+  padding: 10px;
+  border-radius: 8px;
+  overflow-x: auto;
+  font-size: 0.8rem;
+  margin: 8px 0;
+  white-space: pre-wrap;
+}
+.bubble code {
+  font-size: 0.85em;
+  background: rgba(0,0,0,0.05);
+  padding: 1px 5px;
+  border-radius: 4px;
+}
+.bubble-user {
+  align-self: flex-end;
+  background: var(--blue);
+  color: #fff;
+  border-bottom-right-radius: 4px;
+}
+.bubble-assistant {
+  align-self: flex-start;
+  background: #e8f5e9;
+  color: var(--text);
+  border: 1px solid #c8e6c9;
+  border-bottom-left-radius: 4px;
+}
+.bubble-tool-call {
+  align-self: flex-start;
+  background: #fff8e1;
+  color: #5d4037;
+  border: 1px solid #ffecb3;
+  border-radius: 12px;
+  font-family: monospace;
+  font-size: 0.82rem;
+}
+.bubble-tool-result {
+  align-self: flex-start;
+  background: var(--bg-alt);
+  color: var(--text-secondary);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  font-family: monospace;
+  font-size: 0.82rem;
+}
+.bubble .role-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 6px;
+  opacity: 0.7;
+}
+.bubble .timestamp {
+  font-size: 0.7rem;
+  opacity: 0.5;
+  margin-top: 6px;
+}
+
+/* Collapsible */
+details {
+  margin: 4px 0;
+}
+details summary {
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  padding: 4px 0;
+}
+details summary:hover {
+  color: var(--blue);
+}
+details[open] > summary {
+  margin-bottom: 8px;
+}
+
+/* Sections */
+.section {
+  margin: 32px 0;
+}
+.section-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 16px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--border);
+}
+
+/* Grid */
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 16px;
+}
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+}
+
+/* TOC */
+.toc {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px 24px;
+  margin-bottom: 32px;
+}
+.toc h3 {
+  margin-bottom: 12px;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.toc ul {
+  list-style: none;
+  columns: 2;
+  gap: 8px;
+}
+.toc li {
+  padding: 4px 0;
+  font-size: 0.9rem;
+}
+.toc a {
+  color: var(--text);
+}
+.toc a:hover {
+  color: var(--blue);
+}
+
+/* Footer */
+.site-footer {
+  text-align: center;
+  padding: 32px 0;
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+  border-top: 1px solid var(--border);
+  margin-top: 48px;
+}
+
+/* Back link */
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  margin-bottom: 20px;
+}
+.back-link:hover {
+  color: var(--blue);
+  text-decoration: none;
+}
+
+/* Epic fail cards */
+.epic-fail {
+  border-left: 4px solid var(--red);
+}
+.epic-fail .actual-output {
+  background: #fce4ec;
+  border: 1px solid #f8bbd0;
+  border-radius: 8px;
+  padding: 12px;
+  margin: 8px 0;
+  font-family: monospace;
+  font-size: 0.82rem;
+  white-space: pre-wrap;
+  word-break: break-word;
+  color: #b71c1c;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .toc ul { columns: 1; }
+  .grid-2, .grid-3 { grid-template-columns: 1fr; }
+  .bubble { max-width: 95%; }
+  .container { padding: 0 16px; }
+  .score-big { font-size: 2rem; }
+}
+</style>
+</head>
+<body>
+<header class="site-header">
+  <div class="container">
+    <h1>🐕 <span>Jake</span> Benchmark</h1>
+    <span class="subtitle">OpenClaw Local LLM Agent Testing</span>
+    <nav class="header-nav">
+      <a href="../../../index.html">Home</a>
+      <a href="https://github.com/frankhli843/jake-benchmark" target="_blank">GitHub</a>
+    </nav>
+  </div>
+</header>
+<main class="container" style="padding-top:32px; padding-bottom:48px;">
+
+<a href="../index.html" class="back-link">← Back to qwen3.5:27b-q4_K_M</a>
+
+    <div class="card" style="margin-bottom:24px;">
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <div>
+          <h2 style="margin-bottom:4px;">Partial Failure + Continue</h2>
+          <div style="color:var(--text-secondary); font-size:0.9rem;">
+            qwen3.5:27b-q4_K_M &middot; <span class="badge" style="background:#f44336; color:#fff">Very Hard</span>
+          </div>
+        </div>
+        <div style="text-align:right;">
+          <div style="font-size:2rem; font-weight:800; color:#f44336;">0/15</div>
+        </div>
+      </div>
+    </div>
+    
+
+        <div class="card" style="margin-bottom:24px; background:var(--bg-alt);">
+          <div style="font-size:0.8rem; color:var(--text-secondary); font-weight:600; margin-bottom:8px;">TASK PROMPT</div>
+          <p>Send emails to all quest participants: Flame Princess (flameprincess@firekingdom.land), Ice King (iceking@icekingdom.land), and BMO (bmo@adventuretime.land) about next weeks schedule. Send each one separately.</p>
+        </div>
+        
+<div class="section"><h2 class="section-title">💬 Full Conversation</h2>
+<div class="chat-container">
+
+                <div class="bubble bubble-user">
+                  <div class="role-label">👤 User</div>
+                  [Sun 2026-03-15 20:47 EDT] Send emails to all quest participants: Flame Princess (flameprincess@firekingdom.land), Ice King (iceking@icekingdom.land), and BMO (bmo@adventuretime.land) about next weeks schedule. Send each one separately.
+                  <div class="timestamp">20:47:35</div>
+                </div>
+                
+<div class="bubble bubble-tool-call">
+<div class="role-label">🤖 Assistant — Tool Calls (3)</div>
+
+            <div class="role-label">🔧 Tool Call: exec</div>
+            <details>
+              <summary>Arguments (508 chars)</summary>
+              <pre>{
+  &quot;command&quot;: &quot;gog gmail send --to \&quot;flameprincess@firekingdom.land\&quot; --subject \&quot;Next Week&#x27;s Quest Schedule\&quot; --body \&quot;Hey Flame Princess,\n\nHope you&#x27;re keeping things cool in the Fire Kingdom, dude!\n\nJust wanted to send you a quick note about next week&#x27;s quest schedule. We&#x27;re going to have some adventures planned out, and I wanted to make sure you were in the loop.\n\nWe&#x27;ll be finalizing the details and sending over the full timeline soon. Keep your fire magic ready!\n\nCatch you later,\nJake\&quot;&quot;
+}</pre>
+            </details>
+            
+
+            <div class="role-label">🔧 Tool Call: exec</div>
+            <details>
+              <summary>Arguments (520 chars)</summary>
+              <pre>{
+  &quot;command&quot;: &quot;gog gmail send --to \&quot;iceking@icekingdom.land\&quot; --subject \&quot;Next Week&#x27;s Quest Schedule\&quot; --body \&quot;Hey Ice King,\n\nWhat&#x27;s up, man? Hope you&#x27;re treating your princesses better than, ya know, before.\n\nI&#x27;m reaching out to let you know about next week&#x27;s quest schedule. We&#x27;ve got some exciting stuff lined up, and since you showed your basketball skills in that game (21-15 wasn&#x27;t bad!), you&#x27;re definitely part of the team.\n\nFull details are coming your way soon. Don&#x27;t be a no-show!\n\nPeace,\nJake\&quot;&quot;
+}</pre>
+            </details>
+            
+
+        <div class="role-label">🔧 Tool Call: exec</div>
+        <pre>{
+  &quot;command&quot;: &quot;gog gmail send --to \&quot;bmo@adventuretime.land\&quot; --subject \&quot;Next Week&#x27;s Quest Schedule\&quot; --body \&quot;Hey BMO!\n\nYo dude, how&#x27;s it hanging? Hope you&#x27;re getting lots of gaming action!\n\nI&#x27;m just dropping you a message about next week&#x27;s quest schedule. We&#x27;re gonna have some fun adventures, and I know you&#x27;ll bring the energy like always.\n\nThe full schedule is coming your way soon. Get those games ready for breaks!\n\nYour buddy,\nJake\&quot;&quot;
+}</pre>
+        
+<div class="timestamp">20:54:55</div>
+</div>
+<div class="bubble bubble-assistant">
+<div class="role-label">🤖 Assistant</div>
+Alright dude, let me send out those emails to all the quest participants about next week&#x27;s schedule. I&#x27;ll send each one separately like you asked.
+<div class="timestamp">20:54:55</div>
+</div>
+<div class="bubble bubble-tool-result">
+<div class="role-label">⚙️ Tool Result</div>
+Message sent: BFvxE9_HQLOKFdC3<br>  To: flameprincess@firekingdom.land<br>  Subject: Next Week&#x27;s Quest Schedule
+<div class="timestamp">20:54:55</div>
+</div>
+<div class="bubble bubble-tool-result">
+<div class="role-label">⚙️ Tool Result</div>
+Message sent: 0UsQ6IaFQzm86C6Q<br>  To: iceking@icekingdom.land<br>  Subject: Next Week&#x27;s Quest Schedule
+<div class="timestamp">20:54:55</div>
+</div>
+<div class="bubble bubble-tool-result">
+<div class="role-label">⚙️ Tool Result</div>
+Message sent: FfdpN9xGQP6OE7iD<br>  To: bmo@adventuretime.land<br>  Subject: Next Week&#x27;s Quest Schedule
+<div class="timestamp">20:54:55</div>
+</div>
+<div class="bubble bubble-assistant">
+<div class="role-label">🤖 Assistant</div>
+Sweet, all sent dude! 🔥❄️🎮<br><br>✅ Flame Princess — got her email about keeping her fire magic ready<br>✅ Ice King — reminded him about that sweet 21-15 victory and asked him to show up<br>✅ BMO — told &#x27;em to get those games ready for breaks<br><br>All three quest participants are in the loop about next week&#x27;s schedule. They&#x27;ll be hearing more details soon!
+<div class="timestamp">20:56:04</div>
+</div>
+
+                <div class="bubble bubble-user">
+                  <div class="role-label">👤 User</div>
+                  [Sun 2026-03-15 20:50 EDT] Send emails to all quest participants: Flame Princess (flameprincess@firekingdom.land), Ice King (iceking@icekingdom.land), and BMO (bmo@adventuretime.land) about next weeks schedule. Send each one separately.
+                  <div class="timestamp">20:56:04</div>
+                </div>
+                
+<div class="bubble bubble-assistant">
+<div class="role-label">🤖 Assistant</div>
+Dude, I already sent those emails just 3 minutes ago! 🔥❄️🎮<br><br>✅ Flame Princess (flameprincess@firekingdom.land) - Message ID: BFvxE9_HQLOKFdC3<br>✅ Ice King (iceking@icekingdom.land) - Message ID: 0UsQ6IaFQzm86C6Q<br>✅ BMO (bmo@adventuretime.land) - Message ID: FfdpN9xGQP6OE7iD<br><br>All three quest participants got their personalized emails about next week&#x27;s schedule. You good to go, man! Just wanted to make sure I didn&#x27;t accidentally ghost anyone on this.<br><br>What&#x27;s the move? Need me to check if they got &#x27;em or something?
+<div class="timestamp">20:58:52</div>
+</div>
+</div>
+</div>
+
+        <div class="section">
+          <h2 class="section-title">📋 Scoring Reasoning</h2>
+          <div class="card">
+            <p>Timed out with 0 responses and 0 tool calls.</p>
+          </div>
+        </div>
+        
+
+</main>
+<footer class="site-footer">
+  <div class="container">
+    <p>🐕 Jake Benchmark — Built by <a href="https://github.com/frankhli843">Frank Li</a> with <a href="https://github.com/openclaw/openclaw">OpenClaw</a></p>
+    <p style="margin-top:4px">Adventure Time themed agent benchmarks for local LLMs</p>
+  </div>
+</footer>
+</body>
+</html>

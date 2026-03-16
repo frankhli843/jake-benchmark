@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PB Meeting Scheduling — qwen3.5:27b-q4_K_M — Jake Benchmark</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐕</text></svg>">
+<style>
+:root {
+  --blue: #1ea7fd;
+  --yellow: #fcba03;
+  --green: #4caf50;
+  --red: #f44336;
+  --orange: #ff9800;
+  --bg: #ffffff;
+  --bg-alt: #f8f9fa;
+  --bg-card: #ffffff;
+  --text: #1a1a2e;
+  --text-secondary: #555770;
+  --border: #e2e4e9;
+  --shadow: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.06);
+  --shadow-lg: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  background: var(--bg-alt);
+  color: var(--text);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* Header */
+.site-header {
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+  padding: 20px 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  backdrop-filter: blur(8px);
+}
+.site-header .container {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.site-header h1 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--text);
+}
+.site-header h1 span {
+  color: var(--blue);
+}
+.site-header .subtitle {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+.header-nav {
+  margin-left: auto;
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+.header-nav a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: color 0.15s;
+}
+.header-nav a:hover {
+  color: var(--blue);
+}
+
+/* Cards */
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: var(--shadow);
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+.card:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-1px);
+}
+.card h2 {
+  font-size: 1.2rem;
+  margin-bottom: 8px;
+}
+.card h3 {
+  font-size: 1rem;
+  margin-bottom: 6px;
+  color: var(--text);
+}
+
+/* Badges */
+.badge {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  vertical-align: middle;
+}
+
+/* Progress bars */
+.progress-bar {
+  background: var(--bg-alt);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  height: 10px;
+  overflow: hidden;
+  width: 100%;
+}
+.progress-bar .fill {
+  height: 100%;
+  border-radius: 8px;
+  transition: width 0.6s ease;
+}
+
+/* Score display */
+.score-big {
+  font-size: 2.5rem;
+  font-weight: 800;
+  line-height: 1;
+}
+.score-max {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  font-weight: 400;
+}
+
+/* Links */
+a {
+  color: var(--blue);
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+/* Tables */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+th, td {
+  padding: 12px 16px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+th {
+  background: var(--bg-alt);
+  font-weight: 600;
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+tr:hover td {
+  background: var(--bg-alt);
+}
+
+/* Chat bubbles */
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px 0;
+}
+.bubble {
+  max-width: 85%;
+  padding: 14px 18px;
+  border-radius: 16px;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  word-wrap: break-word;
+  position: relative;
+}
+.bubble pre {
+  background: rgba(0,0,0,0.05);
+  padding: 10px;
+  border-radius: 8px;
+  overflow-x: auto;
+  font-size: 0.8rem;
+  margin: 8px 0;
+  white-space: pre-wrap;
+}
+.bubble code {
+  font-size: 0.85em;
+  background: rgba(0,0,0,0.05);
+  padding: 1px 5px;
+  border-radius: 4px;
+}
+.bubble-user {
+  align-self: flex-end;
+  background: var(--blue);
+  color: #fff;
+  border-bottom-right-radius: 4px;
+}
+.bubble-assistant {
+  align-self: flex-start;
+  background: #e8f5e9;
+  color: var(--text);
+  border: 1px solid #c8e6c9;
+  border-bottom-left-radius: 4px;
+}
+.bubble-tool-call {
+  align-self: flex-start;
+  background: #fff8e1;
+  color: #5d4037;
+  border: 1px solid #ffecb3;
+  border-radius: 12px;
+  font-family: monospace;
+  font-size: 0.82rem;
+}
+.bubble-tool-result {
+  align-self: flex-start;
+  background: var(--bg-alt);
+  color: var(--text-secondary);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  font-family: monospace;
+  font-size: 0.82rem;
+}
+.bubble .role-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 6px;
+  opacity: 0.7;
+}
+.bubble .timestamp {
+  font-size: 0.7rem;
+  opacity: 0.5;
+  margin-top: 6px;
+}
+
+/* Collapsible */
+details {
+  margin: 4px 0;
+}
+details summary {
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  padding: 4px 0;
+}
+details summary:hover {
+  color: var(--blue);
+}
+details[open] > summary {
+  margin-bottom: 8px;
+}
+
+/* Sections */
+.section {
+  margin: 32px 0;
+}
+.section-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 16px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--border);
+}
+
+/* Grid */
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 16px;
+}
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+}
+
+/* TOC */
+.toc {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px 24px;
+  margin-bottom: 32px;
+}
+.toc h3 {
+  margin-bottom: 12px;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.toc ul {
+  list-style: none;
+  columns: 2;
+  gap: 8px;
+}
+.toc li {
+  padding: 4px 0;
+  font-size: 0.9rem;
+}
+.toc a {
+  color: var(--text);
+}
+.toc a:hover {
+  color: var(--blue);
+}
+
+/* Footer */
+.site-footer {
+  text-align: center;
+  padding: 32px 0;
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+  border-top: 1px solid var(--border);
+  margin-top: 48px;
+}
+
+/* Back link */
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  margin-bottom: 20px;
+}
+.back-link:hover {
+  color: var(--blue);
+  text-decoration: none;
+}
+
+/* Epic fail cards */
+.epic-fail {
+  border-left: 4px solid var(--red);
+}
+.epic-fail .actual-output {
+  background: #fce4ec;
+  border: 1px solid #f8bbd0;
+  border-radius: 8px;
+  padding: 12px;
+  margin: 8px 0;
+  font-family: monospace;
+  font-size: 0.82rem;
+  white-space: pre-wrap;
+  word-break: break-word;
+  color: #b71c1c;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .toc ul { columns: 1; }
+  .grid-2, .grid-3 { grid-template-columns: 1fr; }
+  .bubble { max-width: 95%; }
+  .container { padding: 0 16px; }
+  .score-big { font-size: 2rem; }
+}
+</style>
+</head>
+<body>
+<header class="site-header">
+  <div class="container">
+    <h1>🐕 <span>Jake</span> Benchmark</h1>
+    <span class="subtitle">OpenClaw Local LLM Agent Testing</span>
+    <nav class="header-nav">
+      <a href="../../../index.html">Home</a>
+      <a href="https://github.com/frankhli843/jake-benchmark" target="_blank">GitHub</a>
+    </nav>
+  </div>
+</header>
+<main class="container" style="padding-top:32px; padding-bottom:48px;">
+
+<a href="../index.html" class="back-link">← Back to qwen3.5:27b-q4_K_M</a>
+
+    <div class="card" style="margin-bottom:24px;">
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <div>
+          <h2 style="margin-bottom:4px;">PB Meeting Scheduling</h2>
+          <div style="color:var(--text-secondary); font-size:0.9rem;">
+            qwen3.5:27b-q4_K_M &middot; <span class="badge" style="background:#ff9800; color:#fff">Hard</span>
+          </div>
+        </div>
+        <div style="text-align:right;">
+          <div style="font-size:2rem; font-weight:800; color:#f44336;">3/25</div>
+        </div>
+      </div>
+    </div>
+    
+
+        <div class="card" style="margin-bottom:24px; background:var(--bg-alt);">
+          <div style="font-size:0.8rem; color:var(--text-secondary); font-weight:600; margin-bottom:8px;">TASK PROMPT</div>
+          <p>Princess Bubblegum sent me an email asking me to schedule 3 lab review meetings. Read her email and do everything she asked — schedule the meetings, check for conflicts, and send the confirmation emails.</p>
+        </div>
+        
+<div class="section"><h2 class="section-title">💬 Full Conversation</h2>
+<div class="chat-container">
+<div class="bubble bubble-tool-call">
+<div class="role-label">🤖 Assistant — Tool Calls (1)</div>
+
+        <div class="role-label">🔧 Tool Call: exec</div>
+        <pre>{
+  &quot;command&quot;: &quot;gog gmail search \&quot;from:Princess Bubblegum lab review\&quot;&quot;,
+  &quot;workdir&quot;: &quot;/home/frank/.openclaw/workspace&quot;
+}</pre>
+        
+<div class="timestamp">08:39:42</div>
+</div>
+<div class="bubble bubble-assistant">
+<div class="role-label">🤖 Assistant</div>
+Let me search for the email from Princess Bubblegum:
+<div class="timestamp">08:39:42</div>
+</div>
+<div class="bubble bubble-tool-result">
+<div class="role-label">⚙️ Tool Result</div>
+No messages match the query.
+<div class="timestamp">08:39:42</div>
+</div>
+<div class="bubble bubble-tool-call">
+<div class="role-label">🤖 Assistant — Tool Calls (1)</div>
+
+        <div class="role-label">🔧 Tool Call: exec</div>
+        <pre>{
+  &quot;command&quot;: &quot;gog gmail search \&quot;Princess Bubblegum\&quot;&quot;,
+  &quot;workdir&quot;: &quot;/home/frank/.openclaw/workspace&quot;
+}</pre>
+        
+<div class="timestamp">08:41:25</div>
+</div>
+<div class="bubble bubble-tool-result">
+<div class="role-label">⚙️ Tool Result</div>
+xVw0zVYhRhqp93WP	2026-03-15 20:05	Jake	Meeting Schedule Confirmed - Lab Reviews	SENT	pxTaM6VwTHuokls5<br>BWmj99T5xZ6734Pf	2026-03-15 12:53	Princess Bubblegum	Need you to schedule a series of lab review meetings	INBOX,IMPORTANT,CATEGORY_PERSONAL	7EfubIl3rOoiw3LM<br>Ib_ZhJGDTfejKbYb	2026-03-14 13:48	Princess Bubblegum	Lab results ready	INBOX,CATEGORY_PERSONAL	-OYOisSTTR-Lunmk<br>OfzCjTKVSP2K5DPF	2026-03-13 13:48	Ice King	MARRY ME PRINCESS	INBOX,SPAM	f1umgA09SR6F4fpD
+<div class="timestamp">08:41:25</div>
+</div>
+<div class="bubble bubble-tool-call">
+<div class="role-label">🤖 Assistant — Tool Calls (1)</div>
+
+        <div class="role-label">🔧 Tool Call: exec</div>
+        <pre>{
+  &quot;command&quot;: &quot;gog gmail read BWmj99T5xZ6734Pf&quot;,
+  &quot;workdir&quot;: &quot;/home/frank/.openclaw/workspace&quot;
+}</pre>
+        
+<div class="timestamp">08:43:32</div>
+</div>
+<div class="bubble bubble-assistant">
+<div class="role-label">🤖 Assistant</div>
+Found it! Let me read that email from Princess Bubblegum:
+<div class="timestamp">08:43:32</div>
+</div>
+<div class="bubble bubble-tool-result">
+<div class="role-label">⚙️ Tool Result</div>
+From: Princess Bubblegum &lt;princess.bubblegum@candykingdom.land&gt;<br>To: jake@treehouse.land<br>Date: 2026-03-15 12:53<br>Subject: Need you to schedule a series of lab review meetings<br>Labels: INBOX, IMPORTANT, CATEGORY_PERSONAL<br>Thread-ID: 7EfubIl3rOoiw3LM<br>Message-ID: BWmj99T5xZ6734Pf<br><br>Jake,<br><br>I need your help organizing the quarterly Candy Kingdom Science Council reviews. Can you set up the following meetings on my behalf?<br><br>1. CANDY CHEMISTRY REVIEW<br>   - Attendees: Me, Peppermint Butler, Dr. Ice Cream<br>   - Duration: 90 minutes<br>   - Needs to happen this week (before Friday)<br>   - Morning preferred (9 AM - 12 PM)<br>   - Location: Candy Kingdom Lab A<br><br>2. BANANA GUARD PERFORMANCE REVIEW<br>   - Attendees: Me, Captain Banana Guard, Finn (as combat advisor)<br>   - Duration: 60 minutes<br>   - Must happen AFTER the chemistry review (same week)<br>   - Afternoon preferred<br>   - Location: Candy Kingdom Throne Room<br><br>3. INFRASTRUCTURE PLANNING SESSION<br>   - Attendees: Me, Root Beer Guy, Starchy<br>   - Duration: 2 hours<br>   - Next week sometime, avoid Monday (I have royal duties)<br>   - Any time works<br>   - Location: Candy Kingdom City Hall<br><br>For each meeting, please:<br>• Check my existing calendar for conflicts before scheduling<br>• Send a confirmation email to each attendee<br>• Add a 15-minute buffer between back-to-back meetings<br>• Put the agenda in the calendar event description<br><br>Also, can you draft an email to the full Science Council (science-council@candykingdom.land) announcing the review schedule once it is finalized?<br><br>Thanks Jake, you are the best!<br>• PB
+<div class="timestamp">08:43:32</div>
+</div>
+<div class="bubble bubble-tool-call">
+<div class="role-label">🤖 Assistant — Tool Calls (1)</div>
+
+        <div class="role-label">🔧 Tool Call: exec</div>
+        <pre>{
+  &quot;command&quot;: &quot;gog calendar list --from 2026-03-16 --to 2026-03-22&quot;,
+  &quot;workdir&quot;: &quot;/home/frank/.openclaw/workspace&quot;
+}</pre>
+        
+<div class="timestamp">08:45:38</div>
+</div>
+<div class="bubble bubble-assistant">
+<div class="role-label">🤖 Assistant</div>
+Got it! Princess Bubblegum needs me to:<br>1. Schedule 3 meetings with specific attendees, times, and locations<br>2. Check her calendar for conflicts<br>3. Send confirmation emails to all attendees<br>4. Send a final announcement to the Science Council<br><br>Let me start by checking her calendar for this week and next week to find available slots:
+<div class="timestamp">08:45:38</div>
+</div>
+<div class="bubble bubble-tool-result">
+<div class="role-label">⚙️ Tool Result</div>
+No events found.
+<div class="timestamp">08:45:38</div>
+</div>
+<div class="bubble bubble-tool-call">
+<div class="role-label">🤖 Assistant — Tool Calls (1)</div>
+
+        <div class="role-label">🔧 Tool Call: exec</div>
+        <pre>{
+  &quot;command&quot;: &quot;gog calendar list --from 2026-03-23 --to 2026-03-29&quot;,
+  &quot;workdir&quot;: &quot;/home/frank/.openclaw/workspace&quot;
+}</pre>
+        
+<div class="timestamp">08:48:22</div>
+</div>
+<div class="bubble bubble-assistant">
+<div class="role-label">🤖 Assistant</div>
+Great! This week is clear. Let me also check next week:
+<div class="timestamp">08:48:22</div>
+</div>
+<div class="bubble bubble-tool-result">
+<div class="role-label">⚙️ Tool Result</div>
+No events found.
+<div class="timestamp">08:48:23</div>
+</div>
+</div>
+</div>
+
+        <div class="section">
+          <h2 class="section-title">📋 Scoring Reasoning</h2>
+          <div class="card">
+            <p>Made good progress — found PB&#x27;s email, read it correctly, checked calendar for conflicts. 4 responses showing step-by-step reasoning. But calendar.json and sent.json are both empty — Jake never actually created the meetings or sent confirmations. All talk, no action. The model ran out of time (900s) doing research and reasoning but never executed the final actions.</p>
+          </div>
+        </div>
+        
+
+</main>
+<footer class="site-footer">
+  <div class="container">
+    <p>🐕 Jake Benchmark — Built by <a href="https://github.com/frankhli843">Frank Li</a> with <a href="https://github.com/openclaw/openclaw">OpenClaw</a></p>
+    <p style="margin-top:4px">Adventure Time themed agent benchmarks for local LLMs</p>
+  </div>
+</footer>
+</body>
+</html>
