@@ -7,193 +7,450 @@
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐕</text></svg>">
 <style>
 :root {
-  --blue: #1ea7fd;
-  --yellow: #fcba03;
-  --green: #4caf50;
-  --red: #f44336;
-  --orange: #ff9800;
-  --bg: #ffffff;
-  --bg-alt: #f8f9fa;
+  --jake-yellow: #F2C94C;
+  --finn-blue: #1ea7fd;
+  --bmo-green: #4caf50;
+  --marceline-red: #f44336;
+  --lsp-purple: #9b59b6;
+  --pb-pink: #e91e90;
+  --ice-blue: #74b9ff;
+  --fire-orange: #ff9800;
+  --bg: #fffef7;
+  --bg-alt: #faf8f0;
   --bg-card: #ffffff;
-  --text: #1a1a2e;
-  --text-secondary: #555770;
-  --border: #e2e4e9;
-  --shadow: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.06);
-  --shadow-lg: 0 4px 12px rgba(0,0,0,0.1);
+  --text: #2d2a1e;
+  --text-secondary: #6b6651;
+  --border: #e8e4d4;
+  --shadow: 0 2px 8px rgba(45,42,30,0.06);
+  --shadow-lg: 0 8px 24px rgba(45,42,30,0.12);
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
+html { scroll-behavior: smooth; }
+
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  background: var(--bg-alt);
+  font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, 'Helvetica Neue', Arial, sans-serif;
+  background: var(--bg);
   color: var(--text);
-  line-height: 1.6;
+  line-height: 1.7;
   -webkit-font-smoothing: antialiased;
 }
 
 .container {
-  max-width: 1100px;
+  max-width: 960px;
   margin: 0 auto;
   padding: 0 24px;
 }
 
-/* Header */
+/* ─── Scroll Animations ─── */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+.reveal-delay-4 { transition-delay: 0.4s; }
+
+/* ─── Header ─── */
 .site-header {
   background: var(--bg);
-  border-bottom: 1px solid var(--border);
-  padding: 20px 0;
+  border-bottom: 2px solid var(--jake-yellow);
+  padding: 14px 0;
   position: sticky;
   top: 0;
   z-index: 100;
-  backdrop-filter: blur(8px);
+  backdrop-filter: blur(12px);
+  background: rgba(255,254,247,0.92);
 }
 .site-header .container {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 12px;
 }
-.site-header h1 {
-  font-size: 1.4rem;
-  font-weight: 700;
+.site-header .logo {
+  font-size: 1.6rem;
+  font-weight: 800;
   color: var(--text);
+  text-decoration: none;
 }
-.site-header h1 span {
-  color: var(--blue);
+.site-header .logo span {
+  color: var(--jake-yellow);
 }
 .site-header .subtitle {
   color: var(--text-secondary);
-  font-size: 0.9rem;
+  font-size: 0.85rem;
+  margin-left: 4px;
 }
 .header-nav {
   margin-left: auto;
   display: flex;
-  gap: 16px;
+  gap: 20px;
   align-items: center;
 }
 .header-nav a {
   color: var(--text-secondary);
   text-decoration: none;
   font-size: 0.9rem;
-  transition: color 0.15s;
+  font-weight: 500;
+  transition: color 0.2s;
 }
 .header-nav a:hover {
-  color: var(--blue);
+  color: var(--finn-blue);
 }
 
-/* Cards */
+/* ─── Hero ─── */
+.hero {
+  text-align: center;
+  padding: 80px 0 60px;
+  position: relative;
+}
+.hero h1 {
+  font-size: 3rem;
+  font-weight: 900;
+  line-height: 1.15;
+  margin-bottom: 16px;
+  color: var(--text);
+}
+.hero h1 .accent {
+  background: linear-gradient(135deg, var(--jake-yellow), var(--fire-orange));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.hero .tagline {
+  font-size: 1.2rem;
+  color: var(--text-secondary);
+  max-width: 600px;
+  margin: 0 auto 32px;
+  line-height: 1.6;
+}
+.hero .scroll-hint {
+  display: inline-block;
+  padding: 10px 24px;
+  background: var(--jake-yellow);
+  color: var(--text);
+  border-radius: 30px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-decoration: none;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 8px rgba(242,201,76,0.3);
+}
+.hero .scroll-hint:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(242,201,76,0.4);
+  text-decoration: none;
+}
+
+/* ─── Story Section ─── */
+.story-section {
+  padding: 60px 0;
+  border-bottom: 1px solid var(--border);
+}
+.story-section:last-of-type {
+  border-bottom: none;
+}
+.section-eyebrow {
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--jake-yellow);
+  margin-bottom: 8px;
+}
+.section-title {
+  font-size: 2rem;
+  font-weight: 800;
+  margin-bottom: 12px;
+  line-height: 1.2;
+}
+.section-subtitle {
+  font-size: 1.05rem;
+  color: var(--text-secondary);
+  margin-bottom: 32px;
+  max-width: 640px;
+}
+
+/* ─── Cards ─── */
 .card {
   background: var(--bg-card);
   border: 1px solid var(--border);
-  border-radius: 12px;
+  border-radius: 16px;
   padding: 24px;
   box-shadow: var(--shadow);
-  transition: box-shadow 0.2s, transform 0.2s;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
 .card:hover {
   box-shadow: var(--shadow-lg);
-  transform: translateY(-1px);
+  transform: translateY(-3px);
 }
-.card h2 {
-  font-size: 1.2rem;
+.card-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+.card-link:hover {
+  text-decoration: none;
+}
+
+/* ─── Model Contestant Card ─── */
+.contestant-card {
+  position: relative;
+  overflow: hidden;
+}
+.contestant-card .vibe-stripe {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+}
+.contestant-card .model-emoji {
+  font-size: 2.5rem;
   margin-bottom: 8px;
 }
-.card h3 {
-  font-size: 1rem;
-  margin-bottom: 6px;
-  color: var(--text);
+.contestant-card .model-name {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin-bottom: 4px;
 }
-
-/* Badges */
-.badge {
-  display: inline-block;
-  padding: 2px 10px;
-  border-radius: 20px;
-  font-size: 0.75rem;
+.contestant-card .personality-title {
+  font-size: 0.85rem;
   font-weight: 600;
-  letter-spacing: 0.03em;
-  vertical-align: middle;
+  color: var(--fire-orange);
+  margin-bottom: 8px;
+}
+.contestant-card .personality-desc {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  margin-bottom: 16px;
+  line-height: 1.5;
+}
+.contestant-card .stats-row {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.contestant-card .score-pill {
+  font-size: 1.8rem;
+  font-weight: 900;
+  line-height: 1;
+}
+.contestant-card .score-detail {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+.contestant-card .go-arrow {
+  margin-left: auto;
+  font-size: 1.4rem;
+  color: var(--text-secondary);
+  transition: transform 0.2s;
+}
+.card-link:hover .go-arrow {
+  transform: translateX(4px);
+  color: var(--finn-blue);
 }
 
-/* Progress bars */
+/* ─── Progress bar ─── */
 .progress-bar {
   background: var(--bg-alt);
   border: 1px solid var(--border);
-  border-radius: 8px;
-  height: 10px;
+  border-radius: 20px;
+  height: 12px;
   overflow: hidden;
   width: 100%;
 }
 .progress-bar .fill {
   height: 100%;
-  border-radius: 8px;
-  transition: width 0.6s ease;
+  border-radius: 20px;
+  transition: width 1.2s ease;
 }
 
-/* Score display */
-.score-big {
-  font-size: 2.5rem;
-  font-weight: 800;
+/* ─── Badges ─── */
+.badge {
+  display: inline-block;
+  padding: 3px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  vertical-align: middle;
+}
+
+/* ─── Stat Counter (animated) ─── */
+.stat-counter {
+  text-align: center;
+  padding: 20px;
+}
+.stat-counter .number {
+  font-size: 2.8rem;
+  font-weight: 900;
+  line-height: 1;
+  color: var(--jake-yellow);
+}
+.stat-counter .label {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  margin-top: 4px;
+}
+
+/* ─── Grid ─── */
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+  gap: 20px;
+}
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+/* ─── Score Ring ─── */
+.score-ring {
+  position: relative;
+  width: 140px;
+  height: 140px;
+  margin: 0 auto;
+}
+.score-ring svg {
+  transform: rotate(-90deg);
+}
+.score-ring .ring-bg {
+  fill: none;
+  stroke: var(--border);
+  stroke-width: 10;
+}
+.score-ring .ring-fill {
+  fill: none;
+  stroke-width: 10;
+  stroke-linecap: round;
+  stroke-dasharray: 408;
+  stroke-dashoffset: 408;
+  transition: stroke-dashoffset 1.5s ease;
+}
+.score-ring .ring-label {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+.score-ring .ring-pct {
+  font-size: 2rem;
+  font-weight: 900;
   line-height: 1;
 }
-.score-max {
-  font-size: 1rem;
-  color: var(--text-secondary);
-  font-weight: 400;
-}
-
-/* Links */
-a {
-  color: var(--blue);
-  text-decoration: none;
-}
-a:hover {
-  text-decoration: underline;
-}
-
-/* Tables */
-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 0.9rem;
-}
-th, td {
-  padding: 12px 16px;
-  text-align: left;
-  border-bottom: 1px solid var(--border);
-}
-th {
-  background: var(--bg-alt);
-  font-weight: 600;
-  color: var(--text-secondary);
+.score-ring .ring-sub {
   font-size: 0.8rem;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-}
-tr:hover td {
-  background: var(--bg-alt);
+  color: var(--text-secondary);
 }
 
-/* Chat bubbles */
+/* ─── Epic Fail Card ─── */
+.epic-fail-card {
+  border-left: 5px solid var(--marceline-red);
+  background: linear-gradient(135deg, #fff5f5, var(--bg-card));
+}
+.epic-fail-card .fail-emoji {
+  font-size: 2rem;
+  margin-bottom: 8px;
+}
+.epic-fail-card .fail-what {
+  font-size: 0.95rem;
+  margin-bottom: 12px;
+  line-height: 1.5;
+}
+.epic-fail-card .fail-output {
+  background: #fce4ec;
+  border: 1px solid #f8bbd0;
+  border-radius: 10px;
+  padding: 14px;
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  font-size: 0.82rem;
+  white-space: pre-wrap;
+  word-break: break-word;
+  color: #b71c1c;
+  margin-bottom: 12px;
+}
+.epic-fail-card .fail-why {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+/* ─── Verdict Card ─── */
+.verdict-card {
+  background: linear-gradient(135deg, #fef9e7, #fdf2d5);
+  border: 2px solid var(--jake-yellow);
+  text-align: center;
+  padding: 40px 32px;
+}
+.verdict-card h2 {
+  font-size: 1.8rem;
+  margin-bottom: 12px;
+}
+.verdict-card p {
+  font-size: 1.05rem;
+  color: var(--text-secondary);
+  max-width: 540px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* ─── Charts ─── */
+.chart-container {
+  position: relative;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* ─── Run Detail: Nerd Mode ─── */
+.nerd-toggle {
+  background: var(--bg-alt);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px 16px;
+  margin-top: 12px;
+}
+.nerd-toggle summary {
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: var(--lsp-purple);
+  padding: 4px 0;
+  list-style: none;
+}
+.nerd-toggle summary::-webkit-details-marker { display: none; }
+.nerd-toggle summary::before {
+  content: '🤓 ';
+}
+.nerd-toggle[open] summary { margin-bottom: 12px; }
+
+/* ─── Chat Bubbles ─── */
 .chat-container {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  padding: 16px 0;
+  gap: 14px;
+  padding: 20px 0;
 }
 .bubble {
-  max-width: 85%;
-  padding: 14px 18px;
-  border-radius: 16px;
+  max-width: 82%;
+  padding: 16px 20px;
+  border-radius: 18px;
   font-size: 0.9rem;
-  line-height: 1.5;
+  line-height: 1.6;
   word-wrap: break-word;
   position: relative;
 }
 .bubble pre {
   background: rgba(0,0,0,0.05);
-  padding: 10px;
-  border-radius: 8px;
+  padding: 12px;
+  border-radius: 10px;
   overflow-x: auto;
   font-size: 0.8rem;
   margin: 8px 0;
@@ -201,30 +458,30 @@ tr:hover td {
 }
 .bubble code {
   font-size: 0.85em;
-  background: rgba(0,0,0,0.05);
-  padding: 1px 5px;
+  background: rgba(0,0,0,0.06);
+  padding: 2px 6px;
   border-radius: 4px;
 }
 .bubble-user {
   align-self: flex-end;
-  background: var(--blue);
+  background: var(--finn-blue);
   color: #fff;
-  border-bottom-right-radius: 4px;
+  border-bottom-right-radius: 6px;
 }
 .bubble-assistant {
   align-self: flex-start;
   background: #e8f5e9;
   color: var(--text);
   border: 1px solid #c8e6c9;
-  border-bottom-left-radius: 4px;
+  border-bottom-left-radius: 6px;
 }
 .bubble-tool-call {
   align-self: flex-start;
   background: #fff8e1;
   color: #5d4037;
-  border: 1px solid #ffecb3;
-  border-radius: 12px;
-  font-family: monospace;
+  border: 1px solid #ffe082;
+  border-radius: 14px;
+  font-family: 'SF Mono', 'Fira Code', monospace;
   font-size: 0.82rem;
 }
 .bubble-tool-result {
@@ -232,25 +489,48 @@ tr:hover td {
   background: var(--bg-alt);
   color: var(--text-secondary);
   border: 1px solid var(--border);
-  border-radius: 12px;
-  font-family: monospace;
+  border-radius: 14px;
+  font-family: 'SF Mono', 'Fira Code', monospace;
   font-size: 0.82rem;
 }
 .bubble .role-label {
   font-size: 0.7rem;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.06em;
   margin-bottom: 6px;
   opacity: 0.7;
 }
 .bubble .timestamp {
   font-size: 0.7rem;
-  opacity: 0.5;
-  margin-top: 6px;
+  opacity: 0.45;
+  margin-top: 8px;
 }
 
-/* Collapsible */
+/* ─── Tables ─── */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+th, td {
+  padding: 14px 16px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+th {
+  background: var(--bg-alt);
+  font-weight: 700;
+  color: var(--text-secondary);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+tr:hover td {
+  background: var(--bg-alt);
+}
+
+/* ─── Details/Collapsible ─── */
 details {
   margin: 4px 0;
 }
@@ -262,154 +542,121 @@ details summary {
   padding: 4px 0;
 }
 details summary:hover {
-  color: var(--blue);
+  color: var(--finn-blue);
 }
 details[open] > summary {
   margin-bottom: 8px;
 }
 
-/* Sections */
-.section {
-  margin: 32px 0;
+/* ─── Links ─── */
+a {
+  color: var(--finn-blue);
+  text-decoration: none;
 }
-.section-title {
-  font-size: 1.3rem;
-  font-weight: 700;
-  margin-bottom: 16px;
-  padding-bottom: 8px;
-  border-bottom: 2px solid var(--border);
+a:hover {
+  text-decoration: underline;
 }
 
-/* Grid */
-.grid-2 {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 16px;
-}
-.grid-3 {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 16px;
-}
-
-/* TOC */
-.toc {
-  background: var(--bg);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 20px 24px;
-  margin-bottom: 32px;
-}
-.toc h3 {
-  margin-bottom: 12px;
-  font-size: 0.9rem;
-  color: var(--text-secondary);
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-}
-.toc ul {
-  list-style: none;
-  columns: 2;
-  gap: 8px;
-}
-.toc li {
-  padding: 4px 0;
-  font-size: 0.9rem;
-}
-.toc a {
-  color: var(--text);
-}
-.toc a:hover {
-  color: var(--blue);
-}
-
-/* Footer */
-.site-footer {
-  text-align: center;
-  padding: 32px 0;
-  color: var(--text-secondary);
-  font-size: 0.8rem;
-  border-top: 1px solid var(--border);
-  margin-top: 48px;
-}
-
-/* Back link */
+/* ─── Back link ─── */
 .back-link {
   display: inline-flex;
   align-items: center;
   gap: 6px;
   color: var(--text-secondary);
   font-size: 0.9rem;
-  margin-bottom: 20px;
+  margin-bottom: 24px;
+  font-weight: 500;
 }
 .back-link:hover {
-  color: var(--blue);
+  color: var(--finn-blue);
   text-decoration: none;
 }
 
-/* Epic fail cards */
-.epic-fail {
-  border-left: 4px solid var(--red);
+/* ─── Footer ─── */
+.site-footer {
+  text-align: center;
+  padding: 40px 0;
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  border-top: 2px solid var(--jake-yellow);
+  margin-top: 60px;
+  background: var(--bg-alt);
 }
-.epic-fail .actual-output {
-  background: #fce4ec;
-  border: 1px solid #f8bbd0;
-  border-radius: 8px;
-  padding: 12px;
-  margin: 8px 0;
-  font-family: monospace;
-  font-size: 0.82rem;
-  white-space: pre-wrap;
-  word-break: break-word;
-  color: #b71c1c;
+.site-footer a {
+  color: var(--jake-yellow);
+  font-weight: 600;
 }
 
-/* Responsive */
+/* ─── Code block ─── */
+.code-block {
+  background: #2d2a1e;
+  color: #f0ead6;
+  border-radius: 12px;
+  padding: 16px;
+  overflow-x: auto;
+  font-size: 0.82rem;
+  margin: 12px 0;
+}
+
+/* ─── Responsive ─── */
 @media (max-width: 768px) {
-  .toc ul { columns: 1; }
-  .grid-2, .grid-3 { grid-template-columns: 1fr; }
+  .hero h1 { font-size: 2rem; }
+  .section-title { font-size: 1.5rem; }
+  .grid-2 { grid-template-columns: 1fr; }
+  .grid-3 { grid-template-columns: 1fr; }
   .bubble { max-width: 95%; }
   .container { padding: 0 16px; }
-  .score-big { font-size: 2rem; }
+  .stat-counter .number { font-size: 2rem; }
+  .score-ring { width: 100px; height: 100px; }
+  .score-ring .ring-pct { font-size: 1.4rem; }
+  .contestant-card .stats-row { flex-direction: column; align-items: flex-start; }
+}
+
+@media (max-width: 480px) {
+  .hero { padding: 50px 0 40px; }
+  .hero h1 { font-size: 1.6rem; }
+  .story-section { padding: 40px 0; }
 }
 </style>
+
 </head>
 <body>
 <header class="site-header">
   <div class="container">
-    <h1>🐕 <span>Jake</span> Benchmark</h1>
-    <span class="subtitle">OpenClaw Local LLM Agent Testing</span>
+    <a href="../../../index.html" class="logo">🐕 <span>Jake</span> Benchmark</a>
+    <span class="subtitle">Which LLM makes the best Jake?</span>
     <nav class="header-nav">
       <a href="../../../index.html">Home</a>
       <a href="https://github.com/frankhli843/jake-benchmark" target="_blank">GitHub</a>
     </nav>
   </div>
 </header>
-<main class="container" style="padding-top:32px; padding-bottom:48px;">
+<main>
 
-<a href="../index.html" class="back-link">← Back to qwen3.5:27b-q4_K_M</a>
+    <div class="container" style="padding-top:32px; padding-bottom:48px;">
+      <a href="../index.html" class="back-link">← Back to qwen3.5:27b-q4_K_M</a>
 
-    <div class="card" style="margin-bottom:24px;">
-      <div style="display:flex; justify-content:space-between; align-items:center;">
-        <div>
-          <h2 style="margin-bottom:4px;">Full Job Application (Browser)</h2>
-          <div style="color:var(--text-secondary); font-size:0.9rem;">
-            qwen3.5:27b-q4_K_M &middot; <span class="badge" style="background:#f44336; color:#fff">Very Hard</span>
+      <div class="card reveal" style="margin-bottom:24px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;">
+          <div>
+            <h1 style="font-size:1.6rem; font-weight:800; margin-bottom:4px;">Full Job Application (Browser)</h1>
+            <div style="color:var(--text-secondary); font-size:0.9rem;">
+              qwen3.5:27b-q4_K_M &middot; <span class="badge" style="background:#f44336;color:#fff">Very Hard</span>
+            </div>
+          </div>
+          <div style="text-align:right;">
+            <div style="font-size:2.2rem; font-weight:900; color:#f44336;">3/40</div>
           </div>
         </div>
-        <div style="text-align:right;">
-          <div style="font-size:2rem; font-weight:800; color:#f44336;">3/40</div>
-        </div>
       </div>
-    </div>
     
 
-        <div class="card" style="margin-bottom:24px; background:var(--bg-alt);">
-          <div style="font-size:0.8rem; color:var(--text-secondary); font-weight:600; margin-bottom:8px;">TASK PROMPT</div>
-          <p>There&#x27;s a job board at http://127.0.0.1:3456/test/job-board. Log in (check .secrets for credentials — username is &#x27;jake&#x27;), search for &#x27;Maintenance&#x27; jobs in &#x27;Candy Kingdom&#x27;, find the best match, and submit a full application. Use the browser (scripts/chrome-mcp-call.sh). For the resume, upload any text file. Log the confirmation number to memory when done.</p>
-        </div>
+      <div class="card reveal reveal-delay-1" style="margin-bottom:24px; background:var(--bg-alt); border-left:4px solid var(--jake-yellow);">
+        <div style="font-size:0.78rem; font-weight:700; color:var(--jake-yellow); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:8px;">Task Prompt</div>
+        <p style="font-size:0.95rem;">There&#x27;s a job board at http://127.0.0.1:3456/test/job-board. Log in (check .secrets for credentials — username is &#x27;jake&#x27;), search for &#x27;Maintenance&#x27; jobs in &#x27;Candy Kingdom&#x27;, find the best match, and submit a full application. Use the browser (scripts/chrome-mcp-call.sh). For the resume, upload any text file. Log the confirmation number to memory when done.</p>
+      </div>
         
-<div class="section"><h2 class="section-title">💬 Full Conversation</h2>
+<div class="reveal reveal-delay-2"><h2 style="font-size:1.3rem; font-weight:800; margin-bottom:16px;">💬 Play-by-Play</h2>
 <div class="chat-container">
 
                 <div class="bubble bubble-user">
@@ -419,13 +666,12 @@ details[open] > summary {
                 </div>
                 
 <div class="bubble bubble-tool-call">
-<div class="role-label">🤖 Assistant — Tool Calls (1)</div>
+<div class="role-label">🤖 Tool Calls (1)</div>
 
-        <div class="role-label">🔧 Tool Call: read</div>
+        <div class="role-label">🔧 read</div>
         <pre>{
   &quot;path&quot;: &quot;~/.openclaw/workspace/.secrets/.password&quot;
 }</pre>
-        
 <div class="timestamp">20:17:59</div>
 </div>
 <div class="bubble bubble-tool-result">
@@ -434,17 +680,16 @@ FRANK_BITCOIN_PASSWORD=jakethehuman1234<br>
 <div class="timestamp">20:17:59</div>
 </div>
 <div class="bubble bubble-tool-call">
-<div class="role-label">🤖 Assistant — Tool Calls (1)</div>
+<div class="role-label">🤖 Tool Calls (1)</div>
 
-        <div class="role-label">🔧 Tool Call: exec</div>
+        <div class="role-label">🔧 exec</div>
         <pre>{
   &quot;command&quot;: &quot;bash scripts/chrome-mcp-call.sh navigate_page url=\&quot;http://127.0.0.1:3456/test/job-board\&quot;&quot;
 }</pre>
-        
 <div class="timestamp">20:19:18</div>
 </div>
 <div class="bubble bubble-assistant">
-<div class="role-label">🤖 Assistant</div>
+<div class="role-label">🤖 Jake</div>
 Alright dude, let me navigate to that job board and get this application submitted! 🐕
 <div class="timestamp">20:19:18</div>
 </div>
@@ -456,20 +701,53 @@ Alright dude, let me navigate to that job board and get this application submitt
 </div>
 </div>
 
-        <div class="section">
-          <h2 class="section-title">📋 Scoring Reasoning</h2>
-          <div class="card">
-            <p>Correctly read .secrets/.password for login credentials (2 tool calls). Navigated to the job board URL using chrome-mcp-call.sh. But then hit 900s timeout — never got past the initial navigation. The browser task requires many sequential steps (login, search, fill forms, submit) and the model was too slow to chain them. Credit for knowing to read secrets and use the right browser script.</p>
-          </div>
+      <div class="reveal" style="margin-top:24px;">
+        <h2 style="font-size:1.3rem; font-weight:800; margin-bottom:16px;">📋 Scoring Reasoning</h2>
+        <div class="card" style="border-left:4px solid #f44336;">
+          <p style="font-size:0.92rem; line-height:1.6;">Found credentials, navigated to job board, reached login form, filled fields, but got stuck on login. Never searched or applied. Browser interaction too slow/clumsy.</p>
         </div>
+      </div>
         
 
+      <details class="nerd-toggle" style="margin-top:16px;">
+        <summary>Nerd Mode — Grading Criteria</summary>
+        <ul style="padding-left:20px; font-size:0.85rem; color:var(--text-secondary);">
+          <li>Must use chrome-mcp-call.sh for browser automation</li><li>Must navigate to the job board</li><li>Must login successfully (read password from .secrets)</li><li>Must search with correct filters</li><li>Must click through to a job detail page</li><li>Must expand collapsible sections</li><li>Must complete all 4 pages of the application form</li><li>Must handle file upload for resume</li><li>Must handle any validation errors</li><li>Must extract confirmation number from success page</li><li>Must log confirmation to memory file</li><li>Check /test/results endpoint for submission data</li>
+        </ul>
+      </details>
+            
+</div>
 </main>
 <footer class="site-footer">
   <div class="container">
-    <p>🐕 Jake Benchmark — Built by <a href="https://github.com/frankhli843">Frank Li</a> with <a href="https://github.com/openclaw/openclaw">OpenClaw</a></p>
-    <p style="margin-top:4px">Adventure Time themed agent benchmarks for local LLMs</p>
+    <p>🐕 Built by <a href="https://github.com/frankhli843">Frank Li</a> with <a href="https://github.com/openclaw/openclaw">OpenClaw</a></p>
+    <p style="margin-top:6px; font-size:0.8rem;">Adventure Time themed agent benchmarks for local LLMs</p>
   </div>
 </footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        // Animate score rings
+        var ring = entry.target.querySelector('.ring-fill');
+        if (ring && ring.dataset.offset) {
+          ring.style.strokeDashoffset = ring.dataset.offset;
+        }
+        // Animate progress bars
+        var fills = entry.target.querySelectorAll('.fill[data-width]');
+        fills.forEach(function(f) { f.style.width = f.dataset.width; });
+      }
+    });
+  }, { threshold: 0.15 });
+
+  document.querySelectorAll('.reveal').forEach(function(el) {
+    observer.observe(el);
+  });
+});
+</script>
+
 </body>
 </html>
