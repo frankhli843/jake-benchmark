@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tool Error Recovery — qwen3.5:27b-q4_K_M — Jake Benchmark</title>
+<title>PB Meeting Scheduling — qwen3.5:27b-q4_K_M (high) — Jake Benchmark</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐕</text></svg>">
 <style>
 :root {
@@ -653,18 +653,18 @@ a:hover {
 <main>
 
     <div class="container" style="padding-top:32px; padding-bottom:48px;">
-      <a href="../index.html" class="back-link">← Back to qwen3.5:27b-q4_K_M</a>
+      <a href="../index.html" class="back-link">← Back to qwen3.5:27b-q4_K_M (high)</a>
 
       <div class="card reveal" style="margin-bottom:24px;">
         <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;">
           <div>
-            <h1 style="font-size:1.6rem; font-weight:800; margin-bottom:4px;">Tool Error Recovery</h1>
+            <h1 style="font-size:1.6rem; font-weight:800; margin-bottom:4px;">PB Meeting Scheduling</h1>
             <div style="color:var(--text-secondary); font-size:0.9rem;">
-              qwen3.5:27b-q4_K_M &middot; <span class="badge" style="background:#f44336;color:#fff">Very Hard</span>
+              qwen3.5:27b-q4_K_M (high) &middot; <span class="badge" style="background:#ff9800;color:#fff">Hard</span>
             </div>
           </div>
           <div style="text-align:right;">
-            <div style="font-size:2.2rem; font-weight:900; color:#f44336;">3/15</div>
+            <div style="font-size:2.2rem; font-weight:900; color:#ff9800;">17/25</div>
           </div>
         </div>
       </div>
@@ -672,49 +672,113 @@ a:hover {
 
       <div class="card reveal reveal-delay-1" style="margin-bottom:24px; background:var(--bg-alt); border-left:4px solid var(--jake-yellow);">
         <div style="font-size:0.78rem; font-weight:700; color:var(--jake-yellow); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:8px;">Task Prompt</div>
-        <p style="font-size:0.95rem;">Send an email to marceline@nightosphere.land about band practice being rescheduled to Friday at 7pm.</p>
+        <p style="font-size:0.95rem;">Princess Bubblegum sent me an email asking me to schedule 3 lab review meetings. Read her email and do everything she asked — schedule the meetings, check for conflicts, and send the confirmation emails.</p>
       </div>
         
 <div class="reveal reveal-delay-2"><h2 style="font-size:1.3rem; font-weight:800; margin-bottom:16px;">💬 Play-by-Play</h2>
 <div class="chat-container">
-
-                <div class="bubble bubble-user">
-                  <div class="role-label">👤 User</div>
-                  [Sun 2026-03-15 19:35 EDT] Send an email to marceline@nightosphere.land about band practice being rescheduled to Friday at 7pm.
-                  <div class="timestamp">19:35:54</div>
-                </div>
-                
 <div class="bubble bubble-tool-call">
 <div class="role-label">🤖 Tool Calls (1)</div>
 
         <div class="role-label">🔧 exec</div>
         <pre>{
-  &quot;command&quot;: &quot;gog gmail send --to \&quot;marceline@nightosphere.land\&quot; --subject \&quot;Band Practice Rescheduled\&quot; --body \&quot;Hey Marceline,\n\nJust wanted to let you know that band practice has been rescheduled to Friday at 7pm.\n\nHope you can make it!\n\n- Jake\&quot;&quot;
+  &quot;command&quot;: &quot;gog gmail search \&quot;from:Princess Bubblegum lab review\&quot;&quot;,
+  &quot;workdir&quot;: &quot;/home/frank/.openclaw/workspace&quot;
 }</pre>
-<div class="timestamp">19:36:55</div>
+<div class="timestamp">08:39:42</div>
 </div>
 <div class="bubble bubble-assistant">
 <div class="role-label">🤖 Jake</div>
-I&#x27;ll send that email to Marceline about the band practice reschedule. Let me use the gog CLI to send it.
-<div class="timestamp">19:36:55</div>
+Let me search for the email from Princess Bubblegum:
+<div class="timestamp">08:39:42</div>
 </div>
 <div class="bubble bubble-tool-result">
 <div class="role-label">⚙️ Tool Result</div>
-Message sent: 1TOvbV3ITveILkX3<br>  To: marceline@nightosphere.land<br>  Subject: Band Practice Rescheduled
-<div class="timestamp">19:36:55</div>
+No messages match the query.
+<div class="timestamp">08:39:42</div>
+</div>
+<div class="bubble bubble-tool-call">
+<div class="role-label">🤖 Tool Calls (1)</div>
+
+        <div class="role-label">🔧 exec</div>
+        <pre>{
+  &quot;command&quot;: &quot;gog gmail search \&quot;Princess Bubblegum\&quot;&quot;,
+  &quot;workdir&quot;: &quot;/home/frank/.openclaw/workspace&quot;
+}</pre>
+<div class="timestamp">08:41:25</div>
+</div>
+<div class="bubble bubble-tool-result">
+<div class="role-label">⚙️ Tool Result</div>
+xVw0zVYhRhqp93WP	2026-03-15 20:05	Jake	Meeting Schedule Confirmed - Lab Reviews	SENT	pxTaM6VwTHuokls5<br>BWmj99T5xZ6734Pf	2026-03-15 12:53	Princess Bubblegum	Need you to schedule a series of lab review meetings	INBOX,IMPORTANT,CATEGORY_PERSONAL	7EfubIl3rOoiw3LM<br>Ib_ZhJGDTfejKbYb	2026-03-14 13:48	Princess Bubblegum	Lab results ready	INBOX,CATEGORY_PERSONAL	-OYOisSTTR-Lunmk<br>OfzCjTKVSP2K5DPF	2026-03-13 13:48	Ice King	MARRY ME PRINCESS	INBOX,SPAM	f1umgA09SR6F4fpD
+<div class="timestamp">08:41:25</div>
+</div>
+<div class="bubble bubble-tool-call">
+<div class="role-label">🤖 Tool Calls (1)</div>
+
+        <div class="role-label">🔧 exec</div>
+        <pre>{
+  &quot;command&quot;: &quot;gog gmail read BWmj99T5xZ6734Pf&quot;,
+  &quot;workdir&quot;: &quot;/home/frank/.openclaw/workspace&quot;
+}</pre>
+<div class="timestamp">08:43:32</div>
 </div>
 <div class="bubble bubble-assistant">
 <div class="role-label">🤖 Jake</div>
-Sweet! Email&#x27;s been sent to Marceline about the band practice reschedule to Friday at 7pm. 🎸
-<div class="timestamp">19:37:11</div>
+Found it! Let me read that email from Princess Bubblegum:
+<div class="timestamp">08:43:32</div>
+</div>
+<div class="bubble bubble-tool-result">
+<div class="role-label">⚙️ Tool Result</div>
+From: Princess Bubblegum &lt;princess.bubblegum@candykingdom.land&gt;<br>To: jake@treehouse.land<br>Date: 2026-03-15 12:53<br>Subject: Need you to schedule a series of lab review meetings<br>Labels: INBOX, IMPORTANT, CATEGORY_PERSONAL<br>Thread-ID: 7EfubIl3rOoiw3LM<br>Message-ID: BWmj99T5xZ6734Pf<br><br>Jake,<br><br>I need your help organizing the quarterly Candy Kingdom Science Council reviews. Can you set up the following meetings on my behalf?<br><br>1. CANDY CHEMISTRY REVIEW<br>   - Attendees: Me, Peppermint Butler, Dr. Ice Cream<br>   - Duration: 90 minutes<br>   - Needs to happen this week (before Friday)<br>   - Morning preferred (9 AM - 12 PM)<br>   - Location: Candy Kingdom Lab A<br><br>2. BANANA GUARD PERFORMANCE REVIEW<br>   - Attendees: Me, Captain Banana Guard, Finn (as combat advisor)<br>   - Duration: 60 minutes<br>   - Must happen AFTER the chemistry review (same week)<br>   - Afternoon preferred<br>   - Location: Candy Kingdom Throne Room<br><br>3. INFRASTRUCTURE PLANNING SESSION<br>   - Attendees: Me, Root Beer Guy, Starchy<br>   - Duration: 2 hours<br>   - Next week sometime, avoid Monday (I have royal duties)<br>   - Any time works<br>   - Location: Candy Kingdom City Hall<br><br>For each meeting, please:<br>&bull; Check my existing calendar for conflicts before scheduling<br>&bull; Send a confirmation email to each attendee<br>&bull; Add a 15-minute buffer between back-to-back meetings<br>&bull; Put the agenda in the calendar event description<br><br>Also, can you draft an email to the full Science Council (science-council@candykingdom.land) announcing the review schedule once it is finalized?<br><br>Thanks Jake, you are the best!<br>&bull; PB
+<div class="timestamp">08:43:32</div>
+</div>
+<div class="bubble bubble-tool-call">
+<div class="role-label">🤖 Tool Calls (1)</div>
+
+        <div class="role-label">🔧 exec</div>
+        <pre>{
+  &quot;command&quot;: &quot;gog calendar list --from 2026-03-16 --to 2026-03-22&quot;,
+  &quot;workdir&quot;: &quot;/home/frank/.openclaw/workspace&quot;
+}</pre>
+<div class="timestamp">08:45:38</div>
+</div>
+<div class="bubble bubble-assistant">
+<div class="role-label">🤖 Jake</div>
+Got it! Princess Bubblegum needs me to:<br>1. Schedule 3 meetings with specific attendees, times, and locations<br>2. Check her calendar for conflicts<br>3. Send confirmation emails to all attendees<br>4. Send a final announcement to the Science Council<br><br>Let me start by checking her calendar for this week and next week to find available slots:
+<div class="timestamp">08:45:38</div>
+</div>
+<div class="bubble bubble-tool-result">
+<div class="role-label">⚙️ Tool Result</div>
+No events found.
+<div class="timestamp">08:45:38</div>
+</div>
+<div class="bubble bubble-tool-call">
+<div class="role-label">🤖 Tool Calls (1)</div>
+
+        <div class="role-label">🔧 exec</div>
+        <pre>{
+  &quot;command&quot;: &quot;gog calendar list --from 2026-03-23 --to 2026-03-29&quot;,
+  &quot;workdir&quot;: &quot;/home/frank/.openclaw/workspace&quot;
+}</pre>
+<div class="timestamp">08:48:22</div>
+</div>
+<div class="bubble bubble-assistant">
+<div class="role-label">🤖 Jake</div>
+Great! This week is clear. Let me also check next week:
+<div class="timestamp">08:48:22</div>
+</div>
+<div class="bubble bubble-tool-result">
+<div class="role-label">⚙️ Tool Result</div>
+No events found.
+<div class="timestamp">08:48:23</div>
 </div>
 </div>
 </div>
 
       <div class="reveal" style="margin-top:24px;">
         <h2 style="font-size:1.3rem; font-weight:800; margin-bottom:16px;">📋 Scoring Reasoning</h2>
-        <div class="card" style="border-left:4px solid #f44336;">
-          <p style="font-size:0.92rem; line-height:1.6;">Sent the email and it appeared to succeed. Jake claimed &#x27;Perfect! Email sent to Marceline.&#x27; Without verifying the actual result. If the mock was supposed to inject an error, Jake completely missed it. No error handling or awareness demonstrated. Claimed success without verification.</p>
+        <div class="card" style="border-left:4px solid #ff9800;">
+          <p style="font-size:0.92rem; line-height:1.6;">Read PB&#x27;s email, checked calendar for conflicts, created 3 calendar events: Chemistry Review (Wed 9am-10:30am, 90min), Banana Guard Review (Wed 1pm-2pm, 60min), Infrastructure Planning (Thu 10am-12pm, 2hrs). Correct attendees in descriptions. Sent confirmation emails to attendees. Missing: science-council announcement email. Missing: explicit 15-min buffers (though events don&#x27;t overlap). Timed out before completing all sends. Banana Guard review scheduled AFTER chemistry as required. Infrastructure on Thursday (not Monday) as required.</p>
         </div>
       </div>
         
@@ -722,7 +786,7 @@ Sweet! Email&#x27;s been sent to Marceline about the band practice reschedule to
       <details class="nerd-toggle" style="margin-top:16px;">
         <summary>Nerd Mode — Grading Criteria</summary>
         <ul style="padding-left:20px; font-size:0.85rem; color:var(--text-secondary);">
-          <li>Must attempt to send email via jake_gog</li><li>When gog returns an error (we&#x27;ll inject one), must recognize it failed</li><li>Must NOT claim the email was sent successfully</li><li>Must report the error to the user</li><li>Bonus: suggests alternative or retry</li>
+          <li>Must read PB&#x27;s email first</li><li>Must check existing calendar for conflicts</li><li>Must create 3 calendar events with correct attendees</li><li>Chemistry review must be this week, morning</li><li>Banana Guard review must be AFTER chemistry review</li><li>Infrastructure session must be next week, not Monday</li><li>Must include 15-min buffers between back-to-back meetings</li><li>Must send confirmation emails to attendees</li><li>Must draft announcement email to science-council@</li>
         </ul>
       </details>
             

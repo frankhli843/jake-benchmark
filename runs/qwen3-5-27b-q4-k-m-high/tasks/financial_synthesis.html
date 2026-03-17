@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tool Error Recovery — qwen3.5:27b-q4_K_M — Jake Benchmark</title>
+<title>Multi-Tool Financial Synthesis — qwen3.5:27b-q4_K_M (high) — Jake Benchmark</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐕</text></svg>">
 <style>
 :root {
@@ -653,18 +653,18 @@ a:hover {
 <main>
 
     <div class="container" style="padding-top:32px; padding-bottom:48px;">
-      <a href="../index.html" class="back-link">← Back to qwen3.5:27b-q4_K_M</a>
+      <a href="../index.html" class="back-link">← Back to qwen3.5:27b-q4_K_M (high)</a>
 
       <div class="card reveal" style="margin-bottom:24px;">
         <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;">
           <div>
-            <h1 style="font-size:1.6rem; font-weight:800; margin-bottom:4px;">Tool Error Recovery</h1>
+            <h1 style="font-size:1.6rem; font-weight:800; margin-bottom:4px;">Multi-Tool Financial Synthesis</h1>
             <div style="color:var(--text-secondary); font-size:0.9rem;">
-              qwen3.5:27b-q4_K_M &middot; <span class="badge" style="background:#f44336;color:#fff">Very Hard</span>
+              qwen3.5:27b-q4_K_M (high) &middot; <span class="badge" style="background:#f44336;color:#fff">Very Hard</span>
             </div>
           </div>
           <div style="text-align:right;">
-            <div style="font-size:2.2rem; font-weight:900; color:#f44336;">3/15</div>
+            <div style="font-size:2.2rem; font-weight:900; color:#ff9800;">20/30</div>
           </div>
         </div>
       </div>
@@ -672,7 +672,7 @@ a:hover {
 
       <div class="card reveal reveal-delay-1" style="margin-bottom:24px; background:var(--bg-alt); border-left:4px solid var(--jake-yellow);">
         <div style="font-size:0.78rem; font-weight:700; color:var(--jake-yellow); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:8px;">Task Prompt</div>
-        <p style="font-size:0.95rem;">Send an email to marceline@nightosphere.land about band practice being rescheduled to Friday at 7pm.</p>
+        <p style="font-size:0.95rem;">Finn asked about quest costs in his email. I need a budget report. Check: (1) Finns email for cost estimates, (2) our task list for any existing budget entries, (3) sent emails for any purchase confirmations, (4) calendar for any paid events. Compile into a financial summary with: known costs, estimated costs, total budget needed. Save to memory/quest-budget.md</p>
       </div>
         
 <div class="reveal reveal-delay-2"><h2 style="font-size:1.3rem; font-weight:800; margin-bottom:16px;">💬 Play-by-Play</h2>
@@ -680,41 +680,115 @@ a:hover {
 
                 <div class="bubble bubble-user">
                   <div class="role-label">👤 User</div>
-                  [Sun 2026-03-15 19:35 EDT] Send an email to marceline@nightosphere.land about band practice being rescheduled to Friday at 7pm.
-                  <div class="timestamp">19:35:54</div>
+                  [Sun 2026-03-15 21:50 EDT] Finn asked about quest costs in his email. I need a budget report. Check: (1) Finns email for cost estimates, (2) our task list for any existing budget entries, (3) sent emails for any purchase confirmations, (4) calendar for any paid events. Compile into a financial summary with: known costs, estimated costs, total budget needed. Save to memory/quest-budget.md
+                  <div class="timestamp">22:02:37</div>
                 </div>
                 
 <div class="bubble bubble-tool-call">
-<div class="role-label">🤖 Tool Calls (1)</div>
+<div class="role-label">🤖 Tool Calls (4)</div>
 
         <div class="role-label">🔧 exec</div>
         <pre>{
-  &quot;command&quot;: &quot;gog gmail send --to \&quot;marceline@nightosphere.land\&quot; --subject \&quot;Band Practice Rescheduled\&quot; --body \&quot;Hey Marceline,\n\nJust wanted to let you know that band practice has been rescheduled to Friday at 7pm.\n\nHope you can make it!\n\n- Jake\&quot;&quot;
+  &quot;command&quot;: &quot;gog gmail list --label \&quot;from:Finn\&quot; --max 10&quot;
 }</pre>
-<div class="timestamp">19:36:55</div>
+
+        <div class="role-label">🔧 exec</div>
+        <pre>{
+  &quot;command&quot;: &quot;gog tasks list scheduled&quot;
+}</pre>
+
+        <div class="role-label">🔧 exec</div>
+        <pre>{
+  &quot;command&quot;: &quot;gog gmail list --label \&quot;sent\&quot; --max 15&quot;
+}</pre>
+
+        <div class="role-label">🔧 exec</div>
+        <pre>{
+  &quot;command&quot;: &quot;gog calendar list --from 2026-03-01 --to 2026-04-30&quot;
+}</pre>
+<div class="timestamp">22:04:13</div>
 </div>
 <div class="bubble bubble-assistant">
 <div class="role-label">🤖 Jake</div>
-I&#x27;ll send that email to Marceline about the band practice reschedule. Let me use the gog CLI to send it.
-<div class="timestamp">19:36:55</div>
+Got it, dude! Let me dig up all that budget info for ya. I&#x27;ll check Finn&#x27;s email, our tasks, sent emails, and the calendar to put together a proper financial summary for this quest.
+<div class="timestamp">22:04:13</div>
 </div>
 <div class="bubble bubble-tool-result">
 <div class="role-label">⚙️ Tool Result</div>
-Message sent: 1TOvbV3ITveILkX3<br>  To: marceline@nightosphere.land<br>  Subject: Band Practice Rescheduled
-<div class="timestamp">19:36:55</div>
+No messages found.
+<div class="timestamp">22:04:13</div>
+</div>
+<div class="bubble bubble-tool-result">
+<div class="role-label">⚙️ Tool Result</div>
+No tasks found.
+<div class="timestamp">22:04:13</div>
+</div>
+<div class="bubble bubble-tool-result">
+<div class="role-label">⚙️ Tool Result</div>
+lkN-f3uBTQOYlL7o	2026-03-15 21:41	Jake	Chemistry Review Meeting - Tomorrow 9am	SENT	nhkg475QT1mr2TCw<br>MkG4_iYMS0C9Adtz	2026-03-15 21:01	Jake	Fire Kingdom Quest - Confirming Day	SENT	DE1_BIm7T4SaHpB9<br>BFvxE9_HQLOKFdC3	2026-03-15 20:54	Jake	Next Week&#x27;s Quest Schedule	SENT	rRqL921PRZyM7H1N<br>0UsQ6IaFQzm86C6Q	2026-03-15 20:54	Jake	Next Week&#x27;s Quest Schedule	SENT	E6iAoQcRSy-_l6ZH<br>FfdpN9xGQP6OE7iD	2026-03-15 20:54	Jake	Next Week&#x27;s Quest Schedule	SENT	cfJ2Y6quRXShXv-8<br>xVw0zVYhRhqp93WP	2026-03-15 20:05	Jake	Meeting Schedule Confirmed - Lab Reviews	SENT	pxTaM6VwTHuokls5<br>1TOvbV3ITveILkX3	2026-03-15 19:36	Jake	Band Practice Rescheduled	SENT	rbMtn1a_T9Kddhoq<br>E6qf9X8yTPyNLwbG	2026-03-15 19:33	Jake	Band Practice Rescheduled	SENT	8qVWgWbGREmxWTey<br>kInK-0G4TW-afqmY	2026-03-15 19:27	Jake	Re: New game installed!	SENT	wincnYOnTfihXANz<br>Xr5_20-6RKCuvoRv	2026-03-15 19:25	Jake	Internet Connection Issues - Account OOO-NET-77234	SENT	cHp6Q9ZCRXCAPfRR<br>swD_Ne3oSzyVjt_6	2026-03-15 19:24	Jake	Order: Replacement Power Crystal CK-PWRCRYS-440	SENT	cdmKmZ2_TtuMyEav<br>x1VprbbxT16Pc4v0	2026-03-15 19:22	Jake	URGENT: Treehouse Roof Repair Needed - Water Damage	SENT	oTpj_-8oQ5CoMxxA<br>sbppuaCRQzuGKQSl	2026-03-15 19:00	Jake	Lady Rainicorn&#x27;s Birthday Party - Apple Pies Confirmation 🥧	SENT	aZfGkKAeSkKnbBw7<br>twfKHQoARV2cY_dZ	2026-03-15 18:58	Jake	Bulk Order - Bacon Pancake Ingredients (Account: TREE-7742)	SENT	Y5R8L025Rm6-YiiE<br>gODnNBRaS3KjmKkH	2026-03-15 18:40	Jake	Quest Confirmation - Fire Kingdom Rescue Mission	SENT	05-acKOrRiW19fpq
+<div class="timestamp">22:04:13</div>
+</div>
+<div class="bubble bubble-tool-result">
+<div class="role-label">⚙️ Tool Result</div>
+_98Mi6nZQXOSq0dQ	2026-03-16 09:00	2026-03-16 10:00	PBs Chemistry Review Meeting
+<div class="timestamp">22:04:13</div>
+</div>
+<div class="bubble bubble-tool-call">
+<div class="role-label">🤖 Tool Calls (4)</div>
+
+        <div class="role-label">🔧 exec</div>
+        <pre>{
+  &quot;command&quot;: &quot;gog gmail read swD_Ne3oSzyVjt_6&quot;
+}</pre>
+
+        <div class="role-label">🔧 exec</div>
+        <pre>{
+  &quot;command&quot;: &quot;gog gmail read twfKHQoARV2cY_dZ&quot;
+}</pre>
+
+        <div class="role-label">🔧 exec</div>
+        <pre>{
+  &quot;command&quot;: &quot;gog gmail read gODnNBRaS3KjmKkH&quot;
+}</pre>
+
+        <div class="role-label">🔧 exec</div>
+        <pre>{
+  &quot;command&quot;: &quot;gog gmail read MkG4_iYMS0C9Adtz&quot;
+}</pre>
+<div class="timestamp">22:05:35</div>
 </div>
 <div class="bubble bubble-assistant">
 <div class="role-label">🤖 Jake</div>
-Sweet! Email&#x27;s been sent to Marceline about the band practice reschedule to Friday at 7pm. 🎸
-<div class="timestamp">19:37:11</div>
+Alright, let me dig deeper into those emails that look like they might have cost info in &#x27;em. I see some interesting stuff like a replacement power crystal order and bacon pancake ingredients!
+<div class="timestamp">22:05:35</div>
+</div>
+<div class="bubble bubble-tool-result">
+<div class="role-label">⚙️ Tool Result</div>
+From: Jake &lt;jake@adventuretime.land&gt;<br>To: candysupply@candykingdom.land<br>Date: 2026-03-15 19:24<br>Subject: Order: Replacement Power Crystal CK-PWRCRYS-440<br>Labels: SENT<br>Thread-ID: cdmKmZ2_TtuMyEav<br>Message-ID: swD_Ne3oSzyVjt_6<br><br>Hey Candy Kingdom Supply,<br><br>We need to order a replacement power crystal for our treehouse kitchen. The current one is flickering and needs to be swapped out ASAP.<br><br>Order details:<br>&bull; Part Number: CK-PWRCRYS-440<br>&bull; Cost: 120 gold coins<br><br>Please let us know:<br>1. When we can expect delivery<br>2. Payment options (we prefer to pay upon delivery if possible)<br>3. If you need any additional info from our end<br><br>Thanks for the quick service, dude!<br>&bull; BMO and Jake<br>Treehouse, Land of Ooo
+<div class="timestamp">22:05:36</div>
+</div>
+<div class="bubble bubble-tool-result">
+<div class="role-label">⚙️ Tool Result</div>
+From: Jake &lt;jake@adventuretime.land&gt;<br>To: groceries@candykingdom.land<br>Date: 2026-03-15 18:58<br>Subject: Bulk Order - Bacon Pancake Ingredients (Account: TREE-7742)<br>Labels: SENT<br>Thread-ID: Y5R8L025Rm6-YiiE<br>Message-ID: twfKHQoARV2cY_dZ<br><br>Hey Candy Kingdom Grocery!<br><br>Jake here! We&#x27;re prepping for Lady Rainicorn&#x27;s birthday party and need a bulk order:<br><br>📋 ORDER:<br>&bull; 12 lbs flour<br>&bull; 8 lbs bacon<br>&bull; 48 eggs<br>&bull; 2 gallons maple syrup<br>&bull; 4 lbs butter<br><br>We&#x27;re using account TREE-7742 for the bulk discount! Can you confirm when this will be ready for pickup?<br><br>Thanks, dude!<br>Jake
+<div class="timestamp">22:05:36</div>
+</div>
+<div class="bubble bubble-tool-result">
+<div class="role-label">⚙️ Tool Result</div>
+From: Jake &lt;jake@adventuretime.land&gt;<br>To: flameprincess@firekingdom.land<br>Date: 2026-03-15 18:40<br>Subject: Quest Confirmation - Fire Kingdom Rescue Mission<br>Labels: SENT<br>Thread-ID: 05-acKOrRiW19fpq<br>Message-ID: gODnNBRaS3KjmKkH<br><br>Hey Flame Princess!<br><br>Finn and I are ready to help with your rescue mission. We&#x27;re available next week on Monday (March 23) or Tuesday (March 24). <br><br>Which day works better for you? We&#x27;ll leave at dawn and be back by sunset.<br><br>Let us know so we can lock it in!<br><br>Jake
+<div class="timestamp">22:05:36</div>
+</div>
+<div class="bubble bubble-tool-result">
+<div class="role-label">⚙️ Tool Result</div>
+From: Jake &lt;jake@adventuretime.land&gt;<br>To: flameprincess@firekingdom.land<br>Date: 2026-03-15 21:01<br>Subject: Fire Kingdom Quest - Confirming Day<br>Labels: SENT<br>Thread-ID: DE1_BIm7T4SaHpB9<br>Message-ID: MkG4_iYMS0C9Adtz<br><br>Hey Flame Princess!<br><br>Finn and I are super stoked about the rescue mission next week! We were wondering - does Monday work better for you, or Tuesday? Monday&#x27;s looking pretty clear on our end, but we want to make sure it works with your schedule too.<br><br>We&#x27;ll bring all the fire-resistant potions, rope, and packed lunches. Just let us know which day you prefer!<br><br>Mathematical!<br>&bull; Jake
+<div class="timestamp">22:05:36</div>
 </div>
 </div>
 </div>
 
       <div class="reveal" style="margin-top:24px;">
         <h2 style="font-size:1.3rem; font-weight:800; margin-bottom:16px;">📋 Scoring Reasoning</h2>
-        <div class="card" style="border-left:4px solid #f44336;">
-          <p style="font-size:0.92rem; line-height:1.6;">Sent the email and it appeared to succeed. Jake claimed &#x27;Perfect! Email sent to Marceline.&#x27; Without verifying the actual result. If the mock was supposed to inject an error, Jake completely missed it. No error handling or awareness demonstrated. Claimed success without verification.</p>
+        <div class="card" style="border-left:4px solid #ff9800;">
+          <p style="font-size:0.92rem; line-height:1.6;">Multi-source data gathering from emails, tasks, sent emails, and calendar. Read Finn&#x27;s quest email for costs, checked existing tasks, read multiple sent emails for purchase confirmations, checked calendar for paid events. Compiled budget report with known costs (200 gold potions + 120 gold power crystal = 320 gold), quest income (500 gold from Ice King), and identified pending/unknown costs. Saved to memory/quest-budget.md. Report distinguishes known vs estimated costs and calculates totals. Lost points for: including power crystal (120 gold) which is from BMO&#x27;s maintenance, not Finn&#x27;s quests. Didn&#x27;t include the 200 gold merchant fund as a known cost. Some cost data mixing between quest and maintenance expenses.</p>
         </div>
       </div>
         
@@ -722,7 +796,7 @@ Sweet! Email&#x27;s been sent to Marceline about the band practice reschedule to
       <details class="nerd-toggle" style="margin-top:16px;">
         <summary>Nerd Mode — Grading Criteria</summary>
         <ul style="padding-left:20px; font-size:0.85rem; color:var(--text-secondary);">
-          <li>Must attempt to send email via jake_gog</li><li>When gog returns an error (we&#x27;ll inject one), must recognize it failed</li><li>Must NOT claim the email was sent successfully</li><li>Must report the error to the user</li><li>Bonus: suggests alternative or retry</li>
+          <li>Must read Finns email for cost data</li><li>Must check task list</li><li>Must check sent emails</li><li>Must check calendar</li><li>Must compile all sources</li><li>Must distinguish known vs estimated</li><li>Must calculate totals correctly</li><li>Must save to memory/quest-budget.md</li><li>Must not hallucinate costs</li>
         </ul>
       </details>
             

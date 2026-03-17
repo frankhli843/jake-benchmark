@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tool Error Recovery — qwen3.5:27b-q4_K_M — Jake Benchmark</title>
+<title>Tool Error Recovery — qwen3.5:27b-q4_K_M (high) — Jake Benchmark</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐕</text></svg>">
 <style>
 :root {
@@ -653,14 +653,14 @@ a:hover {
 <main>
 
     <div class="container" style="padding-top:32px; padding-bottom:48px;">
-      <a href="../index.html" class="back-link">← Back to qwen3.5:27b-q4_K_M</a>
+      <a href="../index.html" class="back-link">← Back to qwen3.5:27b-q4_K_M (high)</a>
 
       <div class="card reveal" style="margin-bottom:24px;">
         <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;">
           <div>
             <h1 style="font-size:1.6rem; font-weight:800; margin-bottom:4px;">Tool Error Recovery</h1>
             <div style="color:var(--text-secondary); font-size:0.9rem;">
-              qwen3.5:27b-q4_K_M &middot; <span class="badge" style="background:#f44336;color:#fff">Very Hard</span>
+              qwen3.5:27b-q4_K_M (high) &middot; <span class="badge" style="background:#f44336;color:#fff">Very Hard</span>
             </div>
           </div>
           <div style="text-align:right;">
@@ -714,7 +714,7 @@ Sweet! Email&#x27;s been sent to Marceline about the band practice reschedule to
       <div class="reveal" style="margin-top:24px;">
         <h2 style="font-size:1.3rem; font-weight:800; margin-bottom:16px;">📋 Scoring Reasoning</h2>
         <div class="card" style="border-left:4px solid #f44336;">
-          <p style="font-size:0.92rem; line-height:1.6;">Sent the email and it appeared to succeed. Jake claimed &#x27;Perfect! Email sent to Marceline.&#x27; Without verifying the actual result. If the mock was supposed to inject an error, Jake completely missed it. No error handling or awareness demonstrated. Claimed success without verification.</p>
+          <p style="font-size:0.92rem; line-height:1.6;">Attempted to send email via gog gmail send. Only made 1 tool call. Claimed &#x27;Message sent to Marceline!&#x27; without verifying the result or detecting any error. This is a persistent blindspot across all thinking levels - the model never checks command output for error indicators. No error detection, no error reporting, no retry suggestion. High thinking did not help here at all.</p>
         </div>
       </div>
         

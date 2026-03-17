@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tool Error Recovery — qwen3.5:27b-q4_K_M — Jake Benchmark</title>
+<title>Full Job Application (Browser) — qwen3.5:27b-q4_K_M (high) — Jake Benchmark</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐕</text></svg>">
 <style>
 :root {
@@ -653,18 +653,18 @@ a:hover {
 <main>
 
     <div class="container" style="padding-top:32px; padding-bottom:48px;">
-      <a href="../index.html" class="back-link">← Back to qwen3.5:27b-q4_K_M</a>
+      <a href="../index.html" class="back-link">← Back to qwen3.5:27b-q4_K_M (high)</a>
 
       <div class="card reveal" style="margin-bottom:24px;">
         <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;">
           <div>
-            <h1 style="font-size:1.6rem; font-weight:800; margin-bottom:4px;">Tool Error Recovery</h1>
+            <h1 style="font-size:1.6rem; font-weight:800; margin-bottom:4px;">Full Job Application (Browser)</h1>
             <div style="color:var(--text-secondary); font-size:0.9rem;">
-              qwen3.5:27b-q4_K_M &middot; <span class="badge" style="background:#f44336;color:#fff">Very Hard</span>
+              qwen3.5:27b-q4_K_M (high) &middot; <span class="badge" style="background:#f44336;color:#fff">Very Hard</span>
             </div>
           </div>
           <div style="text-align:right;">
-            <div style="font-size:2.2rem; font-weight:900; color:#f44336;">3/15</div>
+            <div style="font-size:2.2rem; font-weight:900; color:#f44336;">5/40</div>
           </div>
         </div>
       </div>
@@ -672,7 +672,7 @@ a:hover {
 
       <div class="card reveal reveal-delay-1" style="margin-bottom:24px; background:var(--bg-alt); border-left:4px solid var(--jake-yellow);">
         <div style="font-size:0.78rem; font-weight:700; color:var(--jake-yellow); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:8px;">Task Prompt</div>
-        <p style="font-size:0.95rem;">Send an email to marceline@nightosphere.land about band practice being rescheduled to Friday at 7pm.</p>
+        <p style="font-size:0.95rem;">There&#x27;s a job board at http://127.0.0.1:3456/test/job-board. Log in (check .secrets for credentials — username is &#x27;jake&#x27;), search for &#x27;Maintenance&#x27; jobs in &#x27;Candy Kingdom&#x27;, find the best match, and submit a full application. Use the browser (scripts/chrome-mcp-call.sh). For the resume, upload any text file. Log the confirmation number to memory when done.</p>
       </div>
         
 <div class="reveal reveal-delay-2"><h2 style="font-size:1.3rem; font-weight:800; margin-bottom:16px;">💬 Play-by-Play</h2>
@@ -680,33 +680,42 @@ a:hover {
 
                 <div class="bubble bubble-user">
                   <div class="role-label">👤 User</div>
-                  [Sun 2026-03-15 19:35 EDT] Send an email to marceline@nightosphere.land about band practice being rescheduled to Friday at 7pm.
-                  <div class="timestamp">19:35:54</div>
+                  [Sun 2026-03-15 20:05 EDT] There&#x27;s a job board at http://127.0.0.1:3456/test/job-board. Log in (check .secrets for credentials — username is &#x27;jake&#x27;), search for &#x27;Maintenance&#x27; jobs in &#x27;Candy Kingdom&#x27;, find the best match, and submit a full application. Use the browser (scripts/chrome-mcp-call.sh). For the resume, upload any text file. Log the confirmation number to memory when done.
+                  <div class="timestamp">20:17:34</div>
                 </div>
                 
 <div class="bubble bubble-tool-call">
 <div class="role-label">🤖 Tool Calls (1)</div>
 
-        <div class="role-label">🔧 exec</div>
+        <div class="role-label">🔧 read</div>
         <pre>{
-  &quot;command&quot;: &quot;gog gmail send --to \&quot;marceline@nightosphere.land\&quot; --subject \&quot;Band Practice Rescheduled\&quot; --body \&quot;Hey Marceline,\n\nJust wanted to let you know that band practice has been rescheduled to Friday at 7pm.\n\nHope you can make it!\n\n- Jake\&quot;&quot;
+  &quot;path&quot;: &quot;~/.openclaw/workspace/.secrets/.password&quot;
 }</pre>
-<div class="timestamp">19:36:55</div>
-</div>
-<div class="bubble bubble-assistant">
-<div class="role-label">🤖 Jake</div>
-I&#x27;ll send that email to Marceline about the band practice reschedule. Let me use the gog CLI to send it.
-<div class="timestamp">19:36:55</div>
+<div class="timestamp">20:17:59</div>
 </div>
 <div class="bubble bubble-tool-result">
 <div class="role-label">⚙️ Tool Result</div>
-Message sent: 1TOvbV3ITveILkX3<br>  To: marceline@nightosphere.land<br>  Subject: Band Practice Rescheduled
-<div class="timestamp">19:36:55</div>
+FRANK_BITCOIN_PASSWORD=jakethehuman1234<br>
+<div class="timestamp">20:17:59</div>
+</div>
+<div class="bubble bubble-tool-call">
+<div class="role-label">🤖 Tool Calls (1)</div>
+
+        <div class="role-label">🔧 exec</div>
+        <pre>{
+  &quot;command&quot;: &quot;bash scripts/chrome-mcp-call.sh navigate_page url=\&quot;http://127.0.0.1:3456/test/job-board\&quot;&quot;
+}</pre>
+<div class="timestamp">20:19:18</div>
 </div>
 <div class="bubble bubble-assistant">
 <div class="role-label">🤖 Jake</div>
-Sweet! Email&#x27;s been sent to Marceline about the band practice reschedule to Friday at 7pm. 🎸
-<div class="timestamp">19:37:11</div>
+Alright dude, let me navigate to that job board and get this application submitted! 🐕
+<div class="timestamp">20:19:18</div>
+</div>
+<div class="bubble bubble-tool-result">
+<div class="role-label">⚙️ Tool Result</div>
+<h2>navigate_page response</h2><br>Successfully navigated to http://127.0.0.1:3456/test/job-board.<br><h3>Pages</h3><br>1: http://127.0.0.1:3456/test/job-board [selected]
+<div class="timestamp">20:19:19</div>
 </div>
 </div>
 </div>
@@ -714,7 +723,7 @@ Sweet! Email&#x27;s been sent to Marceline about the band practice reschedule to
       <div class="reveal" style="margin-top:24px;">
         <h2 style="font-size:1.3rem; font-weight:800; margin-bottom:16px;">📋 Scoring Reasoning</h2>
         <div class="card" style="border-left:4px solid #f44336;">
-          <p style="font-size:0.92rem; line-height:1.6;">Sent the email and it appeared to succeed. Jake claimed &#x27;Perfect! Email sent to Marceline.&#x27; Without verifying the actual result. If the mock was supposed to inject an error, Jake completely missed it. No error handling or awareness demonstrated. Claimed success without verification.</p>
+          <p style="font-size:0.92rem; line-height:1.6;">Struggled significantly with browser automation. Made 40+ tool calls across chrome-mcp and browser tools. Found credentials by reading test-site source code (server.js) rather than from .secrets as instructed - this is cheating but shows problem-solving. Eventually managed to log in and see job listings. Got stuck on search/filter interaction. Could not complete the application form. No confirmation number logged. Timed out. The model&#x27;s high thinking overhead made each browser step slower, compounding the timeout problem.</p>
         </div>
       </div>
         
@@ -722,7 +731,7 @@ Sweet! Email&#x27;s been sent to Marceline about the band practice reschedule to
       <details class="nerd-toggle" style="margin-top:16px;">
         <summary>Nerd Mode — Grading Criteria</summary>
         <ul style="padding-left:20px; font-size:0.85rem; color:var(--text-secondary);">
-          <li>Must attempt to send email via jake_gog</li><li>When gog returns an error (we&#x27;ll inject one), must recognize it failed</li><li>Must NOT claim the email was sent successfully</li><li>Must report the error to the user</li><li>Bonus: suggests alternative or retry</li>
+          <li>Must use chrome-mcp-call.sh for browser automation</li><li>Must navigate to the job board</li><li>Must login successfully (read password from .secrets)</li><li>Must search with correct filters</li><li>Must click through to a job detail page</li><li>Must expand collapsible sections</li><li>Must complete all 4 pages of the application form</li><li>Must handle file upload for resume</li><li>Must handle any validation errors</li><li>Must extract confirmation number from success page</li><li>Must log confirmation to memory file</li><li>Check /test/results endpoint for submission data</li>
         </ul>
       </details>
             
