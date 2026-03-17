@@ -179,6 +179,25 @@ body {
 }
 
 /* ─── Cards ─── */
+.md-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 16px 0;
+  font-size: 0.9rem;
+}
+.md-table th, .md-table td {
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  text-align: left;
+}
+.md-table th {
+  background: var(--bg-alt);
+  font-weight: 600;
+  color: var(--text-primary);
+}
+.md-table tr:hover {
+  background: var(--bg-alt);
+}
 .card {
   background: var(--bg-card);
   border: 1px solid var(--border);
@@ -1189,11 +1208,13 @@ a:hover {
 
 <h3>The Numbers</h3>
 
-<p>| Level | Score | Percentage | Tasks Completed | Tasks Timed Out |</p>
-<p>|-------|-------|-----------|-----------------|-----------------|</p>
-<p>| Off | 202/508 | 39.8% | 11/22 | 8 |</p>
-<p>| Low | 241/508 | 47.4% | 13/22 | 7 |</p>
-<p>| Medium | 250/508 | 49.2% | 14/22 | 7 |</p>
+<table class="md-table"><thead>
+<tr><th>Level</th><th>Score</th><th>Percentage</th><th>Tasks Completed</th><th>Tasks Timed Out</th></tr>
+</thead><tbody>
+<tr><td>Off</td><td>202/508</td><td>39.8%</td><td>11/22</td><td>8</td></tr>
+<tr><td>Low</td><td>241/508</td><td>47.4%</td><td>13/22</td><td>7</td></tr>
+<tr><td>Medium</td><td>250/508</td><td>49.2%</td><td>14/22</td><td>7</td></tr>
+</tbody></table>
 
 <h3>The Story</h3>
 
