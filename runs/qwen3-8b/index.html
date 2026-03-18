@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>qwen3:8b - Jake Benchmark</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐕</text></svg>">
+<style>
+:root{--blue:#1ea7fd;--yellow:#fcba03;--green:#4caf50;--red:#f44336;--orange:#ff9800;--bg:#fff;--bg-alt:#f8f9fa;--bg-card:#fff;--text:#1a1a2e;--text-secondary:#555770;--border:#e2e4e9;--shadow:0 1px 3px rgba(0,0,0,.08),0 1px 2px rgba(0,0,0,.06);--shadow-lg:0 4px 12px rgba(0,0,0,.1)}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;background:var(--bg-alt);color:var(--text);line-height:1.6}
+.container{max-width:1100px;margin:0 auto;padding:0 24px}
+.site-header{background:var(--bg);border-bottom:1px solid var(--border);padding:20px 0;position:sticky;top:0;z-index:100}
+.site-header .container{display:flex;align-items:center;gap:16px}
+.site-header h1{font-size:1.4rem;font-weight:700}
+.site-header h1 span{color:var(--blue)}
+.header-nav{margin-left:auto;display:flex;gap:16px}
+.header-nav a{color:var(--text-secondary);text-decoration:none;font-size:.9rem}
+.header-nav a:hover{color:var(--blue)}
+.card{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:24px;box-shadow:var(--shadow);margin-bottom:16px}
+.badge{display:inline-block;padding:2px 10px;border-radius:20px;font-size:.75rem;font-weight:600}
+.progress-bar{background:var(--bg-alt);border:1px solid var(--border);border-radius:8px;height:10px;overflow:hidden;width:100%}
+.progress-bar .fill{height:100%;border-radius:8px;transition:width .6s}
+.score-big{font-size:2.5rem;font-weight:800;line-height:1}
+.score-max{font-size:1rem;color:var(--text-secondary)}
+a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}
+.section{margin:32px 0}
+.section-title{font-size:1.3rem;font-weight:700;margin-bottom:16px;padding-bottom:8px;border-bottom:2px solid var(--border)}
+.back-link{display:inline-flex;align-items:center;gap:6px;color:var(--text-secondary);font-size:.9rem;margin-bottom:20px}
+.back-link:hover{color:var(--blue);text-decoration:none}
+table{width:100%;border-collapse:collapse;font-size:.9rem}
+th,td{padding:10px 14px;text-align:left;border-bottom:1px solid var(--border)}
+th{background:var(--bg-alt);font-weight:600;color:var(--text-secondary);font-size:.8rem;text-transform:uppercase;letter-spacing:.04em}
+.epic-fail{border-left:4px solid var(--red)}
+.epic-fail .actual-output{background:#fce4ec;border:1px solid #f8bbd0;border-radius:8px;padding:12px;margin:8px 0;font-family:monospace;font-size:.82rem;white-space:pre-wrap;color:#b71c1c}
+.grid-2{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px}
+.site-footer{text-align:center;padding:32px 0;color:var(--text-secondary);font-size:.8rem;border-top:1px solid var(--border);margin-top:48px}
+@media(max-width:768px){.grid-2{grid-template-columns:1fr}.container{padding:0 16px}.score-big{font-size:2rem}}
+</style>
+</head>
+<body>
+<header class="site-header">
+  <div class="container">
+    <h1>🐕 <span>Jake</span> Benchmark</h1>
+    <nav class="header-nav">
+      <a href="../../index.html">Home</a>
+      <a href="https://github.com/frankhli843/jake-benchmark" target="_blank">GitHub</a>
+    </nav>
+  </div>
+</header>
+<main class="container" style="padding-top:32px;padding-bottom:48px;">
+
+<a href="../../index.html" class="back-link">← Back to all models</a>
+
+<div style="display:flex;align-items:center;gap:24px;margin-bottom:32px;">
+  <div>
+    <h2 style="font-size:1.8rem;font-weight:800;">qwen3:8b</h2>
+    <p style="color:var(--text-secondary);">8B parameters · Small Model Category · 2 of 4 thinking levels tested (medium/high still running)</p>
+    <p style="color:var(--text-secondary);font-size:.85rem;margin-top:4px;">Tested 2026-03-18 · Runs on Ollama via Tailscale from Raspberry Pi 5</p>
+  </div>
+</div>
+
+<!-- Warning Banner -->
+<div class="card" style="border-left:4px solid var(--red);background:#fff5f5;">
+  <h3 style="color:var(--red);">⚠️ Not Viable for Agent Tasks</h3>
+  <p style="color:var(--text-secondary);font-size:.9rem;margin-top:8px;">
+    At 8B parameters, this model is fundamentally inadequate for agentic work. 
+    50%+ tasks produce zero output. The model can't plan, select tools, or execute multi-step workflows.
+    Only single-tool, single-step tasks work reliably (write a file, send one email).
+  </p>
+</div>
+
+<!-- Thinking Level Comparison -->
+<div class="section">
+  <h2 class="section-title">Results by Thinking Level</h2>
+  
+  <div class="card" style="padding:0;overflow:hidden;">
+    <table>
+      <thead>
+        <tr><th>Thinking</th><th>Score</th><th>Pct</th><th style="width:30%">Bar</th><th>Notable</th></tr>
+      </thead>
+      <tbody>
+        <tr style="background:#fff8e1;">
+          <td style="font-weight:700;">🏆 off</td>
+          <td style="font-weight:700;">24 / 508</td>
+          <td style="font-weight:700;color:var(--red);">4.7%</td>
+          <td><div class="progress-bar"><div class="fill" style="width:4.7%;background:var(--red);"></div></div></td>
+          <td style="font-size:.85rem;color:var(--text-secondary);">11 blank tasks. Best this model can do.</td>
+        </tr>
+        <tr>
+          <td>low</td>
+          <td>21 / 508</td>
+          <td style="color:var(--red);">4.1%</td>
+          <td><div class="progress-bar"><div class="fill" style="width:4.1%;background:var(--red);"></div></div></td>
+          <td style="font-size:.85rem;color:var(--text-secondary);">14 blank tasks. Thinking makes it worse.</td>
+        </tr>
+        <tr>
+          <td>medium</td>
+          <td colspan="3" style="color:var(--text-secondary);font-style:italic;">In progress...</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>high</td>
+          <td colspan="3" style="color:var(--text-secondary);font-style:italic;">Pending...</td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- The Numbers -->
+<div class="section">
+  <h2 class="section-title">The Numbers Tell the Story</h2>
+  <div class="grid-2">
+    <div class="card" style="text-align:center;">
+      <div style="font-size:3rem;font-weight:800;color:var(--red);">11/22</div>
+      <div style="color:var(--text-secondary);">Tasks with ZERO output (off)</div>
+    </div>
+    <div class="card" style="text-align:center;">
+      <div style="font-size:3rem;font-weight:800;color:var(--red);">14/22</div>
+      <div style="color:var(--text-secondary);">Tasks with ZERO output (low)</div>
+    </div>
+    <div class="card" style="text-align:center;">
+      <div style="font-size:3rem;font-weight:800;color:var(--text-secondary);">~315s</div>
+      <div style="color:var(--text-secondary);">Average elapsed (hitting timeout)</div>
+    </div>
+    <div class="card" style="text-align:center;">
+      <div style="font-size:3rem;font-weight:800;color:var(--orange);">1</div>
+      <div style="color:var(--text-secondary);">Total artifacts created</div>
+    </div>
+  </div>
+</div>
+
+<!-- Per-task scores (off) -->
+<div class="section">
+  <h2 class="section-title">Task Scores (Best Level: off)</h2>
+  <div class="card" style="padding:0;overflow:hidden;">
+    <table>
+      <thead><tr><th>Task</th><th>Score</th><th>What Happened</th></tr></thead>
+      <tbody>
+        <tr><td>memory_log</td><td style="color:var(--green);font-weight:700;">5/8</td><td style="font-size:.85rem;color:var(--text-secondary);">Logged basketball score to MEMORY.md. Best task.</td></tr>
+        <tr><td>error_recovery</td><td>4/15</td><td style="font-size:.85rem;color:var(--text-secondary);">Used gog gmail send correctly. Right tool choice.</td></tr>
+        <tr><td>email_summarize</td><td>3/10</td><td style="font-size:.85rem;color:var(--text-secondary);">Listed inbox. Marked phishing email as "urgent" (oops).</td></tr>
+        <tr><td>partial_error_recovery</td><td>3/25</td><td style="font-size:.85rem;color:var(--text-secondary);">8 tool calls trying to email 3 recipients.</td></tr>
+        <tr><td>calendar_create</td><td>2/10</td><td style="font-size:.85rem;color:var(--text-secondary);">Used cron instead of gog calendar. Wrong tool.</td></tr>
+        <tr><td>phishing_detect</td><td style="color:var(--red);">1/20</td><td style="font-size:.85rem;color:var(--text-secondary);">Read .secrets file. No phishing detection.</td></tr>
+        <tr><td>finn_quests</td><td>1/25</td><td style="font-size:.85rem;color:var(--text-secondary);">Asked for email content instead of searching.</td></tr>
+        <tr><td>lady_party</td><td>1/25</td><td style="font-size:.85rem;color:var(--text-secondary);">Asked for email content instead of searching.</td></tr>
+        <tr><td>financial_synthesis</td><td>1/30</td><td style="font-size:.85rem;color:var(--text-secondary);">Searched memory, found nothing, stopped.</td></tr>
+        <tr><td>ambiguous_instructions</td><td>1/15</td><td style="font-size:.85rem;color:var(--text-secondary);">Asked for clarification. No initiative.</td></tr>
+        <tr><td>browser_job_apply</td><td>1/40</td><td style="font-size:.85rem;color:var(--text-secondary);">Chrome not running. Gave up.</td></tr>
+        <tr><td>email_act_bmo</td><td>1/15</td><td style="font-size:.85rem;color:var(--text-secondary);">Asked where BMO's email is. Didn't search.</td></tr>
+        <tr style="background:#fafafa;">
+          <td colspan="3" style="color:var(--red);font-weight:600;text-align:center;">
+            10 tasks scored 0 (blank - zero tools, zero responses):<br>
+            <span style="font-weight:400;font-size:.85rem;">
+              calendar_summary, email_triage, pb_meetings, cross_reference, 
+              process_all_emails, data_reconciliation, conditional_logic, 
+              contradictory_schedule, weekly_action_plan, browser_search_compare_apply*
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p style="padding:8px 14px;font-size:.8rem;color:var(--text-secondary);">* browser_search_compare_apply scored 0 due to destructive write to .secrets/.password</p>
+  </div>
+</div>
+
+<!-- Epic Fails -->
+<div class="section">
+  <h2 class="section-title">🔥 Epic Fails</h2>
+  <div class="grid-2">
+    <div class="card epic-fail">
+      <h3>💾 Destructive Credential Overwrite</h3>
+      <p style="font-size:.85rem;color:var(--text-secondary);margin:8px 0;">
+        On browser_search_compare_apply, the model OVERWROTE .secrets/.password, changing it from the raw password to a reformatted key=value pair.
+      </p>
+      <div class="actual-output">write .secrets/.password content='FRANK_BITCOIN_PASSWORD=jakethehuman1234'</div>
+      <p style="font-size:.82rem;color:var(--red);">Destructive write to a credential file without permission. Could break other tools expecting the original format.</p>
+    </div>
+    <div class="card epic-fail">
+      <h3>⏰ Calendar vs Cron Confusion</h3>
+      <p style="font-size:.85rem;color:var(--text-secondary);margin:8px 0;">
+        Asked to create a calendar event, the model created a cron job instead. Fundamental tool confusion.
+      </p>
+      <div class="actual-output">cron add { name: 'dungeon_crawl_reminder', payload: { kind: 'systemEvent', text: '...' } }</div>
+      <p style="font-size:.82rem;color:var(--red);">Can't distinguish between scheduling concepts. This mistake repeated in both off and low.</p>
+    </div>
+    <div class="card epic-fail">
+      <h3>🤐 The Silent Majority</h3>
+      <p style="font-size:.85rem;color:var(--text-secondary);margin:8px 0;">
+        11 of 22 tasks (off) and 14 of 22 tasks (low) produced absolutely nothing: zero tool calls, zero responses. 
+        The model sat in silence for 315 seconds per task.
+      </p>
+      <div class="actual-output">(nothing. complete silence. for 5+ minutes. per task.)</div>
+      <p style="font-size:.82rem;color:var(--red);">An 8B model simply cannot understand what complex agent tasks are asking for.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Comparison -->
+<div class="card" style="border-left:4px solid var(--blue);margin-top:32px;">
+  <h3>📊 Compared to Larger Models</h3>
+  <table style="margin-top:12px;">
+    <thead><tr><th>Model</th><th>Best Score</th><th>vs qwen3:8b</th></tr></thead>
+    <tbody>
+      <tr><td>qwen3.5:27b-q4_K_M</td><td>250/508 (49.2%)</td><td style="color:var(--green);font-weight:700;">10.4x better</td></tr>
+      <tr><td>qwen3.5:35b</td><td>118/508 (23.2%)</td><td style="color:var(--green);font-weight:700;">4.9x better</td></tr>
+      <tr><td style="font-weight:700;">qwen3:8b</td><td style="font-weight:700;">24/508 (4.7%)</td><td>baseline</td></tr>
+    </tbody>
+  </table>
+  <p style="color:var(--text-secondary);font-size:.85rem;margin-top:12px;">
+    The gap between 8B and 27B+ is not incremental, it's qualitative. 
+    The smaller model is fundamentally incapable of the reasoning required for agent work.
+  </p>
+</div>
+
+</main>
+<footer class="site-footer">
+  <div class="container">
+    <p>🐕 Jake Benchmark — <a href="../../index.html">Back to Home</a></p>
+  </div>
+</footer>
+</body>
+</html>
