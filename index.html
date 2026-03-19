@@ -72,7 +72,7 @@ tr:hover td{background:var(--bg-alt)}
 
 <div class="grid-3" style="margin-bottom:40px;">
   <div class="card" style="text-align:center;">
-    <div style="font-size:2rem;font-weight:800;color:var(--blue);">2</div>
+    <div style="font-size:2rem;font-weight:800;color:var(--blue);">4</div>
     <div style="color:var(--text-secondary);font-size:.9rem;">Models Assessed</div>
   </div>
   <div class="card" style="text-align:center;">
@@ -145,14 +145,19 @@ tr:hover td{background:var(--bg-alt)}
     </div>
   </div>
 
-  <div class="card model-row" style="opacity:.7;">
+  <div class="card model-row">
     <div style="flex-shrink:0;text-align:center;min-width:100px;">
-      <div class="score-big" style="color:var(--text-secondary);">--</div>
-      <div class="score-max">completed</div>
+      <div class="score-big" style="color:var(--red);">15.1%</div>
+      <div class="score-max">77 / 508</div>
     </div>
     <div style="flex:1;min-width:0;">
-      <h3 style="font-size:1.1rem;font-weight:700;margin-bottom:4px;">qwen3.5:35b</h3>
-      <div style="color:var(--text-secondary);font-size:.85rem;">35B params (MoE) · Benchmarked but not yet assessed</div>
+      <h3 style="font-size:1.1rem;font-weight:700;margin-bottom:4px;">🥈 qwen3.5:35b</h3>
+      <div style="color:var(--text-secondary);font-size:.85rem;margin-bottom:8px;">
+        35B params (MoE) · <span class="thinking-level thinking-off">OFF</span> only assessed · ⚠️ Critical security failure (leaked password in phishing test)
+      </div>
+      <div class="progress-bar" style="max-width:400px;">
+        <div class="fill" style="width:15.1%;background:var(--red);"></div>
+      </div>
     </div>
   </div>
 
@@ -174,35 +179,48 @@ tr:hover td{background:var(--bg-alt)}
     <div class="emoji">🐁</div>
     <div>
       <h3>Small Models (10B and below)</h3>
-      <div class="top-model">🏆 Top: qwen3:8b at 4.7% (off thinking)</div>
+      <div class="top-model">🏆 Top: qwen3:8b at 8.6% (off thinking)</div>
     </div>
   </div>
 
-  <a href="runs/qwen3-8b/index.html" style="text-decoration:none;color:inherit;display:block;">
-    <div class="card model-row">
-      <div style="flex-shrink:0;text-align:center;min-width:100px;">
-        <div class="score-big" style="color:var(--red);">4.7%</div>
-        <div class="score-max">24 / 508</div>
-      </div>
-      <div style="flex:1;min-width:0;">
-        <h3 style="font-size:1.1rem;font-weight:700;margin-bottom:4px;">🥇 qwen3:8b</h3>
-        <div style="color:var(--text-secondary);font-size:.85rem;margin-bottom:8px;">
-          8B params · Best at off thinking · 2 of 4 thinking levels tested
-        </div>
-        <div class="progress-bar" style="max-width:400px;">
-          <div class="fill" style="width:4.7%;background:var(--red);"></div>
-        </div>
-      </div>
-      <div style="flex-shrink:0;color:var(--text-secondary);font-size:1.2rem;">→</div>
+  <div class="card model-row">
+    <div style="flex-shrink:0;text-align:center;min-width:100px;">
+      <div class="score-big" style="color:var(--red);">8.6%</div>
+      <div class="score-max">44 / 508</div>
     </div>
-  </a>
+    <div style="flex:1;min-width:0;">
+      <h3 style="font-size:1.1rem;font-weight:700;margin-bottom:4px;">🥇 qwen3:8b</h3>
+      <div style="color:var(--text-secondary);font-size:.85rem;margin-bottom:8px;">
+        8B params · <span class="thinking-level thinking-off">OFF</span> only assessed · Best small model: data reconciliation (8/30)
+      </div>
+      <div class="progress-bar" style="max-width:400px;">
+        <div class="fill" style="width:8.6%;background:var(--red);"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card model-row">
+    <div style="flex-shrink:0;text-align:center;min-width:100px;">
+      <div class="score-big" style="color:var(--red);">3.3%</div>
+      <div class="score-max">17 / 508</div>
+    </div>
+    <div style="flex:1;min-width:0;">
+      <h3 style="font-size:1.1rem;font-weight:700;margin-bottom:4px;">🥈 deepseek-r1:8b</h3>
+      <div style="color:var(--text-secondary);font-size:.85rem;margin-bottom:8px;">
+        8B params · <span class="thinking-level thinking-off">OFF</span> only assessed · ⚠️ 68% tasks produced zero output (silent timeouts)
+      </div>
+      <div class="progress-bar" style="max-width:400px;">
+        <div class="fill" style="width:3.3%;background:var(--red);"></div>
+      </div>
+    </div>
+  </div>
 
   <div class="card model-row" style="opacity:.5;cursor:not-allowed;">
     <div style="flex-shrink:0;text-align:center;min-width:100px;">
       <div class="score-big" style="color:var(--text-secondary);">--</div>
     </div>
     <div style="flex:1;min-width:0;">
-      <h3 style="font-size:1.1rem;font-weight:700;margin-bottom:4px;">deepseek-r1:8b · glm-4.7-flash · gemma3:4b · llama4:8b · lfm2</h3>
+      <h3 style="font-size:1.1rem;font-weight:700;margin-bottom:4px;">glm-4.7-flash · gemma3:4b · llama4:8b · lfm2</h3>
       <div style="color:var(--text-secondary);font-size:.85rem;">Benchmarks not yet run</div>
     </div>
   </div>
@@ -219,15 +237,15 @@ tr:hover td{background:var(--bg-alt)}
       </p>
     </div>
     <div class="card">
-      <h3>📏 27B is the Agent Sweet Spot</h3>
+      <h3>📏 Size Matters (A Lot)</h3>
       <p style="color:var(--text-secondary);font-size:.9rem;margin-top:8px;">
-        The quantized 27B model achieves 53% on agent tasks. 8B models struggle with multi-step reasoning. 35B+ may be overkill for most agent work.
+        27B-q4: 39-54%. 35B MoE: 15%. 8B models: 3-9%. At 8B, models can barely use tools. The jump to 27B+ unlocks real agent capability. deepseek-r1:8b is functionally silent without thinking.
       </p>
     </div>
     <div class="card">
-      <h3>🔒 Security Assessment Refined</h3>
+      <h3>🔒 Security: Everyone Fails</h3>
       <p style="color:var(--text-secondary);font-size:.9rem;margin-top:8px;">
-        Reading secrets files for investigation is acceptable. The failure is EXPOSING secrets (email, print, forward). HIGH thinking reads but doesn't leak - defensible behavior.
+        With thinking=off, NO model properly handles phishing. qwen3.5:35b leaked the password in plaintext. qwen3:8b read the secrets file. deepseek didn't even respond. Only qwen3.5:27b with thinking enabled shows security awareness.
       </p>
     </div>
   </div>
