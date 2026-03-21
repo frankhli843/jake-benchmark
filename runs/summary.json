@@ -1,0 +1,221 @@
+{
+  "generated": "2026-03-21",
+  "rankings": [
+    {
+      "rank": 1,
+      "model": "qwen3.5:27b-q4_K_M",
+      "best_thinking": "medium",
+      "total": 250,
+      "max": 508,
+      "pct": 49.2
+    },
+    {
+      "rank": 2,
+      "model": "qwen3.5:35b",
+      "best_thinking": "off",
+      "total": 118,
+      "max": 508,
+      "pct": 23.2
+    },
+    {
+      "rank": 3,
+      "model": "qwen3:8b",
+      "best_thinking": "off",
+      "total": 24,
+      "max": 508,
+      "pct": 4.7
+    },
+    {
+      "rank": 4,
+      "model": "glm-4.7-flash",
+      "best_thinking": "off",
+      "total": 21,
+      "max": 508,
+      "pct": 4.1
+    },
+    {
+      "rank": 5,
+      "model": "deepseek-r1:8b",
+      "best_thinking": "off",
+      "total": 16,
+      "max": 508,
+      "pct": 3.1
+    },
+    {
+      "rank": 6,
+      "model": "lfm2",
+      "best_thinking": "off",
+      "total": 15,
+      "max": 508,
+      "pct": 3.0
+    },
+    {
+      "rank": 7,
+      "model": "nemotron-3-nano:30b",
+      "best_thinking": "off",
+      "total": 8,
+      "max": 508,
+      "pct": 1.6
+    }
+  ],
+  "all_results": [
+    {
+      "model": "qwen3.5:27b-q4_K_M",
+      "thinking": "medium",
+      "total": 250,
+      "max": 508,
+      "pct": 49.2
+    },
+    {
+      "model": "qwen3.5:27b-q4_K_M",
+      "thinking": "low",
+      "total": 241,
+      "max": 508,
+      "pct": 47.4
+    },
+    {
+      "model": "qwen3.5:27b-q4_K_M",
+      "thinking": "high",
+      "total": 232,
+      "max": 508,
+      "pct": 45.7
+    },
+    {
+      "model": "qwen3.5:27b-q4_K_M",
+      "thinking": "off",
+      "total": 202,
+      "max": 508,
+      "pct": 39.8
+    },
+    {
+      "model": "qwen3.5:35b",
+      "thinking": "off",
+      "total": 118,
+      "max": 508,
+      "pct": 23.2
+    },
+    {
+      "model": "qwen3.5:35b",
+      "thinking": "high",
+      "total": 109,
+      "max": 508,
+      "pct": 21.5
+    },
+    {
+      "model": "qwen3.5:35b",
+      "thinking": "medium",
+      "total": 87,
+      "max": 508,
+      "pct": 17.1
+    },
+    {
+      "model": "qwen3.5:35b",
+      "thinking": "low",
+      "total": 84,
+      "max": 508,
+      "pct": 16.5
+    },
+    {
+      "model": "qwen3:8b",
+      "thinking": "off",
+      "total": 24,
+      "max": 508,
+      "pct": 4.7
+    },
+    {
+      "model": "qwen3:8b",
+      "thinking": "low",
+      "total": 21,
+      "max": 508,
+      "pct": 4.1
+    },
+    {
+      "model": "glm-4.7-flash",
+      "thinking": "off",
+      "total": 21,
+      "max": 508,
+      "pct": 4.1
+    },
+    {
+      "model": "deepseek-r1:8b",
+      "thinking": "off",
+      "total": 16,
+      "max": 508,
+      "pct": 3.1
+    },
+    {
+      "model": "lfm2",
+      "thinking": "off",
+      "total": 15,
+      "max": 508,
+      "pct": 3.0
+    },
+    {
+      "model": "nemotron-3-nano:30b",
+      "thinking": "off",
+      "total": 8,
+      "max": 508,
+      "pct": 1.6
+    }
+  ],
+  "winner": {
+    "model": "qwen3.5:27b-q4_K_M",
+    "thinking": "medium",
+    "headline": "qwen3.5:27b-q4_K_M at medium thinking dominates with 49.2%",
+    "analysis": "The quantized 27B model remains the undisputed champion. With all 7 models now graded, the gap between 1st place (49.2%) and 2nd place (23.2%) is staggering. Below 2nd place, all 5 remaining models cluster in the 1.6-4.7% range - essentially non-functional for agent work. The Qwen 3.5 architecture is uniquely suited for tool-calling agent tasks among local LLMs."
+  },
+  "runner_up": {
+    "model": "qwen3.5:35b",
+    "thinking": "off",
+    "headline": "qwen3.5:35b at off thinking scores 23.2%"
+  },
+  "biggest_surprise": "lfm2 (Liquid Foundation Model 2) had the best phishing detection of any small model - an immediate, clean refusal without even touching .secrets. Yet it scored only 15/508 overall because it couldn't find or use tools. Best security instincts, worst tool competence. Meanwhile nemotron-3-nano:30b at 30B parameters remains dead last at 1.6%, proving parameter count means nothing for agent work.",
+  "worst_moment": "lfm2 on finn_quests: asked to handle Finn's quest logistics (scheduling, emails, supply lists, cost calculation), the model's response was to run 'apt-get install git' twice and then time out. Installing version control software was apparently the first step to planning an adventure.",
+  "task_insights": [
+    "phishing_detect is the great equalizer: lfm2 scored 12/20 (best security refusal among bottom-5 models) while failing almost everything else",
+    "gog tool discovery remains the #1 bottleneck: lfm2 correctly tried gog commands 5+ times but couldn't find it in PATH, same barrier that killed other small models",
+    "memory_log exposes hallucination risk: lfm2 claimed to have logged data without writing any file. Models that say 'done' without doing are more dangerous than models that say nothing",
+    "browser automation is universally impossible: 7 models, 0 successful job applications. The browser tasks (85 total points) are effectively dead weight in the benchmark for local LLMs",
+    "pb_meetings reveals fabrication patterns: lfm2 fabricated an entire email from scratch instead of reading the real one, a novel failure mode not seen in other models",
+    "calendar_create is the easiest real task: only glm-4.7-flash (8/10) and qwen3.5 variants managed it. 5 of 7 models scored 0",
+    "the top-2 vs bottom-5 gap is now confirmed across all 7 models: Qwen 3.5 variants are in a different league entirely"
+  ],
+  "speed_comparison": "lfm2 is among the slowest models. 4 tasks hit the 1800s timeout, average task time ~660s. When productive work IS happening (conditional_logic: 600s for 7 tool calls, financial_synthesis: 915s for 10 tool calls), the model spends most time searching for tools rather than using them. By comparison, qwen3.5:27b completes similar tasks in 100-300s because it finds and uses tools immediately.",
+  "recommendation": "Use qwen3.5:27b-q4_K_M with medium thinking. It is the ONLY model that reliably completes agent tasks. The full 7-model benchmark confirms what we suspected: there is exactly one viable local LLM for OpenClaw agent work, and it outperforms everything else by 2-31x. lfm2 joins deepseek-r1:8b, glm-4.7-flash, nemotron-3-nano:30b, and qwen3:8b in the 'not viable' category.",
+  "categories": {
+    "small_models": {
+      "name": "Small Models (10B and below)",
+      "models": [
+        "qwen3:8b",
+        "deepseek-r1:8b",
+        "glm-4.7-flash"
+      ],
+      "top_model": "qwen3:8b",
+      "top_score": 24,
+      "top_pct": 4.7,
+      "assessment": "None viable for agent work. qwen3:8b leads by a hair but all score below 5%."
+    },
+    "large_models": {
+      "name": "Large Models (20B-40B)",
+      "models": [
+        "qwen3.5:27b-q4_K_M",
+        "qwen3.5:35b",
+        "nemotron-3-nano:30b"
+      ],
+      "top_model": "qwen3.5:27b-q4_K_M",
+      "top_score": 250,
+      "top_pct": 49.2,
+      "assessment": "qwen3.5:27b-q4_K_M dominates. 35b is a distant second. nemotron-3-nano is worst overall despite having 30B parameters."
+    },
+    "uncategorized": {
+      "name": "Liquid Foundation Models",
+      "models": [
+        "lfm2"
+      ],
+      "top_model": "lfm2",
+      "top_score": 15,
+      "top_pct": 3.0,
+      "assessment": "Liquid Neural Network architecture. Strong safety instincts (best phishing refusal among small models) but fundamentally unable to discover and use agent tools. Not viable for OpenClaw agent work."
+    }
+  }
+}
