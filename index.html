@@ -267,6 +267,218 @@ tr:hover{background:rgba(0,0,0,0.02)}
 /* Footer */
 .footer{text-align:center;padding:30px;color:var(--text-dim);font-size:0.85em;margin-top:30px;border-top:1px solid var(--border)}
 
+/* ===== Narrative Story ===== */
+html { scroll-behavior: smooth; }
+
+.narrative { max-width: 900px; margin: 0 auto; padding: 0 20px; }
+
+.story-hero {
+  text-align: center; padding: 80px 20px 60px;
+  background: linear-gradient(180deg, #fffde7 0%, #ffffff 100%);
+  border-bottom: 3px solid var(--jake-yellow);
+}
+.story-hero h1 {
+  font-size: 3em; color: #1a1a2e; font-weight: 800; letter-spacing: -1px; margin-bottom: 8px;
+}
+.story-hero-question {
+  font-size: 1.35em; color: #b8860b; font-weight: 600; margin-bottom: 30px;
+}
+.story-hero-stats {
+  display: flex; justify-content: center; gap: 40px; margin: 30px 0; flex-wrap: wrap;
+}
+.story-stat { text-align: center; }
+.story-stat-num { display: block; font-size: 2.4em; font-weight: 800; color: #b8860b; line-height: 1; }
+.story-stat-label { font-size: 0.9em; color: var(--text-dim); text-transform: uppercase; letter-spacing: 1px; }
+.story-hero-tagline {
+  font-size: 1.1em; color: var(--text-dim); max-width: 600px; margin: 0 auto; line-height: 1.6;
+}
+
+.story-section {
+  padding: 60px 0; border-bottom: 1px solid var(--border);
+}
+.story-section:last-child { border-bottom: none; }
+.story-section h2 {
+  font-size: 2em; color: #1a1a2e; margin-bottom: 8px; font-weight: 700;
+}
+.story-section .section-lead {
+  font-size: 1.05em; color: var(--text-dim); margin-bottom: 30px; line-height: 1.6;
+}
+.story-section p { font-size: 1em; color: var(--text); line-height: 1.7; margin-bottom: 16px; }
+
+/* Setup grid */
+.setup-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px; margin: 20px 0;
+}
+.setup-card {
+  background: var(--bg2); border-radius: 10px; padding: 20px;
+  border: 1px solid var(--border);
+}
+.setup-card h4 { color: var(--finn-blue); margin-bottom: 6px; font-size: 0.95em; }
+.setup-card p { font-size: 0.9em; color: var(--text-dim); margin: 0; }
+
+/* Winner reveal */
+.story-winner {
+  text-align: center; padding: 70px 20px;
+  background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 30%, #e8f5e9 100%);
+  border-radius: 16px; margin: 40px auto; border: 2px solid var(--bmo-green);
+  max-width: 900px;
+}
+.story-winner .trophy { font-size: 4em; margin-bottom: 10px; }
+.story-winner h2 { font-size: 2em; color: #2e7d32; margin-bottom: 4px; }
+.story-winner .winner-model {
+  font-family: 'Courier New', monospace; font-size: 1.5em; color: #1a1a2e;
+  font-weight: 700; margin: 10px 0;
+  background: rgba(255,255,255,0.7); display: inline-block; padding: 6px 20px; border-radius: 8px;
+}
+.story-winner .winner-score {
+  font-size: 1.8em; font-weight: 800; color: #b8860b; margin: 8px 0;
+}
+.story-winner .winner-pct { font-size: 1.1em; color: var(--text-dim); }
+
+.winner-details {
+  text-align: left; max-width: 700px; margin: 30px auto 0;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
+}
+.winner-detail-card {
+  background: rgba(255,255,255,0.8); border-radius: 10px; padding: 18px;
+}
+.winner-detail-card h4 { margin-bottom: 8px; font-size: 0.95em; }
+.winner-detail-card ul { margin: 0; padding-left: 18px; font-size: 0.9em; color: var(--text-dim); line-height: 1.7; }
+.winner-detail-card.good h4 { color: var(--bmo-green); }
+.winner-detail-card.bad h4 { color: var(--flame-red); }
+
+/* Thinking sweet spot */
+.thinking-sweet-spot {
+  display: flex; flex-direction: column; gap: 10px; margin: 25px 0;
+  max-width: 500px;
+}
+.thinking-row {
+  display: flex; align-items: center; gap: 12px;
+}
+.thinking-row .tl { min-width: 80px; font-size: 0.9em; color: var(--text-dim); text-align: right; }
+.thinking-row .tb {
+  flex: 1; height: 32px; background: var(--bg3); border-radius: 6px; overflow: hidden; position: relative;
+}
+.thinking-row .tb-fill {
+  height: 100%; border-radius: 6px; display: flex; align-items: center; padding: 0 10px;
+  font-size: 0.82em; font-weight: 700; color: #fff; transition: width 0.8s ease;
+}
+.thinking-row .tv { min-width: 50px; font-size: 0.88em; font-weight: 600; }
+.thinking-row.best .tl { font-weight: 700; color: var(--bmo-green); }
+.thinking-row.best .tv { color: var(--bmo-green); }
+
+/* Model story cards */
+.model-story {
+  background: var(--bg); border: 1px solid var(--border); border-radius: 12px;
+  padding: 28px; margin-bottom: 20px; box-shadow: var(--shadow-sm);
+  transition: border-color 0.2s;
+}
+.model-story:hover { border-color: var(--jake-yellow); }
+.model-story.champion { border-color: var(--bmo-green); border-width: 2px; background: linear-gradient(135deg, #f1f8e9, #ffffff); }
+.model-story-header {
+  display: flex; align-items: center; gap: 14px; margin-bottom: 16px; flex-wrap: wrap;
+}
+.model-story-name {
+  font-family: 'Courier New', monospace; font-size: 1.15em; font-weight: 700; color: var(--text);
+}
+.model-story-badge {
+  display: inline-block; padding: 3px 12px; border-radius: 20px; font-size: 0.78em;
+  font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
+}
+.badge-champion { background: #e8f5e9; color: #2e7d32; }
+.badge-underachiever { background: #fff3e0; color: #e65100; }
+.badge-ghost { background: #f5f5f5; color: #757575; }
+.badge-basement { background: #ffebee; color: #b71c1c; }
+.badge-bestsmall { background: #e3f2fd; color: #1565c0; }
+.badge-specialist { background: #f3e5f5; color: #9c27b0; }
+.badge-hallucinator { background: #fce4ec; color: #c62828; }
+
+.model-story-score {
+  display: flex; align-items: center; gap: 12px; margin-bottom: 14px;
+}
+.model-story-pct {
+  font-size: 2em; font-weight: 800; line-height: 1;
+}
+.model-story-bar {
+  flex: 1; height: 24px; background: var(--bg3); border-radius: 6px; overflow: hidden;
+}
+.model-story-bar-fill {
+  height: 100%; border-radius: 6px; transition: width 1s ease;
+}
+.model-story p { font-size: 0.95em; color: var(--text); line-height: 1.7; margin-bottom: 8px; }
+.model-story .key-insight {
+  font-size: 0.9em; color: var(--text-dim); font-style: italic;
+  border-left: 3px solid var(--jake-yellow); padding-left: 12px; margin-top: 12px;
+}
+
+.model-story-params {
+  font-size: 0.85em; color: var(--text-dim); margin-left: auto;
+}
+
+/* Section verdicts */
+.verdict {
+  background: var(--bg2); border-left: 4px solid var(--jake-yellow); border-radius: 0 8px 8px 0;
+  padding: 16px 20px; margin: 25px 0; font-size: 0.95em; color: var(--text); line-height: 1.6;
+}
+.verdict strong { color: #b8860b; }
+
+/* Insight cards */
+.insight-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px; margin: 25px 0;
+}
+.insight-card {
+  border-radius: 12px; padding: 22px; border-left: 5px solid;
+}
+.insight-card h4 { font-size: 1em; margin-bottom: 8px; }
+.insight-card p { font-size: 0.9em; margin: 0; line-height: 1.5; }
+.insight-card.insight-size { background: #fff3e0; border-color: #e65100; }
+.insight-card.insight-size h4 { color: #e65100; }
+.insight-card.insight-size p { color: #bf360c; }
+.insight-card.insight-thinking { background: #e3f2fd; border-color: #1565c0; }
+.insight-card.insight-thinking h4 { color: #1565c0; }
+.insight-card.insight-thinking p { color: #0d47a1; }
+.insight-card.insight-tools { background: #e8f5e9; border-color: #2e7d32; }
+.insight-card.insight-tools h4 { color: #2e7d32; }
+.insight-card.insight-tools p { color: #1b5e20; }
+.insight-card.insight-browser { background: #fce4ec; border-color: #c62828; }
+.insight-card.insight-browser h4 { color: #c62828; }
+.insight-card.insight-browser p { color: #b71c1c; }
+.insight-card.insight-security { background: #f3e5f5; border-color: #7b1fa2; }
+.insight-card.insight-security h4 { color: #7b1fa2; }
+.insight-card.insight-security p { color: #4a148c; }
+
+/* Recommendation cards */
+.rec-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 20px; margin: 25px 0;
+}
+.rec-card {
+  border-radius: 12px; padding: 28px; border: 2px solid;
+}
+.rec-card h3 { font-size: 1.15em; margin-bottom: 4px; }
+.rec-card .rec-model {
+  font-family: 'Courier New', monospace; font-size: 1em; font-weight: 700;
+  margin-bottom: 16px;
+}
+.rec-card .rec-row { display: flex; gap: 8px; margin-bottom: 8px; font-size: 0.9em; line-height: 1.5; }
+.rec-card .rec-label { min-width: 70px; color: var(--text-dim); }
+.rec-card .rec-value { color: var(--text); }
+.rec-card.rec-high { border-color: var(--bmo-green); background: #f1f8e9; }
+.rec-card.rec-high h3 { color: #2e7d32; }
+.rec-card.rec-high .rec-model { color: #2e7d32; }
+.rec-card.rec-low { border-color: var(--mid); background: #fff8e1; }
+.rec-card.rec-low h3 { color: #e65100; }
+.rec-card.rec-low .rec-model { color: #e65100; }
+
+/* Explore CTA */
+.explore-cta {
+  text-align: center; padding: 50px 20px; margin: 40px 0 0;
+}
+.explore-cta h2 { font-size: 1.8em; color: #1a1a2e; margin-bottom: 8px; }
+.explore-cta p { font-size: 1.05em; color: var(--text-dim); margin-bottom: 20px; }
+
 /* Responsive */
 @media(max-width:768px){
   .hero h1{font-size:1.8em}
@@ -280,6 +492,23 @@ tr:hover{background:rgba(0,0,0,0.02)}
   .heatmap td{min-width:28px;font-size:0.7em}
   .modal-content{margin:10px;padding:15px}
   .chat-bubble{max-width:95%}
+  /* Narrative mobile */
+  .story-hero h1{font-size:2em}
+  .story-hero-question{font-size:1.1em}
+  .story-hero-stats{gap:20px}
+  .story-stat-num{font-size:1.8em}
+  .story-section h2{font-size:1.5em}
+  .story-section{padding:40px 0}
+  .story-winner{padding:40px 15px}
+  .story-winner .winner-model{font-size:1.1em}
+  .story-winner .winner-score{font-size:1.4em}
+  .winner-details{grid-template-columns:1fr}
+  .model-story-header{flex-direction:column;align-items:flex-start;gap:6px}
+  .model-story-pct{font-size:1.5em}
+  .model-story-params{margin-left:0}
+  .insight-grid{grid-template-columns:1fr}
+  .rec-grid{grid-template-columns:1fr}
+  .setup-grid{grid-template-columns:1fr}
 }
 
 
@@ -345,23 +574,305 @@ tr:hover{background:rgba(0,0,0,0.02)}
 </style>
 </head>
 <body>
-<div class="hero">
+<!-- ===== SCROLLABLE NARRATIVE STORY ===== -->
+
+<!-- 1. Hero Banner -->
+<div class="story-hero">
   <h1>&#x1F415; Jake Benchmark</h1>
-  <div class="subtitle">Local LLM Agent Showdown &mdash; Adventure Time Edition</div>
-  <div class="stats-row">
-    <div class="stat"><div class="num">7</div><div class="label">Models Tested</div></div>
-    <div class="stat"><div class="num">22</div><div class="label">Tasks</div></div>
-    <div class="stat"><div class="num">16</div><div class="label">Benchmark Runs</div></div>
-    <div class="stat"><div class="num">508</div><div class="label">Max Points</div></div>
+  <div class="story-hero-question">Which Local LLM Can Actually Be an Agent?</div>
+  <div class="story-hero-stats">
+    <div class="story-stat"><span class="story-stat-num">7</span><span class="story-stat-label">Models</span></div>
+    <div class="story-stat"><span class="story-stat-num">22</span><span class="story-stat-label">Tasks</span></div>
+    <div class="story-stat"><span class="story-stat-num">508</span><span class="story-stat-label">Max Points</span></div>
+    <div class="story-stat"><span class="story-stat-num">~5</span><span class="story-stat-label">Days of Testing</span></div>
+  </div>
+  <div class="story-hero-tagline">We ran every model through 22 real agent tasks on a Raspberry Pi to find out.</div>
+</div>
+
+<div class="narrative">
+
+<!-- 2. The Setup -->
+<div class="story-section">
+  <h2>The Setup</h2>
+  <p class="section-lead">We wanted to answer a simple question: can a local LLM actually work as an AI assistant? Not just chat, but <em>do things</em>: read emails, schedule meetings, create tasks, handle security threats, and automate browsers.</p>
+
+  <div class="setup-grid">
+    <div class="setup-card">
+      <h4>&#x1F4BB; The Rig</h4>
+      <p>OpenClaw running on a Raspberry Pi 5, talking to Ollama on an RTX 3090 over the local network.</p>
+    </div>
+    <div class="setup-card">
+      <h4>&#x1F3AF; Agent Tasks</h4>
+      <p>Reading emails, scheduling meetings, creating tasks, handling security threats, browser automation.</p>
+    </div>
+    <div class="setup-card">
+      <h4>&#x1F4CA; 3 Difficulty Tiers</h4>
+      <p><strong>Medium:</strong> basic tool use. <strong>Hard:</strong> multi-step workflows. <strong>Very Hard:</strong> error recovery, security, browser automation.</p>
+    </div>
+    <div class="setup-card">
+      <h4>&#x1F9EA; Scoring</h4>
+      <p>LLM-graded (not automated scripts). Per-criterion evaluation across 22 tasks, 508 max points.</p>
+    </div>
   </div>
 </div>
 
+<!-- 3. The Overall Winner -->
+<div class="story-section" style="border-bottom:none;padding-bottom:0">
+  <h2>And The Winner Is...</h2>
+</div>
+</div><!-- close .narrative temporarily for full-width winner -->
+
+<div class="story-winner">
+  <div class="trophy">&#x1F451;</div>
+  <h2>The Overall Champion</h2>
+  <div class="winner-model">qwen3.5:27b-q4_K_M</div>
+  <div style="color:var(--text-dim)">at medium thinking</div>
+  <div class="winner-score">302 / 508</div>
+  <div class="winner-pct">59.4% of all possible points</div>
+
+  <div class="winner-details">
+    <div class="winner-detail-card good">
+      <h4>&#x2705; What it did well</h4>
+      <ul>
+        <li>Email triage and prioritization</li>
+        <li>Calendar management</li>
+        <li>Task creation and tracking</li>
+        <li>Multi-step workflows</li>
+        <li>Good security awareness</li>
+      </ul>
+    </div>
+    <div class="winner-detail-card bad">
+      <h4>&#x274C; What it struggled with</h4>
+      <ul>
+        <li>Browser automation (0/40)</li>
+        <li>Some cross-referencing tasks</li>
+        <li>Complex error recovery</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="narrative">
+
+<!-- Thinking sweet spot -->
+<div class="story-section" style="border-top:none;padding-top:30px">
+  <h2>The Thinking Sweet Spot</h2>
+  <p>More thinking isn't always better. For the champion model, medium thinking hit the sweet spot. Go higher, and the model starts overthinking. Turn it off entirely, and it misses nuance.</p>
+
+  <div class="thinking-sweet-spot">
+    <div class="thinking-row best">
+      <span class="tl">Medium</span>
+      <div class="tb"><div class="tb-fill" style="width:59.4%;background:var(--bmo-green)">59.4%</div></div>
+      <span class="tv">302 pts</span>
+    </div>
+    <div class="thinking-row">
+      <span class="tl">High</span>
+      <div class="tb"><div class="tb-fill" style="width:52.2%;background:var(--mid)">52.2%</div></div>
+      <span class="tv">265 pts</span>
+    </div>
+    <div class="thinking-row">
+      <span class="tl">Low</span>
+      <div class="tb"><div class="tb-fill" style="width:50.2%;background:var(--mid)">50.2%</div></div>
+      <span class="tv">255 pts</span>
+    </div>
+    <div class="thinking-row">
+      <span class="tl">Off</span>
+      <div class="tb"><div class="tb-fill" style="width:44.5%;background:var(--flame-red)">44.5%</div></div>
+      <span class="tv">226 pts</span>
+    </div>
+  </div>
+</div>
+
+<!-- 4. Large Models -->
+<div class="story-section">
+  <h2>&#x1F3C6; Large Models (20B+): The Real Contest</h2>
+  <p class="section-lead">Four large models competed. Only one proved it could actually be an agent.</p>
+
+  <!-- Champion -->
+  <div class="model-story champion">
+    <div class="model-story-header">
+      <span class="model-story-name">qwen3.5:27b-q4_K_M</span>
+      <span class="model-story-badge badge-champion">&#x1F451; The Champion</span>
+      <span class="model-story-params">27B quantized (Q4_K_M)</span>
+    </div>
+    <div class="model-story-score">
+      <span class="model-story-pct" style="color:var(--bmo-green)">59.4%</span>
+      <div class="model-story-bar"><div class="model-story-bar-fill" style="width:59.4%;background:linear-gradient(90deg,#43a047,#66bb6a)"></div></div>
+    </div>
+    <p>The only model that consistently completed multi-step agent tasks. Found the gog CLI, used it correctly, handled errors gracefully, and maintained persona throughout. Medium thinking was the sweet spot.</p>
+    <p>Key insight: quantization (Q4_K_M) didn't hurt. It actually helped by keeping responses focused and preventing the model from rambling into confusion.</p>
+    <div class="key-insight">The quantized 27B model beat the full 35B model by 2.5x. Smaller and faster won.</div>
+  </div>
+
+  <!-- Underachiever -->
+  <div class="model-story">
+    <div class="model-story-header">
+      <span class="model-story-name">qwen3.5:35b</span>
+      <span class="model-story-badge badge-underachiever">The Underachiever</span>
+      <span class="model-story-params">35B full precision</span>
+    </div>
+    <div class="model-story-score">
+      <span class="model-story-pct" style="color:var(--mid)">23.2%</span>
+      <div class="model-story-bar"><div class="model-story-bar-fill" style="width:23.2%;background:linear-gradient(90deg,#f9a825,#ffca28)"></div></div>
+    </div>
+    <p>Despite being larger, scored 2.5x worse. Suffered from "thinking paralysis" at higher thinking levels (medium: 17.1%, high: 21.5%). The extra parameters led to overthinking and tool confusion.</p>
+    <div class="key-insight">Lesson: bigger &#x2260; better. The 35B model couldn't decide which tool to use and would second-guess itself into failure.</div>
+  </div>
+
+  <!-- Ghost -->
+  <div class="model-story">
+    <div class="model-story-header">
+      <span class="model-story-name">lfm2</span>
+      <span class="model-story-badge badge-ghost">The Ghost</span>
+      <span class="model-story-params">23.8B</span>
+    </div>
+    <div class="model-story-score">
+      <span class="model-story-pct" style="color:var(--flame-red)">3.0%</span>
+      <div class="model-story-bar"><div class="model-story-bar-fill" style="width:3.0%;background:linear-gradient(90deg,#e53935,#ef5350)"></div></div>
+    </div>
+    <p>9 of 22 tasks produced completely empty sessions. When it did work, it actually had the best security instincts (clean phishing refusal). But it couldn't find gog in the PATH and would give up, asking the user to run commands manually.</p>
+    <div class="key-insight">Not an agent. A model that asks you to do its job isn't helping.</div>
+  </div>
+
+  <!-- Basement -->
+  <div class="model-story">
+    <div class="model-story-header">
+      <span class="model-story-name">nemotron-3-nano:30b</span>
+      <span class="model-story-badge badge-basement">The Basement</span>
+      <span class="model-story-params">30B</span>
+    </div>
+    <div class="model-story-score">
+      <span class="model-story-pct" style="color:var(--flame-red)">1.6%</span>
+      <div class="model-story-bar"><div class="model-story-bar-fill" style="width:1.6%;background:linear-gradient(90deg,#e53935,#ef5350)"></div></div>
+    </div>
+    <p>Despite being the largest non-Qwen model, scored dead last. Tried to read .secrets 3 times before refusing the phishing email. Couldn't find gog at all. Most bizarre: attempted to solve tasks by running <code>apt-get install</code> commands.</p>
+    <div class="key-insight">The 30B model scored worse than every 8B model. Parameters are meaningless without agent capability.</div>
+  </div>
+
+  <div class="verdict"><strong>Verdict:</strong> qwen3.5:27b-q4_K_M is the only viable large model. Nothing else comes close.</div>
+</div>
+
+<!-- 5. Small Models -->
+<div class="story-section">
+  <h2>&#x1F3C5; Small Models (&#x2264;10B): Can They Agent?</h2>
+  <p class="section-lead">Three small models entered. None could reliably handle real agent work.</p>
+
+  <!-- Best small -->
+  <div class="model-story">
+    <div class="model-story-header">
+      <span class="model-story-name">qwen3:8b</span>
+      <span class="model-story-badge badge-bestsmall">Best of a Weak Field</span>
+      <span class="model-story-params">8B</span>
+    </div>
+    <div class="model-story-score">
+      <span class="model-story-pct" style="color:var(--flame-red)">4.7%</span>
+      <div class="model-story-bar"><div class="model-story-bar-fill" style="width:4.7%;background:linear-gradient(90deg,#e53935,#ef5350)"></div></div>
+    </div>
+    <p>Can handle the simplest tasks (memory_log, calendar_create). Falls apart on anything multi-step. The Qwen architecture advantage shows even at small scale.</p>
+  </div>
+
+  <!-- Specialist -->
+  <div class="model-story">
+    <div class="model-story-header">
+      <span class="model-story-name">glm-4.7-flash</span>
+      <span class="model-story-badge badge-specialist">The Specialist</span>
+      <span class="model-story-params">9B</span>
+    </div>
+    <div class="model-story-score">
+      <span class="model-story-pct" style="color:var(--flame-red)">4.1%</span>
+      <div class="model-story-bar"><div class="model-story-bar-fill" style="width:4.1%;background:linear-gradient(90deg,#e53935,#ef5350)"></div></div>
+    </div>
+    <p>Scored 8/10 on calendar_create (almost perfect!), proving it CAN use tools when it finds them. But found only sent mail when checking email. A model that excels at exactly one thing.</p>
+  </div>
+
+  <!-- Hallucinator -->
+  <div class="model-story">
+    <div class="model-story-header">
+      <span class="model-story-name">deepseek-r1:8b</span>
+      <span class="model-story-badge badge-hallucinator">The Hallucinator</span>
+      <span class="model-story-params">8B</span>
+    </div>
+    <div class="model-story-score">
+      <span class="model-story-pct" style="color:var(--flame-red)">3.1%</span>
+      <div class="model-story-bar"><div class="model-story-bar-fill" style="width:3.1%;background:linear-gradient(90deg,#e53935,#ef5350)"></div></div>
+    </div>
+    <p>Worst hallucination problem of any model. Confidently reported 2 of 3 emails sent when gog-state shows ZERO were delivered. Dangerous in production.</p>
+    <div class="key-insight">A model that lies about what it did is worse than one that does nothing.</div>
+  </div>
+
+  <div class="verdict"><strong>Verdict:</strong> No small model is viable for real agent work. If you're constrained, qwen3:8b handles basic tasks. But set expectations very low.</div>
+</div>
+
+<!-- 6. Key Insights -->
+<div class="story-section">
+  <h2>Key Insights</h2>
+  <p class="section-lead">Five lessons from running 22 tasks across 7 models.</p>
+
+  <div class="insight-grid">
+    <div class="insight-card insight-size">
+      <h4>&#x1F4CF; Bigger &#x2260; Better</h4>
+      <p>30B nemotron scored 1.6%. 27B qwen scored 59.4%. Architecture and training matter infinitely more than parameter count.</p>
+    </div>
+    <div class="insight-card insight-thinking">
+      <h4>&#x1F9E0; Thinking Has a Sweet Spot</h4>
+      <p>Medium thinking (59.4%) beat high thinking (52.2%) for the winner. Too much thinking leads to analysis paralysis.</p>
+    </div>
+    <div class="insight-card insight-tools">
+      <h4>&#x1F527; Tool Discovery is Everything</h4>
+      <p>Models that find gog succeed. Models that can't find it score &lt;5%. The ability to discover and use CLI tools is the #1 predictor of success.</p>
+    </div>
+    <div class="insight-card insight-browser">
+      <h4>&#x1F310; Browser Automation is Universally Broken</h4>
+      <p>No model completed a job application. 0/40 and 0/45 across the board. Local LLMs cannot reliably drive a browser.</p>
+    </div>
+    <div class="insight-card insight-security">
+      <h4>&#x1F512; Security Varies Wildly</h4>
+      <p>Some models refused phishing perfectly. Others immediately tried to read .secrets. There's no consistent security behavior across models.</p>
+    </div>
+  </div>
+</div>
+
+<!-- 7. What to Expect -->
+<div class="story-section">
+  <h2>What to Expect</h2>
+  <p class="section-lead">Practical recommendations based on your hardware.</p>
+
+  <div class="rec-grid">
+    <div class="rec-card rec-high">
+      <h3>&#x1F4AA; If you have a 24GB GPU</h3>
+      <div style="font-size:0.85em;color:var(--text-dim);margin-bottom:12px">RTX 3090 / RTX 4090</div>
+      <div class="rec-model">&#x2192; qwen3.5:27b-q4_K_M at medium thinking</div>
+      <div class="rec-row"><span class="rec-label">Expect:</span><span class="rec-value">~60% task completion, solid email/calendar/task management, good security awareness</span></div>
+      <div class="rec-row"><span class="rec-label">Won't work:</span><span class="rec-value">Browser automation, some complex cross-referencing</span></div>
+      <div class="rec-row"><span class="rec-label">Speed:</span><span class="rec-value">20-30 tokens/sec, tasks complete in 5-20 minutes</span></div>
+    </div>
+    <div class="rec-card rec-low">
+      <h3>&#x1F4A1; If you have &#x2264;8GB VRAM</h3>
+      <div style="font-size:0.85em;color:var(--text-dim);margin-bottom:12px">Most consumer GPUs</div>
+      <div class="rec-model">&#x2192; qwen3:8b at off thinking</div>
+      <div class="rec-row"><span class="rec-label">Expect:</span><span class="rec-value">~5% task completion, basic memory logging and calendar events only</span></div>
+      <div class="rec-row"><span class="rec-label">Won't work:</span><span class="rec-value">Email triage, multi-step workflows, security tasks, anything complex</span></div>
+      <div class="rec-row"><span class="rec-label">Speed:</span><span class="rec-value">Faster inference but mostly wasted on failed attempts</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- 8. Explore the Data (transition to tabs) -->
+<div class="explore-cta">
+  <h2>&#x1F50D; Explore the Data</h2>
+  <p>Want to dig deeper? Click into any model, any task, and read the actual conversations.</p>
+</div>
+
+</div><!-- end .narrative -->
+
+<!-- ===== END NARRATIVE, BEGIN TAB CONTENT ===== -->
+
 <div class="container">
-  <div class="winner">
-    <div class="crown">&#x1F451;</div>
+  <!-- Hidden winner fields for JS compat -->
+  <div style="display:none">
     <h2 id="winner-name"></h2>
-    <div class="score-line" id="winner-score"></div>
-    <div class="analysis" id="winner-analysis"></div>
+    <div id="winner-score"></div>
+    <div id="winner-analysis"></div>
   </div>
 
   <nav class="tabs" id="tab-nav">
