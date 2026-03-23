@@ -1315,6 +1315,54 @@ document.addEventListener('keydown', e => { if(e.key === 'Escape') closeModal();
 
 // ===== Chat Timeline Viewer Component (Rich Format) =====
 
+
+function renderMd(text) {
+  if (!text) return '';
+  let h = text;
+  // Escape HTML first
+  h = h.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  // Headers
+  h = h.replace(/^### (.+)$/gm, '<h4 style="margin:16px 0 8px;color:#333">$1</h4>');
+  h = h.replace(/^## (.+)$/gm, '<h3 style="margin:20px 0 10px;color:#1a1a2e;border-bottom:1px solid #e0e0e0;padding-bottom:6px">$1</h3>');
+  h = h.replace(/^# (.+)$/gm, '<h2 style="margin:24px 0 12px;color:#1a1a2e">$1</h2>');
+  // Bold
+  h = h.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+  // Italic
+  h = h.replace(/\*(.+?)\*/g, '<em>$1</em>');
+  // Code blocks
+  h = h.replace(/```([\s\S]*?)```/g, function(m, code) {
+    return '<pre style="background:#f5f5f5;padding:12px;border-radius:6px;overflow-x:auto;font-size:0.85em;border:1px solid #e0e0e0">' + code.trim() + '</pre>';
+  });
+  // Inline code
+  h = h.replace(/`([^`]+)`/g, '<code style="background:#f0f0f0;padding:1px 5px;border-radius:3px;font-size:0.9em">$1</code>');
+  // Tables
+  h = h.replace(/^\|(.+)\|$/gm, function(line) {
+    var cells = line.split('|').filter(function(c) { return c.trim(); });
+    if (cells.every(function(c) { return /^[\s\-:]+$/.test(c); })) return '';
+    var isHeader = false;
+    var row = '<tr>' + cells.map(function(c) {
+      return '<td style="padding:6px 12px;border:1px solid #e0e0e0">' + c.trim() + '</td>';
+    }).join('') + '</tr>';
+    return row;
+  });
+  // Wrap consecutive table rows
+  h = h.replace(/(<tr>.*?<\/tr>\n?)+/g, function(m) {
+    var rows = m.trim().split('\n').filter(function(r) { return r.trim(); });
+    if (rows.length > 1) {
+      return '<table style="border-collapse:collapse;margin:12px 0;width:100%;font-size:0.9em"><thead>' + rows[0] + '</thead><tbody>' + rows.slice(1).join('') + '</tbody></table>';
+    }
+    return '<table style="border-collapse:collapse;margin:12px 0;width:100%;font-size:0.9em"><tbody>' + m + '</tbody></table>';
+  });
+  // Unordered lists
+  h = h.replace(/^- (.+)$/gm, '<li style="margin:4px 0">$1</li>');
+  h = h.replace(/(<li.*?<\/li>\n?)+/g, '<ul style="margin:8px 0;padding-left:24px">$&</ul>');
+  // Paragraphs (double newline)
+  h = h.replace(/\n\n/g, '</p><p style="margin:10px 0">');
+  // Single newlines to br
+  h = h.replace(/\n/g, '<br>');
+  return '<div style="line-height:1.7">' + h + '</div>';
+}
+
 function renderConversation(model, thinking, taskId) {
   // Try rich session data first
   const sKey = model + '/' + thinking + '/' + taskId;
@@ -1631,7 +1679,7 @@ function openModelDetail(model, thinking) {
   if(comm) {
     html += `<details style="margin-bottom:20px">
       <summary style="cursor:pointer;color:var(--marceline-purple);font-weight:600">&#x1F4DD; Assessment Commentary</summary>
-      <div class="commentary-block">${esc(comm)}</div>
+      <div class="commentary-block">${renderMd(comm)}</div>
     </details>`;
   }
   
@@ -2105,7 +2153,7 @@ function selectModelTab(model) {
   // Commentary
   const comm = commentaries[model];
   if(comm) {
-    html += `<details style="margin-top:20px"><summary style="cursor:pointer;color:var(--marceline-purple);font-weight:600">&#x1F4DD; Assessment Commentary</summary><div class="commentary-block">${esc(comm)}</div></details>`;
+    html += `<details style="margin-top:20px"><summary style="cursor:pointer;color:var(--marceline-purple);font-weight:600">&#x1F4DD; Assessment Commentary</summary><div class="commentary-block">${renderMd(comm)}</div></details>`;
   }
   
   area.innerHTML = html;
