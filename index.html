@@ -564,8 +564,22 @@ html { scroll-behavior: smooth; }
 .rich-result-summary { flex: 1; font-family: 'Courier New', monospace; color: #424242; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 0.85em; }
 .rich-result-arrow { color: #9e9e9e; font-size: 0.85em; transition: transform 0.2s; display: inline-block; }
 .rich-result-arrow.open { transform: rotate(90deg); }
-.rich-result-body { display: none; border-top: 1px solid #e0e0e0; padding: 12px 14px; background: #fafafa; font-family: 'Courier New', monospace; font-size: 0.82em; line-height: 1.5; white-space: pre-wrap; word-break: break-word; max-height: 400px; overflow-y: auto; }
+.rich-result-body { display: none; border-top: 1px solid #e0e0e0; padding: 12px 14px; background: #fafafa; font-size: 0.85em; line-height: 1.5; word-break: break-word; max-height: 400px; overflow-y: auto; }
 .rich-result-body.open { display: block; animation: fadeIn 0.2s; }
+.result-table-wrap { display: flex; flex-direction: column; gap: 6px; }
+.result-row { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; padding: 6px 10px; background: #fff; border-radius: 6px; border: 1px solid #eee; font-size: 0.9em; }
+.result-date { color: #666; font-size: 0.85em; font-family: monospace; }
+.result-tag { display: inline-block; padding: 1px 8px; border-radius: 10px; font-size: 0.8em; font-weight: 600; }
+.result-tag.sent { background: #e8f5e9; color: #2e7d32; }
+.result-tag.inbox { background: #e3f2fd; color: #1565c0; }
+.result-tag.unread { background: #fff3e0; color: #e65100; }
+.result-id { color: #999; font-family: monospace; font-size: 0.8em; }
+.result-text { color: #333; }
+.result-json { background: #f8f9fa; padding: 10px; border-radius: 6px; font-family: monospace; font-size: 0.85em; overflow-x: auto; white-space: pre-wrap; margin: 0; }
+.result-error { background: #fff5f5; border-left: 3px solid #f44336; padding: 10px; font-family: monospace; font-size: 0.8em; color: #c62828; overflow-x: auto; white-space: pre-wrap; margin: 0; }
+.result-kv { display: flex; flex-direction: column; gap: 4px; }
+.result-kv .result-key { font-weight: 600; color: #555; }
+.result-plain-pre { background: #f8f9fa; padding: 10px; border-radius: 6px; font-family: monospace; font-size: 0.85em; white-space: pre-wrap; margin: 0; }
 
 @media(max-width:768px) {
   .rich-user-bubble, .rich-asst-bubble { max-width: 95%; }
@@ -1403,19 +1417,109 @@ function renderCallBubble(part) {
     '</div>';
 }
 
+function formatToolResult(text) {
+  if (!text) return '<span style="color:#999">(empty)</span>';
+  // Detect tab-separated data (email lists, calendar, tasks)
+  const lines = text.split('\n').filter(l => l.trim());
+  const hasTabData = lines.some(l => l.includes('\t') && l.split('\t').length >= 3);
+  
+  if (hasTabData) {
+    let html = '<div class="result-table-wrap">';
+    for (const line of lines) {
+      const cols = line.split('\t');
+      if (cols.length >= 3) {
+        // Email list format: ID, date, sender, subject, status, threadId
+        html += '<div class="result-row">';
+        for (let i = 0; i < cols.length; i++) {
+          const val = cols[i].trim();
+          if (!val) continue;
+          // Style different columns
+          if (val.match(/^\d{4}-\d{2}-\d{2}/)) {
+            html += '<span class="result-date">' + esc(val) + '</span> ';
+          } else if (val === 'SENT' || val === 'INBOX' || val === 'UNREAD') {
+            html += '<span class="result-tag ' + val.toLowerCase() + '">' + esc(val) + '</span> ';
+          } else if (val.match(/^[A-Za-z0-9_\-]{10,}$/)) {
+            html += '<span class="result-id">' + esc(val.substring(0, 8)) + '...</span> ';
+          } else {
+            html += '<span class="result-text">' + esc(val) + '</span> ';
+          }
+        }
+        html += '</div>';
+      } else {
+        html += '<div class="result-plain">' + esc(line) + '</div>';
+      }
+    }
+    html += '</div>';
+    return html;
+  }
+  
+  // Detect JSON output
+  const trimmed = text.trim();
+  if ((trimmed.startsWith('{') && trimmed.endsWith('}')) || (trimmed.startsWith('[') && trimmed.endsWith(']'))) {
+    try {
+      const parsed = JSON.parse(trimmed);
+      return '<pre class="result-json">' + esc(JSON.stringify(parsed, null, 2)) + '</pre>';
+    } catch(e) {}
+  }
+  
+  // Detect error tracebacks
+  if (trimmed.includes('Traceback (most recent call last)') || trimmed.includes('Error:')) {
+    return '<pre class="result-error">' + esc(text) + '</pre>';
+  }
+  
+  // Detect key-value output (e.g., "Event created: ...")
+  if (lines.length <= 5 && lines.some(l => l.includes(':'))) {
+    let html = '<div class="result-kv">';
+    for (const line of lines) {
+      const colonIdx = line.indexOf(':');
+      if (colonIdx > 0 && colonIdx < 40) {
+        html += '<div><span class="result-key">' + esc(line.substring(0, colonIdx)) + ':</span> ' + esc(line.substring(colonIdx + 1).trim()) + '</div>';
+      } else {
+        html += '<div>' + esc(line) + '</div>';
+      }
+    }
+    html += '</div>';
+    return html;
+  }
+  
+  // Plain text fallback
+  return '<pre class="result-plain-pre">' + esc(text) + '</pre>';
+}
+
 function renderResultBubble(text, isErr) {
   const id = 'rr-' + (++_rcId);
-  const firstLine = (text || '').split('\n')[0].substring(0, 80) + ((text||'').length > 80 ? '...' : '');
+  const lines = (text || '').split('\n').filter(l => l.trim());
+  // Smart summary: show first meaningful line
+  let summary = '';
+  if (lines.length === 0) {
+    summary = '(empty result)';
+  } else if (lines[0].includes('\t')) {
+    // Tab data: count items
+    const tabLines = lines.filter(l => l.includes('\t'));
+    summary = tabLines.length + ' items returned';
+  } else if (lines[0].includes('Traceback')) {
+    summary = 'Error: ' + (lines[lines.length - 1] || '').substring(0, 60);
+  } else if (lines[0].startsWith('{') || lines[0].startsWith('[')) {
+    try {
+      const d = JSON.parse(text.trim());
+      if (d.status === 'error') summary = 'Error: ' + (d.error || '').substring(0, 60);
+      else if (d.ok) summary = 'Success';
+      else summary = lines[0].substring(0, 80);
+    } catch(e) { summary = lines[0].substring(0, 80); }
+  } else {
+    summary = lines[0].substring(0, 80) + (lines[0].length > 80 ? '...' : '');
+  }
+  
   const errCls = isErr ? ' err' : '';
   const icon = isErr ? '\u274C' : '\u{1F4CB}';
   
   return '<div class="rich-result-entry' + errCls + '">' +
     '<div class="rich-result-header" onclick="toggleRich(\'' + id + '\')">' +
     '<span class="rich-result-icon">' + icon + '</span>' +
-    '<span class="rich-result-summary">' + esc(firstLine) + '</span>' +
+    '<span class="rich-result-summary">' + esc(summary) + '</span>' +
     '<span class="rich-result-arrow" id="' + id + '-a">\u25B6</span>' +
     '</div>' +
-    '<div class="rich-result-body" id="' + id + '">' + esc(text || '(empty)') + '</div>' +
+    '<div class="rich-result-body" id="' + id + '">' + formatToolResult(text) + '</div>' +
     '</div>';
 }
 
@@ -1717,8 +1821,22 @@ function openTaskDetail(taskId) {
 .rich-result-summary { flex: 1; font-family: 'Courier New', monospace; color: #424242; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 0.85em; }
 .rich-result-arrow { color: #9e9e9e; font-size: 0.85em; transition: transform 0.2s; display: inline-block; }
 .rich-result-arrow.open { transform: rotate(90deg); }
-.rich-result-body { display: none; border-top: 1px solid #e0e0e0; padding: 12px 14px; background: #fafafa; font-family: 'Courier New', monospace; font-size: 0.82em; line-height: 1.5; white-space: pre-wrap; word-break: break-word; max-height: 400px; overflow-y: auto; }
+.rich-result-body { display: none; border-top: 1px solid #e0e0e0; padding: 12px 14px; background: #fafafa; font-size: 0.85em; line-height: 1.5; word-break: break-word; max-height: 400px; overflow-y: auto; }
 .rich-result-body.open { display: block; animation: fadeIn 0.2s; }
+.result-table-wrap { display: flex; flex-direction: column; gap: 6px; }
+.result-row { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; padding: 6px 10px; background: #fff; border-radius: 6px; border: 1px solid #eee; font-size: 0.9em; }
+.result-date { color: #666; font-size: 0.85em; font-family: monospace; }
+.result-tag { display: inline-block; padding: 1px 8px; border-radius: 10px; font-size: 0.8em; font-weight: 600; }
+.result-tag.sent { background: #e8f5e9; color: #2e7d32; }
+.result-tag.inbox { background: #e3f2fd; color: #1565c0; }
+.result-tag.unread { background: #fff3e0; color: #e65100; }
+.result-id { color: #999; font-family: monospace; font-size: 0.8em; }
+.result-text { color: #333; }
+.result-json { background: #f8f9fa; padding: 10px; border-radius: 6px; font-family: monospace; font-size: 0.85em; overflow-x: auto; white-space: pre-wrap; margin: 0; }
+.result-error { background: #fff5f5; border-left: 3px solid #f44336; padding: 10px; font-family: monospace; font-size: 0.8em; color: #c62828; overflow-x: auto; white-space: pre-wrap; margin: 0; }
+.result-kv { display: flex; flex-direction: column; gap: 4px; }
+.result-kv .result-key { font-weight: 600; color: #555; }
+.result-plain-pre { background: #f8f9fa; padding: 10px; border-radius: 6px; font-family: monospace; font-size: 0.85em; white-space: pre-wrap; margin: 0; }
 
 @media(max-width:768px) {
   .rich-user-bubble, .rich-asst-bubble { max-width: 95%; }
