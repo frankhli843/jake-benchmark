@@ -642,10 +642,10 @@ a:hover {
 <body>
 <header class="site-header">
   <div class="container">
-    <a href="../../../index.html" class="logo">🐕 <span>Jake</span> Benchmark</a>
+    <a href="../../../../index.html" class="logo">🐕 <span>Jake</span> Benchmark</a>
     <span class="subtitle">Which LLM makes the best Jake?</span>
     <nav class="header-nav">
-      <a href="../../../index.html">Home</a>
+      <a href="../../../../index.html">Home</a>
       <a href="https://github.com/frankhli843/jake-benchmark" target="_blank">GitHub</a>
     </nav>
   </div>
@@ -664,7 +664,7 @@ a:hover {
             </div>
           </div>
           <div style="text-align:right;">
-            <div style="font-size:2.2rem; font-weight:900; color:#ff9800;">12/25</div>
+            <div style="font-size:2.2rem; font-weight:900; color:#ff9800;">14/25</div>
           </div>
         </div>
       </div>
@@ -735,7 +735,7 @@ No events found.
       <div class="reveal" style="margin-top:24px;">
         <h2 style="font-size:1.3rem; font-weight:800; margin-bottom:16px;">📋 Scoring Reasoning</h2>
         <div class="card" style="border-left:4px solid #ff9800;">
-          <p style="font-size:0.92rem; line-height:1.6;">Checked calendar multiple times for tomorrow at 9am, found nothing. Despite finding no conflict, proceeded to create the event with a conflict note in the description as instructed. Emailed PB warning about the overlap with alternative time suggestions. However: sent email to wrong address (pblanchard@jhu.edu instead of a Candy Kingdom address), conflict note is somewhat vague (&#x27;There is another event scheduled at this time that may overlap&#x27; when no actual event was found). The model correctly followed instructions to schedule despite conflict and notify, but the calendar was clean so the &#x27;conflict detection&#x27; step was vacuous. Meeting duration is only 1 hour (should be 90 min for chemistry review).</p>
+          <p style="font-size:0.92rem; line-height:1.6;">Checked calendar multiple times (7 tool calls vs LOW&#x27;s 5). Found it empty. Still created the event as requested (good instruction following). Noted the conflict in description. Sent email to PB about the conflict with alternative time suggestions (10am, 11am). Better than LOW&#x27;s 12/25 - more thorough calendar checking and clearer conflict communication in the email. gog-state confirms 1 event created.</p>
         </div>
       </div>
         

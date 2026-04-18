@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Create Calendar Event — qwen3.5:35b (low) — Jake Benchmark</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐕</text></svg>">
+<style>
+:root {
+  --jake-yellow: #F2C94C;
+  --finn-blue: #1ea7fd;
+  --bmo-green: #4caf50;
+  --marceline-red: #f44336;
+  --lsp-purple: #9b59b6;
+  --pb-pink: #e91e90;
+  --ice-blue: #74b9ff;
+  --fire-orange: #ff9800;
+  --bg: #fffef7;
+  --bg-alt: #faf8f0;
+  --bg-card: #ffffff;
+  --text: #2d2a1e;
+  --text-secondary: #6b6651;
+  --border: #e8e4d4;
+  --shadow: 0 2px 8px rgba(45,42,30,0.06);
+  --shadow-lg: 0 8px 24px rgba(45,42,30,0.12);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, 'Helvetica Neue', Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* ─── Scroll Animations ─── */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+.reveal-delay-4 { transition-delay: 0.4s; }
+
+/* ─── Header ─── */
+.site-header {
+  background: var(--bg);
+  border-bottom: 2px solid var(--jake-yellow);
+  padding: 14px 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  backdrop-filter: blur(12px);
+  background: rgba(255,254,247,0.92);
+}
+.site-header .container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.site-header .logo {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--text);
+  text-decoration: none;
+}
+.site-header .logo span {
+  color: var(--jake-yellow);
+}
+.site-header .subtitle {
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  margin-left: 4px;
+}
+.header-nav {
+  margin-left: auto;
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+.header-nav a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+.header-nav a:hover {
+  color: var(--finn-blue);
+}
+
+/* ─── Hero ─── */
+.hero {
+  text-align: center;
+  padding: 80px 0 60px;
+  position: relative;
+}
+.hero h1 {
+  font-size: 3rem;
+  font-weight: 900;
+  line-height: 1.15;
+  margin-bottom: 16px;
+  color: var(--text);
+}
+.hero h1 .accent {
+  background: linear-gradient(135deg, var(--jake-yellow), var(--fire-orange));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.hero .tagline {
+  font-size: 1.2rem;
+  color: var(--text-secondary);
+  max-width: 600px;
+  margin: 0 auto 32px;
+  line-height: 1.6;
+}
+.hero .scroll-hint {
+  display: inline-block;
+  padding: 10px 24px;
+  background: var(--jake-yellow);
+  color: var(--text);
+  border-radius: 30px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-decoration: none;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 8px rgba(242,201,76,0.3);
+}
+.hero .scroll-hint:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(242,201,76,0.4);
+  text-decoration: none;
+}
+
+/* ─── Story Section ─── */
+.story-section {
+  padding: 60px 0;
+  border-bottom: 1px solid var(--border);
+}
+.story-section:last-of-type {
+  border-bottom: none;
+}
+.section-eyebrow {
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--jake-yellow);
+  margin-bottom: 8px;
+}
+.section-title {
+  font-size: 2rem;
+  font-weight: 800;
+  margin-bottom: 12px;
+  line-height: 1.2;
+}
+.section-subtitle {
+  font-size: 1.05rem;
+  color: var(--text-secondary);
+  margin-bottom: 32px;
+  max-width: 640px;
+}
+
+/* ─── Cards ─── */
+.md-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 16px 0;
+  font-size: 0.9rem;
+}
+.md-table th, .md-table td {
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  text-align: left;
+}
+.md-table th {
+  background: var(--bg-alt);
+  font-weight: 600;
+  color: var(--text-primary);
+}
+.md-table tr:hover {
+  background: var(--bg-alt);
+}
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: var(--shadow);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+.card:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-3px);
+}
+.card-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+.card-link:hover {
+  text-decoration: none;
+}
+
+/* ─── Model Contestant Card ─── */
+.contestant-card {
+  position: relative;
+  overflow: hidden;
+}
+.contestant-card .vibe-stripe {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+}
+.contestant-card .model-emoji {
+  font-size: 2.5rem;
+  margin-bottom: 8px;
+}
+.contestant-card .model-name {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+.contestant-card .personality-title {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--fire-orange);
+  margin-bottom: 8px;
+}
+.contestant-card .personality-desc {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  margin-bottom: 16px;
+  line-height: 1.5;
+}
+.contestant-card .stats-row {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.contestant-card .score-pill {
+  font-size: 1.8rem;
+  font-weight: 900;
+  line-height: 1;
+}
+.contestant-card .score-detail {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+.contestant-card .go-arrow {
+  margin-left: auto;
+  font-size: 1.4rem;
+  color: var(--text-secondary);
+  transition: transform 0.2s;
+}
+.card-link:hover .go-arrow {
+  transform: translateX(4px);
+  color: var(--finn-blue);
+}
+
+/* ─── Progress bar ─── */
+.progress-bar {
+  background: var(--bg-alt);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  height: 12px;
+  overflow: hidden;
+  width: 100%;
+}
+.progress-bar .fill {
+  height: 100%;
+  border-radius: 20px;
+  transition: width 1.2s ease;
+}
+
+/* ─── Badges ─── */
+.badge {
+  display: inline-block;
+  padding: 3px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  vertical-align: middle;
+}
+
+/* ─── Stat Counter (animated) ─── */
+.stat-counter {
+  text-align: center;
+  padding: 20px;
+}
+.stat-counter .number {
+  font-size: 2.8rem;
+  font-weight: 900;
+  line-height: 1;
+  color: var(--jake-yellow);
+}
+.stat-counter .label {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  margin-top: 4px;
+}
+
+/* ─── Grid ─── */
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+  gap: 20px;
+}
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+/* ─── Score Ring ─── */
+.score-ring {
+  position: relative;
+  width: 140px;
+  height: 140px;
+  margin: 0 auto;
+}
+.score-ring svg {
+  transform: rotate(-90deg);
+}
+.score-ring .ring-bg {
+  fill: none;
+  stroke: var(--border);
+  stroke-width: 10;
+}
+.score-ring .ring-fill {
+  fill: none;
+  stroke-width: 10;
+  stroke-linecap: round;
+  stroke-dasharray: 408;
+  stroke-dashoffset: 408;
+  transition: stroke-dashoffset 1.5s ease;
+}
+.score-ring .ring-label {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+.score-ring .ring-pct {
+  font-size: 2rem;
+  font-weight: 900;
+  line-height: 1;
+}
+.score-ring .ring-sub {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+/* ─── Epic Fail Card ─── */
+.epic-fail-card {
+  border-left: 5px solid var(--marceline-red);
+  background: linear-gradient(135deg, #fff5f5, var(--bg-card));
+}
+.epic-fail-card .fail-emoji {
+  font-size: 2rem;
+  margin-bottom: 8px;
+}
+.epic-fail-card .fail-what {
+  font-size: 0.95rem;
+  margin-bottom: 12px;
+  line-height: 1.5;
+}
+.epic-fail-card .fail-output {
+  background: #fce4ec;
+  border: 1px solid #f8bbd0;
+  border-radius: 10px;
+  padding: 14px;
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  font-size: 0.82rem;
+  white-space: pre-wrap;
+  word-break: break-word;
+  color: #b71c1c;
+  margin-bottom: 12px;
+}
+.epic-fail-card .fail-why {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+/* ─── Verdict Card ─── */
+.verdict-card {
+  background: linear-gradient(135deg, #fef9e7, #fdf2d5);
+  border: 2px solid var(--jake-yellow);
+  text-align: center;
+  padding: 40px 32px;
+}
+.verdict-card h2 {
+  font-size: 1.8rem;
+  margin-bottom: 12px;
+}
+.verdict-card p {
+  font-size: 1.05rem;
+  color: var(--text-secondary);
+  max-width: 540px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* ─── Charts ─── */
+.chart-container {
+  position: relative;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* ─── Run Detail: Nerd Mode ─── */
+.nerd-toggle {
+  background: var(--bg-alt);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px 16px;
+  margin-top: 12px;
+}
+.nerd-toggle summary {
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: var(--lsp-purple);
+  padding: 4px 0;
+  list-style: none;
+}
+.nerd-toggle summary::-webkit-details-marker { display: none; }
+.nerd-toggle summary::before {
+  content: '🤓 ';
+}
+.nerd-toggle[open] summary { margin-bottom: 12px; }
+
+/* ─── Chat Bubbles ─── */
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 20px 0;
+}
+.bubble {
+  max-width: 82%;
+  padding: 16px 20px;
+  border-radius: 18px;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  word-wrap: break-word;
+  position: relative;
+}
+.bubble pre {
+  background: rgba(0,0,0,0.05);
+  padding: 12px;
+  border-radius: 10px;
+  overflow-x: auto;
+  font-size: 0.8rem;
+  margin: 8px 0;
+  white-space: pre-wrap;
+}
+.bubble code {
+  font-size: 0.85em;
+  background: rgba(0,0,0,0.06);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+.bubble-user {
+  align-self: flex-end;
+  background: var(--finn-blue);
+  color: #fff;
+  border-bottom-right-radius: 6px;
+}
+.bubble-assistant {
+  align-self: flex-start;
+  background: #e8f5e9;
+  color: var(--text);
+  border: 1px solid #c8e6c9;
+  border-bottom-left-radius: 6px;
+}
+.bubble-tool-call {
+  align-self: flex-start;
+  background: #fff8e1;
+  color: #5d4037;
+  border: 1px solid #ffe082;
+  border-radius: 14px;
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  font-size: 0.82rem;
+}
+.bubble-tool-result {
+  align-self: flex-start;
+  background: var(--bg-alt);
+  color: var(--text-secondary);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  font-size: 0.82rem;
+}
+.bubble .role-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 6px;
+  opacity: 0.7;
+}
+.bubble .timestamp {
+  font-size: 0.7rem;
+  opacity: 0.45;
+  margin-top: 8px;
+}
+
+/* ─── Tables ─── */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+th, td {
+  padding: 14px 16px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+th {
+  background: var(--bg-alt);
+  font-weight: 700;
+  color: var(--text-secondary);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+tr:hover td {
+  background: var(--bg-alt);
+}
+
+/* ─── Details/Collapsible ─── */
+details {
+  margin: 4px 0;
+}
+details summary {
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  padding: 4px 0;
+}
+details summary:hover {
+  color: var(--finn-blue);
+}
+details[open] > summary {
+  margin-bottom: 8px;
+}
+
+/* ─── Links ─── */
+a {
+  color: var(--finn-blue);
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+/* ─── Back link ─── */
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  margin-bottom: 24px;
+  font-weight: 500;
+}
+.back-link:hover {
+  color: var(--finn-blue);
+  text-decoration: none;
+}
+
+/* ─── Footer ─── */
+.site-footer {
+  text-align: center;
+  padding: 40px 0;
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  border-top: 2px solid var(--jake-yellow);
+  margin-top: 60px;
+  background: var(--bg-alt);
+}
+.site-footer a {
+  color: var(--jake-yellow);
+  font-weight: 600;
+}
+
+/* ─── Code block ─── */
+.code-block {
+  background: #2d2a1e;
+  color: #f0ead6;
+  border-radius: 12px;
+  padding: 16px;
+  overflow-x: auto;
+  font-size: 0.82rem;
+  margin: 12px 0;
+}
+
+/* ─── Responsive ─── */
+@media (max-width: 768px) {
+  .hero h1 { font-size: 2rem; }
+  .section-title { font-size: 1.5rem; }
+  .grid-2 { grid-template-columns: 1fr; }
+  .grid-3 { grid-template-columns: 1fr; }
+  .bubble { max-width: 95%; }
+  .container { padding: 0 16px; }
+  .stat-counter .number { font-size: 2rem; }
+  .score-ring { width: 100px; height: 100px; }
+  .score-ring .ring-pct { font-size: 1.4rem; }
+  .contestant-card .stats-row { flex-direction: column; align-items: flex-start; }
+}
+
+@media (max-width: 480px) {
+  .hero { padding: 50px 0 40px; }
+  .hero h1 { font-size: 1.6rem; }
+  .story-section { padding: 40px 0; }
+}
+</style>
+
+</head>
+<body>
+<header class="site-header">
+  <div class="container">
+    <a href="../../../../index.html" class="logo">🐕 <span>Jake</span> Benchmark</a>
+    <span class="subtitle">Which LLM makes the best Jake?</span>
+    <nav class="header-nav">
+      <a href="../../../../index.html">Home</a>
+      <a href="https://github.com/frankhli843/jake-benchmark" target="_blank">GitHub</a>
+    </nav>
+  </div>
+</header>
+<main>
+
+    <div class="container" style="padding-top:32px; padding-bottom:48px;">
+      <a href="../index.html" class="back-link">← Back to qwen3.5:35b (low)</a>
+
+      <div class="card reveal" style="margin-bottom:24px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;">
+          <div>
+            <h1 style="font-size:1.6rem; font-weight:800; margin-bottom:4px;">Create Calendar Event</h1>
+            <div style="color:var(--text-secondary); font-size:0.9rem;">
+              qwen3.5:35b (low) &middot; <span class="badge" style="background:#1ea7fd;color:#fff">Medium</span>
+            </div>
+          </div>
+          <div style="text-align:right;">
+            <div style="font-size:2.2rem; font-weight:900; color:#f44336;">1/10</div>
+          </div>
+        </div>
+      </div>
+    
+
+      <div class="card reveal reveal-delay-1" style="margin-bottom:24px; background:var(--bg-alt); border-left:4px solid var(--jake-yellow);">
+        <div style="font-size:0.78rem; font-weight:700; color:var(--jake-yellow); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:8px;">Task Prompt</div>
+        <p style="font-size:0.95rem;">Schedule a dungeon crawl with Finn for next Wednesday at 10am. It should be 3 hours long at the Cryptid Caverns.</p>
+      </div>
+        
+<div class="reveal reveal-delay-2"><h2 style="font-size:1.3rem; font-weight:800; margin-bottom:16px;">💬 Play-by-Play</h2>
+<div class="card"><p style="color:var(--text-secondary);">No session data. The model produced no output for this task.</p></div>
+</div>
+
+      <div class="reveal" style="margin-top:24px;">
+        <h2 style="font-size:1.3rem; font-weight:800; margin-bottom:16px;">📋 Scoring Reasoning</h2>
+        <div class="card" style="border-left:4px solid #f44336;">
+          <p style="font-size:0.92rem; line-height:1.6;">Made 9 tool calls including session_status, date check, web_search for gog CLI, browser navigation to Google Calendar. Fell into browser automation rabbit hole instead of using gog CLI. Never created the event. The date check was smart (today IS Wednesday, so next Wednesday = March 25th) but execution failed.</p>
+        </div>
+      </div>
+        
+
+      <details class="nerd-toggle" style="margin-top:16px;">
+        <summary>Nerd Mode — Grading Criteria</summary>
+        <ul style="padding-left:20px; font-size:0.85rem; color:var(--text-secondary);">
+          <li>Must use jake_gog calendar add</li><li>Date must be next Wednesday (correct date math)</li><li>Time must be 10:00 AM</li><li>Duration must be 3 hours or end time 1:00 PM</li><li>Must include location: Cryptid Caverns</li><li>Must include Finn as attendee/in description</li>
+        </ul>
+      </details>
+            
+</div>
+</main>
+<footer class="site-footer">
+  <div class="container">
+    <p>🐕 Built by <a href="https://github.com/frankhli843">Frank Li</a> with <a href="https://github.com/openclaw/openclaw">OpenClaw</a></p>
+    <p style="margin-top:6px; font-size:0.8rem;">Adventure Time themed agent benchmarks for local LLMs</p>
+  </div>
+</footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        // Animate score rings
+        var ring = entry.target.querySelector('.ring-fill');
+        if (ring && ring.dataset.offset) {
+          ring.style.strokeDashoffset = ring.dataset.offset;
+        }
+        // Animate progress bars
+        var fills = entry.target.querySelectorAll('.fill[data-width]');
+        fills.forEach(function(f) { f.style.width = f.dataset.width; });
+      }
+    });
+  }, { threshold: 0.15 });
+
+  document.querySelectorAll('.reveal').forEach(function(el) {
+    observer.observe(el);
+  });
+});
+</script>
+
+</body>
+</html>
