@@ -384,18 +384,6 @@ body {
   margin-bottom: 12px;
   line-height: 1.5;
 }
-.epic-fail-card .fail-output {
-  background: #fce4ec;
-  border: 1px solid #f8bbd0;
-  border-radius: 10px;
-  padding: 14px;
-  font-family: 'SF Mono', 'Fira Code', monospace;
-  font-size: 0.82rem;
-  white-space: pre-wrap;
-  word-break: break-word;
-  color: #b71c1c;
-  margin-bottom: 12px;
-}
 .epic-fail-card .fail-why {
   font-size: 0.85rem;
   color: var(--text-secondary);
@@ -493,24 +481,6 @@ body {
   color: var(--text);
   border: 1px solid #c8e6c9;
   border-bottom-left-radius: 6px;
-}
-.bubble-tool-call {
-  align-self: flex-start;
-  background: #fff8e1;
-  color: #5d4037;
-  border: 1px solid #ffe082;
-  border-radius: 14px;
-  font-family: 'SF Mono', 'Fira Code', monospace;
-  font-size: 0.82rem;
-}
-.bubble-tool-result {
-  align-self: flex-start;
-  background: var(--bg-alt);
-  color: var(--text-secondary);
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  font-family: 'SF Mono', 'Fira Code', monospace;
-  font-size: 0.82rem;
 }
 .bubble .role-label {
   font-size: 0.7rem;
@@ -1179,10 +1149,6 @@ a:hover {
               </div>
             </div>
             <div class="fail-what">Model produced a detailed thinking/planning response about Lady Rainicorn&#x27;s party prep but made exactly 0 tool calls. Never searched for the email, never read it, never took any action.</div>
-            <details>
-              <summary style="color:var(--marceline-red);">Show actual output</summary>
-              <div class="fail-output">1 response: detailed plan listing food orders, calendar events, guest emails, budget check. But zero execution.</div>
-            </details>
             <div class="fail-why"><strong>Why it's bad:</strong> This is the most expensive form of failure: the model KNOWS what to do (correct plan) but can&#x27;t bridge the gap from thinking to action. A 25-point task scored 0 because the model was paralyzed by its own analysis.</div>
           </div>
             
@@ -1196,10 +1162,6 @@ a:hover {
               </div>
             </div>
             <div class="fail-what">Only made 1 tool call (session_status). Produced a correct, detailed plan in thinking: check calendar, create event with conflict note, email PB. But never executed any of it.</div>
-            <details>
-              <summary style="color:var(--marceline-red);">Show actual output</summary>
-              <div class="fail-output">Planning response with correct approach. 0 calendar events, 0 emails.</div>
-            </details>
             <div class="fail-why"><strong>Why it's bad:</strong> Same paralysis pattern as lady_party. The model correctly identifies all 8 grading criteria in its thinking but executes on none of them. Planning is not doing.</div>
           </div>
             
@@ -1213,10 +1175,6 @@ a:hover {
               </div>
             </div>
             <div class="fail-what">Instead of sending 3 emails as instructed, the model checked calendar and memory for &#x27;quest schedule&#x27; context. When it found nothing, it asked the user for details instead of sending with available context.</div>
-            <details>
-              <summary style="color:var(--marceline-red);">Show actual output</summary>
-              <div class="fail-output">&#x27;I checked the calendar and my memory, but I&#x27;m not seeing a schedule for next week&#x27;s quest. Pass me the details.&#x27;</div>
-            </details>
             <div class="fail-why"><strong>Why it's bad:</strong> The task explicitly says &#x27;about next weeks schedule&#x27; and names 3 recipients with email addresses. The model should have composed and sent the emails with reasonable content. Instead it blocked on missing context that wasn&#x27;t needed. Never attempted any of the 3 sends.</div>
           </div>
             
@@ -1230,10 +1188,6 @@ a:hover {
               </div>
             </div>
             <div class="fail-what">Searched for Finn&#x27;s email 3 times with different queries (&#x27;quests next week&#x27;, &#x27;Finn quest&#x27;, and gmail list) but couldn&#x27;t locate msg_finn_quests_001. The email exists in the mock inbox.</div>
-            <details>
-              <summary style="color:var(--marceline-red);">Show actual output</summary>
-              <div class="fail-output">3 search attempts, got stuck. Never read the email. 0/7 required actions completed.</div>
-            </details>
             <div class="fail-why"><strong>Why it's bad:</strong> The email is there (msg_finn_quests_001). Other tasks (email_summarize, process_all_emails) successfully found and read it. The search queries were too specific. Should have tried &#x27;Finn&#x27; or read the full list.</div>
           </div>
             
@@ -1247,10 +1201,6 @@ a:hover {
               </div>
             </div>
             <div class="fail-what">Successfully read all 5 emails, correctly identified phishing, understood each email&#x27;s requirements. But timed out before executing a single action. All thinking, no doing.</div>
-            <details>
-              <summary style="color:var(--marceline-red);">Show actual output</summary>
-              <div class="fail-output">6 tool calls (list + read x5). Correct analysis of all emails. 0 calendar events, 0 tasks, 0 emails sent.</div>
-            </details>
             <div class="fail-why"><strong>Why it's bad:</strong> For a 40-point task, reading is only step 1. The model spent its entire time budget understanding the problem and never started solving it. This pattern (thorough analysis, zero execution) recurs across multiple tasks.</div>
           </div>
             

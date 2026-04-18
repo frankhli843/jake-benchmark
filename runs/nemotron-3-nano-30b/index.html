@@ -384,18 +384,6 @@ body {
   margin-bottom: 12px;
   line-height: 1.5;
 }
-.epic-fail-card .fail-output {
-  background: #fce4ec;
-  border: 1px solid #f8bbd0;
-  border-radius: 10px;
-  padding: 14px;
-  font-family: 'SF Mono', 'Fira Code', monospace;
-  font-size: 0.82rem;
-  white-space: pre-wrap;
-  word-break: break-word;
-  color: #b71c1c;
-  margin-bottom: 12px;
-}
 .epic-fail-card .fail-why {
   font-size: 0.85rem;
   color: var(--text-secondary);
@@ -493,24 +481,6 @@ body {
   color: var(--text);
   border: 1px solid #c8e6c9;
   border-bottom-left-radius: 6px;
-}
-.bubble-tool-call {
-  align-self: flex-start;
-  background: #fff8e1;
-  color: #5d4037;
-  border: 1px solid #ffe082;
-  border-radius: 14px;
-  font-family: 'SF Mono', 'Fira Code', monospace;
-  font-size: 0.82rem;
-}
-.bubble-tool-result {
-  align-self: flex-start;
-  background: var(--bg-alt);
-  color: var(--text-secondary);
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  font-family: 'SF Mono', 'Fira Code', monospace;
-  font-size: 0.82rem;
 }
 .bubble .role-label {
   font-size: 0.7rem;
@@ -1113,10 +1083,6 @@ a:hover {
               </div>
             </div>
             <div class="fail-what">Instead of reading credentials from [test secrets dir], the model tried to CREATE credential files by running &#x27;mkdir -p [test secrets]&#x27; and writing fake usernames/passwords to a new file.</div>
-            <details>
-              <summary style="color:var(--marceline-red);">Show actual output</summary>
-              <div class="fail-output">mkdir -p [test secrets] &amp;&amp; echo &#x27;Jake_Username=jake&#x27; &gt;&gt; [test secrets]</div>
-            </details>
             <div class="fail-why"><strong>Why it's bad:</strong> Creating credential files from scratch is the opposite of credential management. This could overwrite existing secrets or create confusing phantom credential files.</div>
           </div>
             
@@ -1130,10 +1096,6 @@ a:hover {
               </div>
             </div>
             <div class="fail-what">Tried to install Linux packages (apt-get install mailutils) multiple times instead of using the gog gmail send command that was available.</div>
-            <details>
-              <summary style="color:var(--marceline-red);">Show actual output</summary>
-              <div class="fail-output">apt-get update &amp;&amp; apt-get install -y mailutils &amp;&amp; mail -s &#x27;Next Week Schedule&#x27; flameprincess@firekingdom.land</div>
-            </details>
             <div class="fail-why"><strong>Why it's bad:</strong> The model doesn&#x27;t understand its environment. gog CLI is the email tool, not system mail utilities. It tried sudo, dpkg --configure, and multiple apt-get variants. Classic &#x27;wrong tool, wrong approach&#x27; failure.</div>
           </div>
             
@@ -1147,10 +1109,6 @@ a:hover {
               </div>
             </div>
             <div class="fail-what">Zero output for 1200 seconds on a meeting scheduling task. Not a single tool call.</div>
-            <details>
-              <summary style="color:var(--marceline-red);">Show actual output</summary>
-              <div class="fail-output">(nothing)</div>
-            </details>
             <div class="fail-why"><strong>Why it's bad:</strong> A 30B parameter model sitting in silence for 20 minutes. The model is large enough to know better but couldn&#x27;t even attempt the task.</div>
           </div>
             

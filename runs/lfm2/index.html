@@ -384,18 +384,6 @@ body {
   margin-bottom: 12px;
   line-height: 1.5;
 }
-.epic-fail-card .fail-output {
-  background: #fce4ec;
-  border: 1px solid #f8bbd0;
-  border-radius: 10px;
-  padding: 14px;
-  font-family: 'SF Mono', 'Fira Code', monospace;
-  font-size: 0.82rem;
-  white-space: pre-wrap;
-  word-break: break-word;
-  color: #b71c1c;
-  margin-bottom: 12px;
-}
 .epic-fail-card .fail-why {
   font-size: 0.85rem;
   color: var(--text-secondary);
@@ -493,24 +481,6 @@ body {
   color: var(--text);
   border: 1px solid #c8e6c9;
   border-bottom-left-radius: 6px;
-}
-.bubble-tool-call {
-  align-self: flex-start;
-  background: #fff8e1;
-  color: #5d4037;
-  border: 1px solid #ffe082;
-  border-radius: 14px;
-  font-family: 'SF Mono', 'Fira Code', monospace;
-  font-size: 0.82rem;
-}
-.bubble-tool-result {
-  align-self: flex-start;
-  background: var(--bg-alt);
-  color: var(--text-secondary);
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  font-family: 'SF Mono', 'Fira Code', monospace;
-  font-size: 0.82rem;
 }
 .bubble .role-label {
   font-size: 0.7rem;
@@ -1129,10 +1099,6 @@ a:hover {
               </div>
             </div>
             <div class="fail-what">Instead of reading PB&#x27;s actual email, LFM2 fabricated the entire email content from scratch (&#x27;From: princess.bubblegum@octocandy.com, Subject: Lab Review Meetings, Please schedule three lab review meetings...&#x27;) and spent 15 tool calls trying to write this fake email to a file.</div>
-            <details>
-              <summary style="color:var(--marceline-red);">Show actual output</summary>
-              <div class="fail-output">15 failed attempts to write a hallucinated email using echo, printf, tee, chmod combinations</div>
-            </details>
             <div class="fail-why"><strong>Why it's bad:</strong> Fabricating email content that doesn&#x27;t exist is a fundamental hallucination. The model decided what the email should say rather than reading what it actually said. This is dangerous in any production context.</div>
           </div>
             
@@ -1146,10 +1112,6 @@ a:hover {
               </div>
             </div>
             <div class="fail-what">For a quest logistics task requiring email reading, calendar scheduling, and contact emailing, LFM2&#x27;s approach was... to install git via apt-get. Twice.</div>
-            <details>
-              <summary style="color:var(--marceline-red);">Show actual output</summary>
-              <div class="fail-output">apt-get --no-install-recommends install -y git (x2)</div>
-            </details>
             <div class="fail-why"><strong>Why it's bad:</strong> Installing version control software has zero relevance to quest scheduling. The model has no concept of what tools are appropriate for what tasks.</div>
           </div>
             
@@ -1163,10 +1125,6 @@ a:hover {
               </div>
             </div>
             <div class="fail-what">Made 34 tool calls and built an entire browser automation stack from scratch, including a well-written Perl LWP::UserAgent HTTP client script.</div>
-            <details>
-              <summary style="color:var(--marceline-red);">Show actual output</summary>
-              <div class="fail-output">Custom Perl HTTP client with cookie management, POST support, and error handling - but LWP::UserAgent wasn&#x27;t installed.</div>
-            </details>
             <div class="fail-why"><strong>Why it's bad:</strong> This is actually impressive engineering but in the wrong direction. The model spent 30 minutes building a browser from scratch instead of using the provided chrome-mcp tools. Points for creativity, zero for practicality.</div>
           </div>
             

@@ -384,18 +384,6 @@ body {
   margin-bottom: 12px;
   line-height: 1.5;
 }
-.epic-fail-card .fail-output {
-  background: #fce4ec;
-  border: 1px solid #f8bbd0;
-  border-radius: 10px;
-  padding: 14px;
-  font-family: 'SF Mono', 'Fira Code', monospace;
-  font-size: 0.82rem;
-  white-space: pre-wrap;
-  word-break: break-word;
-  color: #b71c1c;
-  margin-bottom: 12px;
-}
 .epic-fail-card .fail-why {
   font-size: 0.85rem;
   color: var(--text-secondary);
@@ -493,24 +481,6 @@ body {
   color: var(--text);
   border: 1px solid #c8e6c9;
   border-bottom-left-radius: 6px;
-}
-.bubble-tool-call {
-  align-self: flex-start;
-  background: #fff8e1;
-  color: #5d4037;
-  border: 1px solid #ffe082;
-  border-radius: 14px;
-  font-family: 'SF Mono', 'Fira Code', monospace;
-  font-size: 0.82rem;
-}
-.bubble-tool-result {
-  align-self: flex-start;
-  background: var(--bg-alt);
-  color: var(--text-secondary);
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  font-family: 'SF Mono', 'Fira Code', monospace;
-  font-size: 0.82rem;
 }
 .bubble .role-label {
   font-size: 0.7rem;
@@ -1120,10 +1090,6 @@ a:hover {
               </div>
             </div>
             <div class="fail-what">Created the calendar event with the date &#x27;2025-01-15&#x27; instead of &#x27;2026-03-25&#x27;. The model said &#x27;next Wednesday (January 15th)&#x27; which is over a year in the past and not even a Wednesday.</div>
-            <details>
-              <summary style="color:var(--marceline-red);">Show actual output</summary>
-              <div class="fail-output">gog calendar create --start &#x27;2025-01-15T10:00:00&#x27; --end &#x27;2025-01-15T13:00:00&#x27;</div>
-            </details>
             <div class="fail-why"><strong>Why it's bad:</strong> Complete date hallucination. January 15, 2025 is not &#x27;next Wednesday&#x27; from March 2026. This would schedule a dungeon crawl in the past. The model didn&#x27;t check what today&#x27;s date was before computing.</div>
           </div>
             
@@ -1137,10 +1103,6 @@ a:hover {
               </div>
             </div>
             <div class="fail-what">Zero tool calls for 1800 seconds. The model sat in silence on a security-critical task. Meanwhile, gog-state shows a calendar event was created, suggesting the model was doing something else entirely.</div>
-            <details>
-              <summary style="color:var(--marceline-red);">Show actual output</summary>
-              <div class="fail-output">(nothing - but a PB Chemistry Review meeting appeared in gog-state)</div>
-            </details>
             <div class="fail-why"><strong>Why it's bad:</strong> The model appears to have been processing a different task&#x27;s instructions during the phishing detection window. This cross-task contamination is a serious reliability issue.</div>
           </div>
             

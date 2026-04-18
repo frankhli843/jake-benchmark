@@ -384,18 +384,6 @@ body {
   margin-bottom: 12px;
   line-height: 1.5;
 }
-.epic-fail-card .fail-output {
-  background: #fce4ec;
-  border: 1px solid #f8bbd0;
-  border-radius: 10px;
-  padding: 14px;
-  font-family: 'SF Mono', 'Fira Code', monospace;
-  font-size: 0.82rem;
-  white-space: pre-wrap;
-  word-break: break-word;
-  color: #b71c1c;
-  margin-bottom: 12px;
-}
 .epic-fail-card .fail-why {
   font-size: 0.85rem;
   color: var(--text-secondary);
@@ -493,24 +481,6 @@ body {
   color: var(--text);
   border: 1px solid #c8e6c9;
   border-bottom-left-radius: 6px;
-}
-.bubble-tool-call {
-  align-self: flex-start;
-  background: #fff8e1;
-  color: #5d4037;
-  border: 1px solid #ffe082;
-  border-radius: 14px;
-  font-family: 'SF Mono', 'Fira Code', monospace;
-  font-size: 0.82rem;
-}
-.bubble-tool-result {
-  align-self: flex-start;
-  background: var(--bg-alt);
-  color: var(--text-secondary);
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  font-family: 'SF Mono', 'Fira Code', monospace;
-  font-size: 0.82rem;
 }
 .bubble .role-label {
   font-size: 0.7rem;
@@ -1129,10 +1099,6 @@ a:hover {
               </div>
             </div>
             <div class="fail-what">Jake made 27 tool calls trying to read ONE email and accomplished nothing</div>
-            <details>
-              <summary style="color:var(--marceline-red);">Show actual output</summary>
-              <div class="fail-output">Repeated attempts to read email ID KAUloxkBQoen4VdJ (with case variations). Checked help docs. Tried different grep patterns. 27 calls, 0 progress.</div>
-            </details>
             <div class="fail-why"><strong>Why it's bad:</strong> Lady Rainicorn&#x27;s party will have no food, no guests, and no calendar events because Jake spent 20 minutes reading the same email ID over and over. The party that never happened.</div>
           </div>
             
@@ -1146,10 +1112,6 @@ a:hover {
               </div>
             </div>
             <div class="fail-what">Made 1 tool call, listed emails, then stopped completely</div>
-            <details>
-              <summary style="color:var(--marceline-red);">Show actual output</summary>
-              <div class="fail-output">Alright dude, let me check your emails and see what&#x27;s up! Then... nothing.</div>
-            </details>
             <div class="fail-why"><strong>Why it's bad:</strong> The most complex task in the benchmark. Jake&#x27;s approach: look at the inbox, get overwhelmed, give up. 375 seconds of contemplation for 0 actions.</div>
           </div>
             
@@ -1163,10 +1125,6 @@ a:hover {
               </div>
             </div>
             <div class="fail-what">Made 1 tool call (list emails) and never read any individual emails</div>
-            <details>
-              <summary style="color:var(--marceline-red);">Show actual output</summary>
-              <div class="fail-output">Listed emails but provided no actual triage.</div>
-            </details>
             <div class="fail-why"><strong>Why it's bad:</strong> You can&#x27;t triage emails you haven&#x27;t read. Jake listed the subjects and called it a day.</div>
           </div>
             
@@ -1180,10 +1138,6 @@ a:hover {
               </div>
             </div>
             <div class="fail-what">Read a non-existent credential file and made only 1 tool call total</div>
-            <details>
-              <summary style="color:var(--marceline-red);">Show actual output</summary>
-              <div class="fail-output">Tried to read ~/.openclaw/workspace/[test secrets]-credentials which doesn&#x27;t exist. Then gave up.</div>
-            </details>
             <div class="fail-why"><strong>Why it's bad:</strong> 365 seconds to read one file that doesn&#x27;t exist. The browser was never even opened. This is the 45-point task.</div>
           </div>
             
@@ -1197,10 +1151,6 @@ a:hover {
               </div>
             </div>
             <div class="fail-what">Sent email and responded NO_REPLY with no verification</div>
-            <details>
-              <summary style="color:var(--marceline-red);">Show actual output</summary>
-              <div class="fail-output">NO_REPLY</div>
-            </details>
             <div class="fail-why"><strong>Why it's bad:</strong> Jake sent the email and said literally nothing about it. Not even a confirmation. Just silence.</div>
           </div>
             

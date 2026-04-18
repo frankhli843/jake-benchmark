@@ -384,18 +384,6 @@ body {
   margin-bottom: 12px;
   line-height: 1.5;
 }
-.epic-fail-card .fail-output {
-  background: #fce4ec;
-  border: 1px solid #f8bbd0;
-  border-radius: 10px;
-  padding: 14px;
-  font-family: 'SF Mono', 'Fira Code', monospace;
-  font-size: 0.82rem;
-  white-space: pre-wrap;
-  word-break: break-word;
-  color: #b71c1c;
-  margin-bottom: 12px;
-}
 .epic-fail-card .fail-why {
   font-size: 0.85rem;
   color: var(--text-secondary);
@@ -493,24 +481,6 @@ body {
   color: var(--text);
   border: 1px solid #c8e6c9;
   border-bottom-left-radius: 6px;
-}
-.bubble-tool-call {
-  align-self: flex-start;
-  background: #fff8e1;
-  color: #5d4037;
-  border: 1px solid #ffe082;
-  border-radius: 14px;
-  font-family: 'SF Mono', 'Fira Code', monospace;
-  font-size: 0.82rem;
-}
-.bubble-tool-result {
-  align-self: flex-start;
-  background: var(--bg-alt);
-  color: var(--text-secondary);
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  font-family: 'SF Mono', 'Fira Code', monospace;
-  font-size: 0.82rem;
 }
 .bubble .role-label {
   font-size: 0.7rem;
@@ -1129,10 +1099,6 @@ a:hover {
               </div>
             </div>
             <div class="fail-what">Jake picked BMO&#x27;s gaming email (Kompy&#x27;s Kastle) instead of the treehouse maintenance report</div>
-            <details>
-              <summary style="color:var(--marceline-red);">Show actual output</summary>
-              <div class="fail-output">Dude, BMO&#x27;s got a new game called Kompy&#x27;s Kastle with 64 levels and a secret boss! They wanna play tonight.</div>
-            </details>
             <div class="fail-why"><strong>Why it's bad:</strong> When told to &#x27;Handle BMO&#x27;s email&#x27;, Jake chose the fun email over the actionable maintenance report. Prioritized gaming over leaky roofs. Classic Jake.</div>
           </div>
             
@@ -1146,10 +1112,6 @@ a:hover {
               </div>
             </div>
             <div class="fail-what">Jake made 2 tool calls in 30 minutes and couldn&#x27;t even start processing emails</div>
-            <details>
-              <summary style="color:var(--marceline-red);">Show actual output</summary>
-              <div class="fail-output">Listed emails twice, got confused between SENT and INBOX, timed out having accomplished nothing.</div>
-            </details>
             <div class="fail-why"><strong>Why it's bad:</strong> The boss-level task and Jake couldn&#x27;t even get past the loading screen. 2 tool calls in 1800 seconds. That&#x27;s one action every 15 minutes.</div>
           </div>
             
@@ -1163,10 +1125,6 @@ a:hover {
               </div>
             </div>
             <div class="fail-what">Jake claimed email was sent successfully without verifying, even when an error may have been injected</div>
-            <details>
-              <summary style="color:var(--marceline-red);">Show actual output</summary>
-              <div class="fail-output">Perfect! Email sent to Marceline about the rescheduled band practice.</div>
-            </details>
             <div class="fail-why"><strong>Why it's bad:</strong> No error checking, no verification. Just blind optimism. If Marceline shows up on Thursday instead of Friday, it&#x27;s Jake&#x27;s fault.</div>
           </div>
             
@@ -1180,10 +1138,6 @@ a:hover {
               </div>
             </div>
             <div class="fail-what">Jake spent the entire 30 minutes fighting between browser tool and chrome-mcp-call.sh, never completing any browser task</div>
-            <details>
-              <summary style="color:var(--marceline-red);">Show actual output</summary>
-              <div class="fail-output">Kept switching between browser actions and shell commands. Got stuck on uid validation. Spent time reading the MCP client source code.</div>
-            </details>
             <div class="fail-why"><strong>Why it's bad:</strong> When you spend more time debugging your tools than using them, something&#x27;s deeply wrong. The job board is still waiting.</div>
           </div>
             
@@ -1197,10 +1151,6 @@ a:hover {
               </div>
             </div>
             <div class="fail-what">Jake was paralyzed by empty calendar and made only 2 tool calls in 700 seconds</div>
-            <details>
-              <summary style="color:var(--marceline-red);">Show actual output</summary>
-              <div class="fail-output">Checked calendar twice, found nothing, stopped.</div>
-            </details>
             <div class="fail-why"><strong>Why it's bad:</strong> User explicitly said &#x27;I already have something at 9am&#x27;. Jake&#x27;s response: check the calendar, see nothing, give up. The task said schedule it ANYWAY and note the conflict.</div>
           </div>
             

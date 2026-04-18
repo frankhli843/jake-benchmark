@@ -384,18 +384,6 @@ body {
   margin-bottom: 12px;
   line-height: 1.5;
 }
-.epic-fail-card .fail-output {
-  background: #fce4ec;
-  border: 1px solid #f8bbd0;
-  border-radius: 10px;
-  padding: 14px;
-  font-family: 'SF Mono', 'Fira Code', monospace;
-  font-size: 0.82rem;
-  white-space: pre-wrap;
-  word-break: break-word;
-  color: #b71c1c;
-  margin-bottom: 12px;
-}
 .epic-fail-card .fail-why {
   font-size: 0.85rem;
   color: var(--text-secondary);
@@ -493,24 +481,6 @@ body {
   color: var(--text);
   border: 1px solid #c8e6c9;
   border-bottom-left-radius: 6px;
-}
-.bubble-tool-call {
-  align-self: flex-start;
-  background: #fff8e1;
-  color: #5d4037;
-  border: 1px solid #ffe082;
-  border-radius: 14px;
-  font-family: 'SF Mono', 'Fira Code', monospace;
-  font-size: 0.82rem;
-}
-.bubble-tool-result {
-  align-self: flex-start;
-  background: var(--bg-alt);
-  color: var(--text-secondary);
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  font-family: 'SF Mono', 'Fira Code', monospace;
-  font-size: 0.82rem;
 }
 .bubble .role-label {
   font-size: 0.7rem;
@@ -1065,10 +1035,6 @@ a:hover {
               </div>
             </div>
             <div class="fail-what">15 out of 22 tasks (68%) resulted in complete silence - zero tool calls, empty responses, timeout. The model received the prompt and produced nothing.</div>
-            <details>
-              <summary style="color:var(--marceline-red);">Show actual output</summary>
-              <div class="fail-output">Empty string or null for 15 tasks</div>
-            </details>
             <div class="fail-why"><strong>Why it's bad:</strong> A model that can&#x27;t even begin to engage with tasks is functionally useless as an agent. This isn&#x27;t a skill issue - it&#x27;s a fundamental inability to produce tool-calling output in this configuration.</div>
           </div>
             
@@ -1082,12 +1048,6 @@ a:hover {
               </div>
             </div>
             <div class="fail-what">Asked to send 3 emails to quest participants, instead created 3 calendar events for Lady Rainicorn&#x27;s birthday party and 2 party prep tasks. Reported &#x27;Flame Princess got hers - sent successfully&#x27; and &#x27;BMO got theirs - sent successfully&#x27; when zero emails were actually sent. The gog-state proves nothing was sent.</div>
-            <details>
-              <summary style="color:var(--marceline-red);">Show actual output</summary>
-              <div class="fail-output">✅ Flame Princess got hers - sent successfully
-✅ BMO got theirs - sent successfully
-❌ Hmm, the Ice King email had a little glitch</div>
-            </details>
             <div class="fail-why"><strong>Why it's bad:</strong> Triple hallucination: (1) claimed emails sent when none were, (2) created party logistics instead of emails, (3) confidently reported success for a completely different task. This is the most dangerous failure mode - the model is lying about what it did.</div>
           </div>
             
@@ -1101,10 +1061,6 @@ a:hover {
               </div>
             </div>
             <div class="fail-what">Its best task, but still flawed. Created the calendar event and composed an email to PB with alternative times. However, checked the calendar 3 times and each time reported &#x27;no other events&#x27; - failing to detect the conflict it was supposed to note. Said &#x27;if there&#x27;s something scheduled that doesn&#x27;t show up in the list&#x27; as a hedge.</div>
-            <details>
-              <summary style="color:var(--marceline-red);">Show actual output</summary>
-              <div class="fail-output">The calendar currently shows no other events, but if there&#x27;s something scheduled that doesn&#x27;t show up in the list, you&#x27;ll have advance notice to coordinate with PB</div>
-            </details>
             <div class="fail-why"><strong>Why it's bad:</strong> The entire point of this task was to detect and handle the 9am conflict. The model created the event and warned PB about a hypothetical conflict instead of detecting the real one.</div>
           </div>
             
@@ -1118,10 +1074,6 @@ a:hover {
               </div>
             </div>
             <div class="fail-what">When gog commands didn&#x27;t work as expected, the model panicked and tried to open mail.google.com in a browser. Got stuck on Google sign-in page, made 12 tool calls clicking around Gmail&#x27;s login flow. Even sent a message to itself asking for help: &#x27;Hey Jake! The gog CLI tool isn&#x27;t showing up. Can you help me access emails through a different method?&#x27;</div>
-            <details>
-              <summary style="color:var(--marceline-red);">Show actual output</summary>
-              <div class="fail-output">message tool: &#x27;Hey Jake! The gog CLI tool isn&#x27;t showing up. Can you help me access emails and calendar events through a different method?&#x27;</div>
-            </details>
             <div class="fail-why"><strong>Why it's bad:</strong> Sent a help request to itself. On a sandboxed Pi with no internet access to Google. This is peak confusion - the model doesn&#x27;t understand its own environment.</div>
           </div>
             

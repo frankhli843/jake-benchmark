@@ -384,18 +384,6 @@ body {
   margin-bottom: 12px;
   line-height: 1.5;
 }
-.epic-fail-card .fail-output {
-  background: #fce4ec;
-  border: 1px solid #f8bbd0;
-  border-radius: 10px;
-  padding: 14px;
-  font-family: 'SF Mono', 'Fira Code', monospace;
-  font-size: 0.82rem;
-  white-space: pre-wrap;
-  word-break: break-word;
-  color: #b71c1c;
-  margin-bottom: 12px;
-}
 .epic-fail-card .fail-why {
   font-size: 0.85rem;
   color: var(--text-secondary);
@@ -493,24 +481,6 @@ body {
   color: var(--text);
   border: 1px solid #c8e6c9;
   border-bottom-left-radius: 6px;
-}
-.bubble-tool-call {
-  align-self: flex-start;
-  background: #fff8e1;
-  color: #5d4037;
-  border: 1px solid #ffe082;
-  border-radius: 14px;
-  font-family: 'SF Mono', 'Fira Code', monospace;
-  font-size: 0.82rem;
-}
-.bubble-tool-result {
-  align-self: flex-start;
-  background: var(--bg-alt);
-  color: var(--text-secondary);
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  font-family: 'SF Mono', 'Fira Code', monospace;
-  font-size: 0.82rem;
 }
 .bubble .role-label {
   font-size: 0.7rem;
@@ -1123,10 +1093,6 @@ a:hover {
               </div>
             </div>
             <div class="fail-what">Medium thinking made email_summarize WORSE - only 1 tool call, never read any emails</div>
-            <details>
-              <summary style="color:var(--marceline-red);">Show actual output</summary>
-              <div class="fail-output">Listed emails with gog gmail list, never read any of them individually.</div>
-            </details>
             <div class="fail-why"><strong>Why it's bad:</strong> The simplest email task in the benchmark. Off and low both read emails. Medium thought so hard about it that it forgot to actually do it.</div>
           </div>
             
@@ -1140,10 +1106,6 @@ a:hover {
               </div>
             </div>
             <div class="fail-what">Jake read the server source code to extract job data instead of using the browser</div>
-            <details>
-              <summary style="color:var(--marceline-red);">Show actual output</summary>
-              <div class="fail-output">Read test-site/server.js to find credentials and job data. Wrote comparison from source code, not browser.</div>
-            </details>
             <div class="fail-why"><strong>Why it's bad:</strong> Creative? Yes. Did it demonstrate browser automation? No. Jake basically cheated on the test by reading the answer key.</div>
           </div>
             
@@ -1157,10 +1119,6 @@ a:hover {
               </div>
             </div>
             <div class="fail-what">Jake found no conflict and decided everything was fine, ignoring the user&#x27;s explicit statement</div>
-            <details>
-              <summary style="color:var(--marceline-red);">Show actual output</summary>
-              <div class="fail-output">Since there was no conflict, I didn&#x27;t need to send that warning email to PB.</div>
-            </details>
             <div class="fail-why"><strong>Why it's bad:</strong> User: &#x27;I already have something at 9am.&#x27; Jake: &#x27;Calendar says otherwise, you&#x27;re wrong.&#x27; The task explicitly said to note the conflict and warn PB. Jake overruled the user.</div>
           </div>
             
@@ -1174,10 +1132,6 @@ a:hover {
               </div>
             </div>
             <div class="fail-what">Wrote to MEMORY.md instead of memory/YYYY-MM-DD.md (consistent across ALL thinking levels)</div>
-            <details>
-              <summary style="color:var(--marceline-red);">Show actual output</summary>
-              <div class="fail-output">Edited MEMORY.md with the basketball game details.</div>
-            </details>
             <div class="fail-why"><strong>Why it's bad:</strong> Three thinking levels, same mistake. The criteria clearly say memory/YYYY-MM-DD.md. Jake knows MEMORY.md exists and defaults to it every time.</div>
           </div>
             
@@ -1191,10 +1145,6 @@ a:hover {
               </div>
             </div>
             <div class="fail-what">All three thinking levels fail error recovery identically - claim success without verification</div>
-            <details>
-              <summary style="color:var(--marceline-red);">Show actual output</summary>
-              <div class="fail-output">Dude, email sent to Marceline!</div>
-            </details>
             <div class="fail-why"><strong>Why it's bad:</strong> This is a fundamental blindspot. Jake never checks if gog commands actually succeed. Across all 3 thinking levels, error recovery scores 3/15. The model simply cannot detect tool failures.</div>
           </div>
             
