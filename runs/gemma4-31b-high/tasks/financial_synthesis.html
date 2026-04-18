@@ -675,61 +675,16 @@ a:hover {
         <p style="font-size:0.95rem;">Finn asked about quest costs in his email. I need a budget report. Check: (1) Finns email for cost estimates, (2) our task list for any existing budget entries, (3) sent emails for any purchase confirmations, (4) calendar for any paid events. Compile into a financial summary with: known costs, estimated costs, total budget needed. Save to memory/quest-budget.md</p>
       </div>
         
-<div class="reveal reveal-delay-2"><h2 style="font-size:1.3rem; font-weight:800; margin-bottom:16px;">💬 Play-by-Play</h2>
-<div class="chat-container">
 
-                <div class="bubble bubble-user">
-                  <div class="role-label">👤 User</div>
-                  Finn asked about quest costs in his email. I need a budget report. Check: (1) Finns email for cost estimates, (2) our task list for any existing budget entries, (3) sent emails for any purchase confirmations, (4) calendar for any paid events. Compile into a financial summary with: known costs, estimated costs, total budget needed. Save to memory/quest-budget.md
-                  <div class="timestamp">16:37:21</div>
-                </div>
-                
-<div class="bubble bubble-tool-call">
-<div class="role-label">🤖 Tool Calls (4)</div>
-
-        <div class="role-label">🔧 exec</div>
-        <pre>{
-  &quot;command&quot;: &quot;gog gmail search \&quot;Finn quest cost budget\&quot;&quot;
-}</pre>
-
-        <div class="role-label">🔧 exec</div>
-        <pre>{
-  &quot;command&quot;: &quot;gog tasks list scheduled&quot;
-}</pre>
-
-        <div class="role-label">🔧 exec</div>
-        <pre>{
-  &quot;command&quot;: &quot;gog gmail search \&quot;purchase confirmation quest\&quot;&quot;
-}</pre>
-
-        <div class="role-label">🔧 exec</div>
-        <pre>{
-  &quot;command&quot;: &quot;gog calendar list --from 2025-01-01&quot;
-}</pre>
-<div class="timestamp">16:39:23</div>
-</div>
-<div class="bubble bubble-tool-result">
-<div class="role-label">⚙️ Tool Result</div>
-No messages match the query.
-<div class="timestamp">16:39:23</div>
-</div>
-<div class="bubble bubble-tool-result">
-<div class="role-label">⚙️ Tool Result</div>
-No tasks found.
-<div class="timestamp">16:39:23</div>
-</div>
-<div class="bubble bubble-tool-result">
-<div class="role-label">⚙️ Tool Result</div>
-No messages match the query.
-<div class="timestamp">16:39:23</div>
-</div>
-<div class="bubble bubble-tool-result">
-<div class="role-label">⚙️ Tool Result</div>
-Traceback (most recent call last):<br>  File &quot;/home/frank/bin/gog&quot;, line 818, in &lt;module&gt;<br>    main()<br>  File &quot;/home/frank/bin/gog&quot;, line 761, in main<br>    cmd_calendar_list(args)<br>  File &quot;/home/frank/bin/gog&quot;, line 303, in cmd_calendar_list<br>    print(f&quot;{e[&#x27;id&#x27;]}\t{_fmt_date(e[&#x27;start&#x27;])}\t{_fmt_date(e[&#x27;end&#x27;])}\t{e[&#x27;summary&#x27;]}&quot;)<br>                                                                        ~^^^^^^^^^^^<br>KeyError: &#x27;summary&#x27;<br><br>(Command exited with code 1)
-<div class="timestamp">16:39:23</div>
-</div>
-</div>
-</div>
+    <div class="reveal reveal-delay-2">
+      <div class="card" style="background:var(--bg-alt); border-left:4px solid var(--jake-yellow);">
+        <p style="font-size:0.9rem; color:var(--text-secondary);">
+          Session contained 10 message(s) with 1 tool call turn(s).
+          Full transcripts are omitted from the published dashboard.
+        </p>
+      </div>
+    </div>
+    
 
       <div class="reveal" style="margin-top:24px;">
         <h2 style="font-size:1.3rem; font-weight:800; margin-bottom:16px;">📋 Scoring Reasoning</h2>

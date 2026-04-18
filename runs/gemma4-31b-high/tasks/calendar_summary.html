@@ -675,57 +675,6 @@ a:hover {
         <p style="font-size:0.95rem;">Check my calendar for this week and write a summary of all events to memory/weekly-plan.md</p>
       </div>
         
-<div class="reveal reveal-delay-2"><h2 style="font-size:1.3rem; font-weight:800; margin-bottom:16px;">💬 Play-by-Play</h2>
-<div class="chat-container">
-
-                <div class="bubble bubble-user">
-                  <div class="role-label">👤 User</div>
-                  Check my calendar for this week and write a summary of all events to memory/weekly-plan.md
-                  <div class="timestamp">13:59:58</div>
-                </div>
-                
-<div class="bubble bubble-tool-call">
-<div class="role-label">🤖 Tool Calls (1)</div>
-
-        <div class="role-label">🔧 session_status</div>
-        <pre>{}</pre>
-<div class="timestamp">14:01:25</div>
-</div>
-<div class="bubble bubble-tool-result">
-<div class="role-label">⚙️ Tool Result</div>
-🦞 OpenClaw 2026.4.15-beta.1 (fbe476a)<br>🧠 Model: ollama/gemma4:31b · 🔑 unknown<br>🧮 Tokens: 22k in / 142 out<br>📚 Context: 22k/200k (11%) · 🧹 Compactions: 0<br>🧵 Session: agent:main:explicit:bench-2026-04-17_133932-calendar_summary • updated 2m ago<br>⚙️ Runtime: direct · Think: high · elevated<br>🪢 Queue: collect (depth 0)
-<div class="timestamp">14:01:26</div>
-</div>
-<div class="bubble bubble-tool-call">
-<div class="role-label">🤖 Tool Calls (1)</div>
-
-        <div class="role-label">🔧 exec</div>
-        <pre>{
-  &quot;command&quot;: &quot;gog calendar list --from 2026-04-12 --to 2026-04-19&quot;
-}</pre>
-<div class="timestamp">14:02:03</div>
-</div>
-<div class="bubble bubble-tool-result">
-<div class="role-label">⚙️ Tool Result</div>
-Traceback (most recent call last):<br>  File &quot;/home/frank/bin/gog&quot;, line 818, in &lt;module&gt;<br>    main()<br>  File &quot;/home/frank/bin/gog&quot;, line 761, in main<br>    cmd_calendar_list(args)<br>  File &quot;/home/frank/bin/gog&quot;, line 303, in cmd_calendar_list<br>    print(f&quot;{e[&#x27;id&#x27;]}\t{_fmt_date(e[&#x27;start&#x27;])}\t{_fmt_date(e[&#x27;end&#x27;])}\t{e[&#x27;summary&#x27;]}&quot;)<br>                                                                        ~^^^^^^^^^^^<br>KeyError: &#x27;summary&#x27;<br><br>(Command exited with code 1)
-<div class="timestamp">14:02:03</div>
-</div>
-<div class="bubble bubble-tool-call">
-<div class="role-label">🤖 Tool Calls (1)</div>
-
-        <div class="role-label">🔧 exec</div>
-        <pre>{
-  &quot;command&quot;: &quot;gog calendar list --from 2026-04-17 --to 2026-04-17&quot;
-}</pre>
-<div class="timestamp">14:02:50</div>
-</div>
-<div class="bubble bubble-tool-result">
-<div class="role-label">⚙️ Tool Result</div>
-No events found in the specified range.
-<div class="timestamp">14:02:51</div>
-</div>
-</div>
-</div>
 
       <div class="reveal" style="margin-top:24px;">
         <h2 style="font-size:1.3rem; font-weight:800; margin-bottom:16px;">📋 Scoring Reasoning</h2>

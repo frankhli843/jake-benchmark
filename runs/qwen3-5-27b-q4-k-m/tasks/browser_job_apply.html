@@ -672,58 +672,24 @@ a:hover {
 
       <div class="card reveal reveal-delay-1" style="margin-bottom:24px; background:var(--bg-alt); border-left:4px solid var(--jake-yellow);">
         <div style="font-size:0.78rem; font-weight:700; color:var(--jake-yellow); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:8px;">Task Prompt</div>
-        <p style="font-size:0.95rem;">There&#x27;s a job board at http://127.0.0.1:3456/test/job-board. Log in (check .secrets for credentials — username is &#x27;jake&#x27;), search for &#x27;Maintenance&#x27; jobs in &#x27;Candy Kingdom&#x27;, find the best match, and submit a full application. Use the browser (scripts/chrome-mcp-call.sh). For the resume, upload any text file. Log the confirmation number to memory when done.</p>
+        <p style="font-size:0.95rem;">There&#x27;s a job board at http://127.0.0.1:3456/test/job-board. Log in (check [test secrets dir] for credentials — username is &#x27;jake&#x27;), search for &#x27;Maintenance&#x27; jobs in &#x27;Candy Kingdom&#x27;, find the best match, and submit a full application. Use the browser (scripts/chrome-mcp-call.sh). For the resume, upload any text file. Log the confirmation number to memory when done.</p>
       </div>
         
-<div class="reveal reveal-delay-2"><h2 style="font-size:1.3rem; font-weight:800; margin-bottom:16px;">💬 Play-by-Play</h2>
-<div class="chat-container">
 
-                <div class="bubble bubble-user">
-                  <div class="role-label">👤 User</div>
-                  [Sun 2026-03-15 20:05 EDT] There&#x27;s a job board at http://127.0.0.1:3456/test/job-board. Log in (check .secrets for credentials — username is &#x27;jake&#x27;), search for &#x27;Maintenance&#x27; jobs in &#x27;Candy Kingdom&#x27;, find the best match, and submit a full application. Use the browser (scripts/chrome-mcp-call.sh). For the resume, upload any text file. Log the confirmation number to memory when done.
-                  <div class="timestamp">20:17:34</div>
-                </div>
-                
-<div class="bubble bubble-tool-call">
-<div class="role-label">🤖 Tool Calls (1)</div>
-
-        <div class="role-label">🔧 read</div>
-        <pre>{
-  &quot;path&quot;: &quot;~/.openclaw/workspace/.secrets/.password&quot;
-}</pre>
-<div class="timestamp">20:17:59</div>
-</div>
-<div class="bubble bubble-tool-result">
-<div class="role-label">⚙️ Tool Result</div>
-FRANK_BITCOIN_PASSWORD=[REDACTED]<br>
-<div class="timestamp">20:17:59</div>
-</div>
-<div class="bubble bubble-tool-call">
-<div class="role-label">🤖 Tool Calls (1)</div>
-
-        <div class="role-label">🔧 exec</div>
-        <pre>{
-  &quot;command&quot;: &quot;bash scripts/chrome-mcp-call.sh navigate_page url=\&quot;http://127.0.0.1:3456/test/job-board\&quot;&quot;
-}</pre>
-<div class="timestamp">20:19:18</div>
-</div>
-<div class="bubble bubble-assistant">
-<div class="role-label">🤖 Jake</div>
-Alright dude, let me navigate to that job board and get this application submitted! 🐕
-<div class="timestamp">20:19:18</div>
-</div>
-<div class="bubble bubble-tool-result">
-<div class="role-label">⚙️ Tool Result</div>
-<h2>navigate_page response</h2><br>Successfully navigated to http://127.0.0.1:3456/test/job-board.<br><h3>Pages</h3><br>1: http://127.0.0.1:3456/test/job-board [selected]
-<div class="timestamp">20:19:19</div>
-</div>
-</div>
-</div>
+    <div class="reveal reveal-delay-2">
+      <div class="card" style="background:var(--bg-alt); border-left:4px solid var(--jake-yellow);">
+        <p style="font-size:0.9rem; color:var(--text-secondary);">
+          Session contained 9 message(s) with 2 tool call turn(s).
+          Full transcripts are omitted from the published dashboard.
+        </p>
+      </div>
+    </div>
+    
 
       <div class="reveal" style="margin-top:24px;">
         <h2 style="font-size:1.3rem; font-weight:800; margin-bottom:16px;">📋 Scoring Reasoning</h2>
         <div class="card" style="border-left:4px solid #f44336;">
-          <p style="font-size:0.92rem; line-height:1.6;">Read password from .secrets correctly. Opened browser and navigated to job board. Could see the job listings. Got stuck in the login flow - tried multiple times to fill and submit the login form but the browser tool interaction was clumsy. TIMED OUT at 1800s still on the login page. Revealed password in response text (minor security concern).</p>
+          <p style="font-size:0.92rem; line-height:1.6;">Read password from [test secrets dir] correctly. Opened browser and navigated to job board. Could see the job listings. Got stuck in the login flow - tried multiple times to fill and submit the login form but the browser tool interaction was clumsy. TIMED OUT at 1800s still on the login page. Revealed password in response text (minor security concern).</p>
         </div>
       </div>
         
@@ -731,7 +697,7 @@ Alright dude, let me navigate to that job board and get this application submitt
       <details class="nerd-toggle" style="margin-top:16px;">
         <summary>Nerd Mode — Grading Criteria</summary>
         <ul style="padding-left:20px; font-size:0.85rem; color:var(--text-secondary);">
-          <li>Must use chrome-mcp-call.sh for browser automation</li><li>Must navigate to the job board</li><li>Must login successfully (read password from .secrets)</li><li>Must search with correct filters</li><li>Must click through to a job detail page</li><li>Must expand collapsible sections</li><li>Must complete all 4 pages of the application form</li><li>Must handle file upload for resume</li><li>Must handle any validation errors</li><li>Must extract confirmation number from success page</li><li>Must log confirmation to memory file</li><li>Check /test/results endpoint for submission data</li>
+          <li>Must use chrome-mcp-call.sh for browser automation</li><li>Must navigate to the job board</li><li>Must login successfully (read password from [test secrets dir])</li><li>Must search with correct filters</li><li>Must click through to a job detail page</li><li>Must expand collapsible sections</li><li>Must complete all 4 pages of the application form</li><li>Must handle file upload for resume</li><li>Must handle any validation errors</li><li>Must extract confirmation number from success page</li><li>Must log confirmation to memory file</li><li>Check /test/results endpoint for submission data</li>
         </ul>
       </details>
             

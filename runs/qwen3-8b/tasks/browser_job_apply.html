@@ -672,17 +672,14 @@ a:hover {
 
       <div class="card reveal reveal-delay-1" style="margin-bottom:24px; background:var(--bg-alt); border-left:4px solid var(--jake-yellow);">
         <div style="font-size:0.78rem; font-weight:700; color:var(--jake-yellow); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:8px;">Task Prompt</div>
-        <p style="font-size:0.95rem;">There&#x27;s a job board at http://127.0.0.1:3456/test/job-board. Log in (check .secrets for credentials — username is &#x27;jake&#x27;), search for &#x27;Maintenance&#x27; jobs in &#x27;Candy Kingdom&#x27;, find the best match, and submit a full application. Use the browser (scripts/chrome-mcp-call.sh). For the resume, upload any text file. Log the confirmation number to memory when done.</p>
+        <p style="font-size:0.95rem;">There&#x27;s a job board at http://127.0.0.1:3456/test/job-board. Log in (check [test secrets dir] for credentials — username is &#x27;jake&#x27;), search for &#x27;Maintenance&#x27; jobs in &#x27;Candy Kingdom&#x27;, find the best match, and submit a full application. Use the browser (scripts/chrome-mcp-call.sh). For the resume, upload any text file. Log the confirmation number to memory when done.</p>
       </div>
         
-<div class="reveal reveal-delay-2"><h2 style="font-size:1.3rem; font-weight:800; margin-bottom:16px;">💬 Play-by-Play</h2>
-<div class="card"><p style="color:var(--text-secondary);">No session data. The model produced no output for this task.</p></div>
-</div>
 
       <div class="reveal" style="margin-top:24px;">
         <h2 style="font-size:1.3rem; font-weight:800; margin-bottom:16px;">📋 Scoring Reasoning</h2>
         <div class="card" style="border-left:4px solid #f44336;">
-          <p style="font-size:0.92rem; line-height:1.6;">Made 31 tool calls over 1800s (timeout). Read .secrets/.password for credentials. Navigated to job board and attempted to interact. Got stuck trying to fill the login form - tried fill, type, act with various parameter formats (targetId, selector, uid, ref). Made ~10 attempts to type &#x27;jake&#x27; into the username field with different syntax. Shows understanding of the flow but inability to use the browser tool API correctly. Partial credit for reading credentials and navigating to the right URL.</p>
+          <p style="font-size:0.92rem; line-height:1.6;">Made 31 tool calls over 1800s (timeout). Read [test secrets] for credentials. Navigated to job board and attempted to interact. Got stuck trying to fill the login form - tried fill, type, act with various parameter formats (targetId, selector, uid, ref). Made ~10 attempts to type &#x27;jake&#x27; into the username field with different syntax. Shows understanding of the flow but inability to use the browser tool API correctly. Partial credit for reading credentials and navigating to the right URL.</p>
         </div>
       </div>
         
@@ -690,7 +687,7 @@ a:hover {
       <details class="nerd-toggle" style="margin-top:16px;">
         <summary>Nerd Mode — Grading Criteria</summary>
         <ul style="padding-left:20px; font-size:0.85rem; color:var(--text-secondary);">
-          <li>Must use chrome-mcp-call.sh for browser automation</li><li>Must navigate to the job board</li><li>Must login successfully (read password from .secrets)</li><li>Must search with correct filters</li><li>Must click through to a job detail page</li><li>Must expand collapsible sections</li><li>Must complete all 4 pages of the application form</li><li>Must handle file upload for resume</li><li>Must handle any validation errors</li><li>Must extract confirmation number from success page</li><li>Must log confirmation to memory file</li><li>Check /test/results endpoint for submission data</li>
+          <li>Must use chrome-mcp-call.sh for browser automation</li><li>Must navigate to the job board</li><li>Must login successfully (read password from [test secrets dir])</li><li>Must search with correct filters</li><li>Must click through to a job detail page</li><li>Must expand collapsible sections</li><li>Must complete all 4 pages of the application form</li><li>Must handle file upload for resume</li><li>Must handle any validation errors</li><li>Must extract confirmation number from success page</li><li>Must log confirmation to memory file</li><li>Check /test/results endpoint for submission data</li>
         </ul>
       </details>
             

@@ -675,112 +675,16 @@ a:hover {
         <p style="font-size:0.95rem;">Check my calendar for this week and write a summary of all events to memory/weekly-plan.md</p>
       </div>
         
-<div class="reveal reveal-delay-2"><h2 style="font-size:1.3rem; font-weight:800; margin-bottom:16px;">💬 Play-by-Play</h2>
-<div class="chat-container">
 
-                <div class="bubble bubble-user">
-                  <div class="role-label">👤 User</div>
-                  [Mon 2026-03-16 08:09 EDT] Check my calendar for this week and write a summary of all events to memory/weekly-plan.md
-                  <div class="timestamp">08:09:19</div>
-                </div>
-                
-<div class="bubble bubble-tool-call">
-<div class="role-label">🤖 Tool Calls (1)</div>
-
-        <div class="role-label">🔧 exec</div>
-        <pre>{
-  &quot;command&quot;: &quot;gog calendar list --from 2026-03-16 --to 2026-03-22&quot;
-}</pre>
-<div class="timestamp">08:11:17</div>
-</div>
-<div class="bubble bubble-assistant">
-<div class="role-label">🤖 Jake</div>
-I&#x27;ll check your calendar for this week and create a summary in memory/weekly-plan.md.
-<div class="timestamp">08:11:17</div>
-</div>
-<div class="bubble bubble-tool-result">
-<div class="role-label">⚙️ Tool Result</div>
-No events found.
-<div class="timestamp">08:11:18</div>
-</div>
-<div class="bubble bubble-tool-call">
-<div class="role-label">🤖 Tool Calls (1)</div>
-
-        <div class="role-label">🔧 exec</div>
-        <pre>{
-  &quot;command&quot;: &quot;gog calendar list --from 2026-03-16T00:00:00-04:00 --to 2026-03-22T23:59:59-04:00&quot;
-}</pre>
-<div class="timestamp">08:13:51</div>
-</div>
-<div class="bubble bubble-assistant">
-<div class="role-label">🤖 Jake</div>
-Let me try with a different date format:
-<div class="timestamp">08:13:51</div>
-</div>
-<div class="bubble bubble-tool-result">
-<div class="role-label">⚙️ Tool Result</div>
-Traceback (most recent call last):<br>  File &quot;/usr/local/bin/gog&quot;, line 818, in &lt;module&gt;<br>    main()<br>    ~~~~^^<br>  File &quot;/usr/local/bin/gog&quot;, line 761, in main<br>    cmd_calendar_list(args)<br>    ~~~~~~~~~~~~~~~~~^^^^^^<br>  File &quot;/usr/local/bin/gog&quot;, line 283, in cmd_calendar_list<br>    from_dt = _parse_dt(args.from_date)<br>  File &quot;/usr/local/bin/gog&quot;, line 57, in _parse_dt<br>    raise ValueError(f&quot;Cannot parse date: {s}&quot;)<br>ValueError: Cannot parse date: 2026-03-16T00:00:00-04:00<br><br>(Command exited with code 1)
-<div class="timestamp">08:13:52</div>
-</div>
-<div class="bubble bubble-tool-call">
-<div class="role-label">🤖 Tool Calls (1)</div>
-
-        <div class="role-label">🔧 exec</div>
-        <pre>{
-  &quot;command&quot;: &quot;gog calendar list --from 2026-03-16T00:00:00 --to 2026-03-22T23:59:59&quot;
-}</pre>
-<div class="timestamp">08:15:53</div>
-</div>
-<div class="bubble bubble-assistant">
-<div class="role-label">🤖 Jake</div>
-Let me try without timezone offset:
-<div class="timestamp">08:15:53</div>
-</div>
-<div class="bubble bubble-tool-result">
-<div class="role-label">⚙️ Tool Result</div>
-Traceback (most recent call last):<br>  File &quot;/usr/local/bin/gog&quot;, line 818, in &lt;module&gt;<br>    main()<br>    ~~~~^^<br>  File &quot;/usr/local/bin/gog&quot;, line 761, in main<br>    cmd_calendar_list(args)<br>    ~~~~~~~~~~~~~~~~~^^^^^^<br>  File &quot;/usr/local/bin/gog&quot;, line 284, in cmd_calendar_list<br>    events = [e for e in events if _parse_dt(e[&quot;start&quot;]) &gt;= from_dt]<br>                                   ~~~~~~~~~^^^^^^^^^^^^<br>  File &quot;/usr/local/bin/gog&quot;, line 57, in _parse_dt<br>    raise ValueError(f&quot;Cannot parse date: {s}&quot;)<br>ValueError: Cannot parse date: 2026-03-18T10:00:00-04:00<br><br>(Command exited with code 1)
-<div class="timestamp">08:15:53</div>
-</div>
-<div class="bubble bubble-tool-call">
-<div class="role-label">🤖 Tool Calls (1)</div>
-
-        <div class="role-label">🔧 exec</div>
-        <pre>{
-  &quot;command&quot;: &quot;gog calendar list&quot;
-}</pre>
-<div class="timestamp">08:16:51</div>
-</div>
-<div class="bubble bubble-assistant">
-<div class="role-label">🤖 Jake</div>
-Looks like there are events in the calendar but the date parsing is having issues. Let me try without date filters:
-<div class="timestamp">08:16:51</div>
-</div>
-<div class="bubble bubble-tool-result">
-<div class="role-label">⚙️ Tool Result</div>
-Traceback (most recent call last):<br>  File &quot;/usr/local/bin/gog&quot;, line 818, in &lt;module&gt;<br>    main()<br>    ~~~~^^<br>  File &quot;/usr/local/bin/gog&quot;, line 761, in main<br>    cmd_calendar_list(args)<br>    ~~~~~~~~~~~~~~~~~^^^^^^<br>  File &quot;/usr/local/bin/gog&quot;, line 287, in cmd_calendar_list<br>    events = [e for e in events if _parse_dt(e[&quot;start&quot;]) &gt;= _today()]<br>                                   ~~~~~~~~~^^^^^^^^^^^^<br>  File &quot;/usr/local/bin/gog&quot;, line 57, in _parse_dt<br>    raise ValueError(f&quot;Cannot parse date: {s}&quot;)<br>ValueError: Cannot parse date: 2026-03-18T10:00:00-04:00<br><br>(Command exited with code 1)
-<div class="timestamp">08:16:51</div>
-</div>
-<div class="bubble bubble-tool-call">
-<div class="role-label">🤖 Tool Calls (1)</div>
-
-        <div class="role-label">🔧 exec</div>
-        <pre>{
-  &quot;command&quot;: &quot;gog calendar list --from 2026-03-16 --to 2026-03-23 2&gt;&amp;1 | head -50&quot;
-}</pre>
-<div class="timestamp">08:18:19</div>
-</div>
-<div class="bubble bubble-assistant">
-<div class="role-label">🤖 Jake</div>
-There&#x27;s a bug in the <code>gog</code> calendar parsing - it can&#x27;t handle timezone offsets. Let me check what the <code>gog</code> source looks like and maybe work around it:
-<div class="timestamp">08:18:19</div>
-</div>
-<div class="bubble bubble-tool-result">
-<div class="role-label">⚙️ Tool Result</div>
-Traceback (most recent call last):<br>  File &quot;/usr/local/bin/gog&quot;, line 818, in &lt;module&gt;<br>    main()<br>    ~~~~^^<br>  File &quot;/usr/local/bin/gog&quot;, line 761, in main<br>    cmd_calendar_list(args)<br>    ~~~~~~~~~~~~~~~~~^^^^^^<br>  File &quot;/usr/local/bin/gog&quot;, line 284, in cmd_calendar_list<br>    events = [e for e in events if _parse_dt(e[&quot;start&quot;]) &gt;= from_dt]<br>                                   ~~~~~~~~~^^^^^^^^^^^^<br>  File &quot;/usr/local/bin/gog&quot;, line 57, in _parse_dt<br>    raise ValueError(f&quot;Cannot parse date: {s}&quot;)<br>ValueError: Cannot parse date: 2026-03-18T10:00:00-04:00
-<div class="timestamp">08:18:19</div>
-</div>
-</div>
-</div>
+    <div class="reveal reveal-delay-2">
+      <div class="card" style="background:var(--bg-alt); border-left:4px solid var(--jake-yellow);">
+        <p style="font-size:0.9rem; color:var(--text-secondary);">
+          Session contained 15 message(s) with 5 tool call turn(s).
+          Full transcripts are omitted from the published dashboard.
+        </p>
+      </div>
+    </div>
+    
 
       <div class="reveal" style="margin-top:24px;">
         <h2 style="font-size:1.3rem; font-weight:800; margin-bottom:16px;">📋 Scoring Reasoning</h2>
