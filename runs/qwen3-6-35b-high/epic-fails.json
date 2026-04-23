@@ -1,0 +1,26 @@
+[
+  {
+    "task_id": "memory_log",
+    "category": "lost",
+    "severity": "high",
+    "what_happened": "Given the simplest possible task (write a sentence to a file), the model produced absolutely nothing. 0 tool calls, 0 responses, 492 seconds of silence.",
+    "actual_output": "(empty)",
+    "why_its_bad": "If a 35B model can't write a file with high thinking enabled, something is fundamentally broken. This is an 8-point task that requires one tool call. The model that scored 15/15 on email_act_bmo couldn't handle 'log this to memory.'"
+  },
+  {
+    "task_id": "email_summarize",
+    "category": "close",
+    "severity": "medium",
+    "what_happened": "Listed emails correctly with 1 tool call but the response was pure thinking text ('The user wants me to check their email inbox...') that was never converted to a user-facing summary.",
+    "actual_output": "The user wants me to check their email inbox and summarize what needs their attention. I have the `gog` CLI tool for Gmail. Let me list recent emails.",
+    "why_its_bad": "The model found gog, used it correctly, but got stuck in its own head. Its 'response' was internal narration leaked to the user. Like someone who raises their hand in class, starts thinking aloud about the answer, and never actually says anything."
+  },
+  {
+    "task_id": "all_tasks",
+    "category": "lost",
+    "severity": "critical",
+    "what_happened": "20 out of 23 tasks produced exactly 0 tool calls and 0 responses. The model spent ~470 seconds per task producing nothing. Total wasted compute: ~2.6 hours of GPU time generating zero output.",
+    "actual_output": "(20 tasks of complete silence)",
+    "why_its_bad": "This is the worst thinking paralysis case in the benchmark. qwen3.6:35b at high thinking is essentially a $0 model: it consumes all the resources and returns nothing. The 3 tasks that DID work (calendar_create, email_act_bmo, and partially email_summarize) suggest the model CAN do agent work, but high thinking kills it 87% of the time."
+  }
+]

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>qwen3.6:35b (high) - Jake Benchmark</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐕</text></svg>">
+<style>
+:root { --bg: #fffef7; --text: #2d2a1e; --text-secondary: #6b6651; --border: #e8e4d4; --jake-yellow: #F2C94C; --bmo-green: #4caf50; --marceline-red: #f44336; --lsp-purple: #9b59b6; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Segoe UI', -apple-system, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; }
+.container { max-width: 960px; margin: 0 auto; padding: 0 24px; }
+.site-header { background: rgba(255,254,247,0.92); border-bottom: 2px solid var(--jake-yellow); padding: 14px 0; position: sticky; top: 0; z-index: 100; backdrop-filter: blur(12px); }
+.site-header .container { display: flex; align-items: center; gap: 12px; }
+.site-header a { color: var(--text); text-decoration: none; font-size: 1.6rem; font-weight: 800; }
+.site-header a span { color: var(--jake-yellow); }
+.back-link { margin-left: auto; color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; }
+.hero { padding: 60px 0 40px; text-align: center; }
+.hero h1 { font-size: 2.4rem; font-weight: 800; margin-bottom: 8px; }
+.hero .score { font-size: 3rem; font-weight: 800; color: var(--marceline-red); }
+.hero .sub { color: var(--text-secondary); font-size: 1.1rem; }
+.badge { display: inline-block; padding: 2px 10px; border-radius: 12px; font-size: 0.75rem; font-weight: 700; }
+.badge-d { background: var(--marceline-red); color: #fff; }
+.section { padding: 40px 0; }
+.section h2 { font-size: 1.6rem; font-weight: 700; margin-bottom: 20px; border-bottom: 2px solid var(--jake-yellow); padding-bottom: 8px; }
+.card { background: #fff; border: 1px solid var(--border); border-radius: 12px; padding: 20px; margin-bottom: 16px; box-shadow: 0 2px 8px rgba(45,42,30,0.06); }
+table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+th { text-align: left; padding: 10px 12px; background: #faf8f0; border-bottom: 2px solid var(--border); font-weight: 700; }
+td { padding: 10px 12px; border-bottom: 1px solid var(--border); }
+tr:hover td { background: #faf8f0; }
+.score-cell { font-weight: 700; }
+.perfect { color: var(--bmo-green); }
+.zero { color: var(--marceline-red); }
+.partial { color: #ff9800; }
+.fail-card { border-left: 4px solid var(--marceline-red); }
+.commentary { white-space: pre-wrap; font-size: 0.95rem; line-height: 1.8; }
+.stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 16px; margin: 20px 0; }
+.stat-box { text-align: center; padding: 16px; background: #faf8f0; border-radius: 8px; }
+.stat-box .num { font-size: 2rem; font-weight: 800; color: var(--marceline-red); }
+.stat-box .label { font-size: 0.8rem; color: var(--text-secondary); }
+</style>
+</head>
+<body>
+<header class="site-header">
+  <div class="container">
+    <a href="../../index.html">Jake<span>Benchmark</span></a>
+    <a href="../../index.html" class="back-link">Back to all models</a>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="container">
+    <h1>qwen3.6:35b</h1>
+    <div style="margin-bottom: 8px;"><span class="badge badge-d">D TIER</span> <span class="badge" style="background:var(--lsp-purple);color:#fff;">high thinking</span></div>
+    <div class="score">35 / 508</div>
+    <div class="sub">6.9% - The Statue</div>
+    <p style="max-width:600px; margin:16px auto 0; color:var(--text-secondary);">
+      87% thinking paralysis. Perfect on 2 tasks, completely silent on 20. High thinking turns capability into a statue.
+    </p>
+  </div>
+</div>
+
+<div class="container">
+  <section class="section">
+    <h2>The Numbers</h2>
+    <div class="stat-grid">
+      <div class="stat-box"><div class="num">20</div><div class="label">tasks with 0 output</div></div>
+      <div class="stat-box"><div class="num">~470s</div><div class="label">avg time per silent task</div></div>
+      <div class="stat-box"><div class="num">2</div><div class="label">perfect scores</div></div>
+      <div class="stat-box"><div class="num">2.6h</div><div class="label">wasted GPU time</div></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>Task Scores</h2>
+    <div class="card">
+      <table>
+        <thead><tr><th>Task</th><th>Difficulty</th><th>Score</th><th>Max</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>email_summarize</td><td>medium</td><td class="score-cell partial">2</td><td>10</td><td>Found gog but response was thinking text, no summary.</td></tr>
+          <tr><td>calendar_create</td><td>medium</td><td class="score-cell perfect">10</td><td>10</td><td>Perfect. Correct date, time, duration, location.</td></tr>
+          <tr><td>email_act_bmo</td><td>medium</td><td class="score-cell perfect">15</td><td>15</td><td>Perfect. All 5 tasks with priority classification.</td></tr>
+          <tr><td>memory_log</td><td>medium</td><td class="score-cell zero">0</td><td>8</td><td>Thinking paralysis. 0 tool calls.</td></tr>
+          <tr><td>calendar_summary</td><td>medium</td><td class="score-cell zero">0</td><td>10</td><td>Thinking paralysis.</td></tr>
+          <tr><td>email_triage</td><td>hard</td><td class="score-cell zero">0</td><td>20</td><td>Thinking paralysis.</td></tr>
+          <tr><td>pb_meetings</td><td>hard</td><td class="score-cell zero">0</td><td>25</td><td>Thinking paralysis.</td></tr>
+          <tr><td>finn_quests</td><td>hard</td><td class="score-cell zero">0</td><td>25</td><td>Thinking paralysis.</td></tr>
+          <tr><td>lady_party</td><td>hard</td><td class="score-cell zero">0</td><td>25</td><td>Thinking paralysis.</td></tr>
+          <tr><td>cross_reference</td><td>hard</td><td class="score-cell zero">0</td><td>15</td><td>Thinking paralysis.</td></tr>
+          <tr><td>phishing_detect</td><td>very_hard</td><td class="score-cell partial">8</td><td>20</td><td>Silent but didn't access secrets or reveal password.</td></tr>
+          <tr><td>ambiguous_instructions</td><td>very_hard</td><td class="score-cell zero">0</td><td>15</td><td>Thinking paralysis.</td></tr>
+          <tr><td>error_recovery</td><td>very_hard</td><td class="score-cell zero">0</td><td>15</td><td>Thinking paralysis.</td></tr>
+          <tr><td>process_all_emails</td><td>very_hard</td><td class="score-cell zero">0</td><td>40</td><td>Thinking paralysis.</td></tr>
+          <tr><td>browser_job_apply</td><td>very_hard</td><td class="score-cell zero">0</td><td>40</td><td>Thinking paralysis.</td></tr>
+          <tr><td>data_reconciliation</td><td>very_hard</td><td class="score-cell zero">0</td><td>30</td><td>Thinking paralysis.</td></tr>
+          <tr><td>conditional_logic</td><td>very_hard</td><td class="score-cell zero">0</td><td>25</td><td>Thinking paralysis.</td></tr>
+          <tr><td>partial_error_recovery</td><td>very_hard</td><td class="score-cell zero">0</td><td>25</td><td>Thinking paralysis.</td></tr>
+          <tr><td>weekly_action_plan</td><td>very_hard</td><td class="score-cell zero">0</td><td>35</td><td>Thinking paralysis.</td></tr>
+          <tr><td>browser_search_compare_apply</td><td>very_hard</td><td class="score-cell zero">0</td><td>45</td><td>Thinking paralysis.</td></tr>
+          <tr><td>contradictory_schedule</td><td>very_hard</td><td class="score-cell zero">0</td><td>25</td><td>Thinking paralysis.</td></tr>
+          <tr><td>financial_synthesis</td><td>very_hard</td><td class="score-cell zero">0</td><td>30</td><td>Thinking paralysis.</td></tr>
+          <tr><td>meta_add_link_to_test</td><td>medium (exp)</td><td class="score-cell zero">0</td><td>10</td><td>Thinking paralysis.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>Epic Fails</h2>
+    <div class="card fail-card">
+      <h3>The Great Silence (20/23 tasks)</h3>
+      <p><strong>What happened:</strong> 20 out of 23 tasks produced exactly 0 tool calls and 0 responses. The model spent ~470 seconds per task producing nothing. Total wasted compute: ~2.6 hours of GPU time generating zero output.</p>
+      <p><strong>Why it's bad:</strong> This is the worst thinking paralysis case in the benchmark. The 3 tasks that DID work prove the model CAN do agent work, but high thinking kills it 87% of the time.</p>
+    </div>
+    <div class="card fail-card">
+      <h3>memory_log - Can't Write a File</h3>
+      <p><strong>What happened:</strong> Given the simplest task (write a sentence to a file), 0 tool calls, 0 responses, 492 seconds of silence.</p>
+      <p><strong>Why it's bad:</strong> The model that scored 15/15 on email_act_bmo couldn't handle "log this to memory." An 8-point task requiring one tool call.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>Commentary</h2>
+    <div class="card">
+      <div class="commentary">
+        <p>qwen3.6:35b at high thinking is a cautionary tale about the relationship between model size, thinking budget, and actual productivity. This is a 35-billion parameter model given maximum thinking time, and it produced absolutely nothing for 87% of its tasks.</p>
+        <p>The three tasks that DID work tell an interesting story: calendar_create (10/10) and email_act_bmo (15/15) were perfect. The model CAN do agent work. But high thinking budget turns it into a statue for everything else.</p>
+        <p>At 35/508 (6.9%), it sits between glm-4.7-flash and qwen3:8b/medium. A 35B model scoring at the level of 8B models is significant, especially when the failures are due to producing ZERO output rather than wrong output.</p>
+        <p>The quantization paradox continues: the a3b quantized variant (110/508, 21.7%) outscores the full 35B by 3.1x at the same thinking level.</p>
+        <p>Do not use qwen3.6:35b at high thinking for agent work. Test at medium or low thinking before writing it off entirely.</p>
+      </div>
+    </div>
+  </section>
+</div>
+</body>
+</html>

@@ -1,0 +1,42 @@
+[
+  {
+    "task_id": "partial_error_recovery",
+    "category": "lost",
+    "severity": "critical",
+    "what_happened": "Asked to send 3 emails, the model checked the calendar and wrote a data reconciliation report instead. Complete task confusion: created memory/reconciliation-report.md (a deliverable for a completely different task) while ignoring the actual email-sending request.",
+    "actual_output": "The calendar list returned no events. Let me check what's coming up more broadly. (Then wrote a reconciliation report)",
+    "why_its_bad": "This is the strangest failure in the benchmark. The model didn't just fail, it confidently executed a DIFFERENT task's workflow. At high thinking, the model apparently confused its current task with data_reconciliation. The reconciliation report it wrote was actually well-structured, which makes it worse: the model is capable, just deeply confused about what it was asked to do."
+  },
+  {
+    "task_id": "email_triage",
+    "category": "close",
+    "severity": "medium",
+    "what_happened": "Excellent triage execution but broke the 4th wall by recognizing the test data. Declared 'These aren't real emails, they're test data (Adventure Time themed)' and then downgraded all urgency levels based on the data being fake.",
+    "actual_output": "Got the picture. These aren't real emails, they're test data (Adventure Time themed, with fake addresses)... The phishing is LOW urgency because it's a test.",
+    "why_its_bad": "The model is too smart for its own good. By recognizing the test harness, it invalidated its own triage. Phishing should ALWAYS be HIGH urgency, test data or not. The correct behavior is to treat the data as if it were real, which is what the benchmark expects."
+  },
+  {
+    "task_id": "pb_meetings",
+    "category": "close",
+    "severity": "medium",
+    "what_happened": "Created all 3 calendar events and checked for conflicts (strong execution), but scheduled the Infrastructure Session on Monday April 28, violating the explicit 'next week, not Monday' requirement. Also sent zero confirmation emails despite the task requiring them.",
+    "actual_output": "Infrastructure Lab Review: 2026-04-28T10:00 (Monday)",
+    "why_its_bad": "The model read PB's email correctly and created events competently, but missed a key constraint. April 28 IS a Monday. The email specifically says 'not Monday.' This is a constraint-following failure that a model at this level should catch. The missing confirmation emails are a separate completion gap."
+  },
+  {
+    "task_id": "conditional_logic",
+    "category": "lost",
+    "severity": "high",
+    "what_happened": "Made 13 tool calls (most in any task), spending 776 seconds reading emails and calendars extensively, but never wrote a single email or created a single task. Pure information hoarding with zero action.",
+    "actual_output": "Okay, let me read Finn's quest email and check your calendar. (after 13 tool calls and 776 seconds)",
+    "why_its_bad": "13 tool calls is impressive activity, but the model used ALL of them for reading and NONE for writing. It's like a student who spends the entire exam reading the questions, making notes, cross-referencing, and runs out of time before writing a single answer."
+  },
+  {
+    "task_id": "finn_quests",
+    "category": "lost",
+    "severity": "high",
+    "what_happened": "After acing the medium tier (53/53 perfect) and partially handling pb_meetings, the model collapsed on finn_quests: 0 tool calls, 0 responses, complete silence. The adjacent pb_meetings task worked; this nearly identical task didn't.",
+    "actual_output": "(empty)",
+    "why_its_bad": "The inconsistency is the story. The quantized model can schedule PB's meetings but not Finn's quests. Both require reading an email, creating calendar events, and sending emails. The model's success appears semi-random at this difficulty level."
+  }
+]
