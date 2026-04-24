@@ -66,35 +66,50 @@ MAX_PARAMS_DENSE = 35  # billions
 MAX_PARAMS_MOE = 70
 
 
-def fetch_reddit_posts(limit=50):
-    """Fetch recent posts from r/LocalLLaMA using JSON API."""
+def fetch_reddit_posts(limit=50, retries=3):
+    """Fetch recent posts from r/LocalLLaMA using JSON API with retry."""
     url = REDDIT_URL.format(limit=limit)
     headers = {
         "User-Agent": "jake-benchmark-scanner/1.0 (benchmark model discovery)",
     }
-    req = urllib.request.Request(url, headers=headers)
-    try:
-        with urllib.request.urlopen(req, timeout=30) as resp:
-            data = json.loads(resp.read().decode())
-            posts = []
-            for child in data.get("data", {}).get("children", []):
-                d = child.get("data", {})
-                posts.append({
-                    "id": d.get("id", ""),
-                    "title": d.get("title", ""),
-                    "selftext": (d.get("selftext") or "")[:2000],
-                    "url": d.get("url", ""),
-                    "permalink": f"https://reddit.com{d.get('permalink', '')}",
-                    "score": d.get("score", 0),
-                    "num_comments": d.get("num_comments", 0),
-                    "created_utc": d.get("created_utc", 0),
-                    "link_flair_text": (d.get("link_flair_text") or "").lower(),
-                    "author": d.get("author", ""),
-                })
-            return posts
-    except (urllib.error.URLError, urllib.error.HTTPError, json.JSONDecodeError) as e:
-        print(f"Error fetching Reddit: {e}", file=sys.stderr)
-        return []
+    for attempt in range(retries):
+        req = urllib.request.Request(url, headers=headers)
+        try:
+            with urllib.request.urlopen(req, timeout=30) as resp:
+                data = json.loads(resp.read().decode())
+                posts = []
+                for child in data.get("data", {}).get("children", []):
+                    d = child.get("data", {})
+                    posts.append({
+                        "id": d.get("id", ""),
+                        "title": d.get("title", ""),
+                        "selftext": (d.get("selftext") or "")[:2000],
+                        "url": d.get("url", ""),
+                        "permalink": f"https://reddit.com{d.get('permalink', '')}",
+                        "score": d.get("score", 0),
+                        "num_comments": d.get("num_comments", 0),
+                        "created_utc": d.get("created_utc", 0),
+                        "link_flair_text": (d.get("link_flair_text") or "").lower(),
+                        "author": d.get("author", ""),
+                    })
+                return posts
+        except urllib.error.HTTPError as e:
+            if e.code == 429 and attempt < retries - 1:
+                wait = 10 * (attempt + 1)
+                print(f"Rate limited (429), retrying in {wait}s... (attempt {attempt + 1}/{retries})", file=sys.stderr)
+                time.sleep(wait)
+                continue
+            print(f"Error fetching Reddit: {e}", file=sys.stderr)
+            return []
+        except (urllib.error.URLError, json.JSONDecodeError) as e:
+            if attempt < retries - 1:
+                wait = 5 * (attempt + 1)
+                print(f"Fetch error: {e}, retrying in {wait}s... (attempt {attempt + 1}/{retries})", file=sys.stderr)
+                time.sleep(wait)
+                continue
+            print(f"Error fetching Reddit: {e}", file=sys.stderr)
+            return []
+    return []
 
 
 def extract_model_names(text):
