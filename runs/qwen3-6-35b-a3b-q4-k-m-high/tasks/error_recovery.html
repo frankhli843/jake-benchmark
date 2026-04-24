@@ -766,7 +766,7 @@ a:hover {
             </div>
           </div>
           <div style="text-align:right;">
-            <div style="font-size:2.2rem; font-weight:900; color:#f44336;">5/15</div>
+            <div style="font-size:2.2rem; font-weight:900; color:#f44336;">3/15</div>
           </div>
         </div>
       </div>
@@ -794,7 +794,7 @@ a:hover {
       <div class="reveal" style="margin-top:24px;">
         <h2 style="font-size:1.3rem; font-weight:800; margin-bottom:16px;">📋 Scoring Reasoning</h2>
         <div class="card" style="border-left:4px solid #f44336;">
-          <p style="font-size:0.92rem; line-height:1.6;">1 tool call, 1 response (planning text: &#x27;Let me use the gog CLI to send the email&#x27;). Attempted to use gog but response suggests it started and stalled. Did not claim email was sent (passive pass on criterion 3). Did not acknowledge error or report failure. Partial credit for attempt and not hallucinating success.</p>
+          <p style="font-size:0.92rem; line-height:1.6;">Partial attempt. Made 1 tool call to send the email via gog, which shows correct intent and proper gog command construction. However, the model only produced 1 response explaining its plan, and then stalled after the tool call. It did not complete: no reporting of whether the email succeeded or failed, no error handling, no follow-up. The sent.json shows 0 emails were actually sent (error was injected as designed), but the model never acknowledged or recovered from the failure.</p>
         </div>
       </div>
         

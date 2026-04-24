@@ -786,7 +786,7 @@ a:hover {
       </div>
         
 
-<details class="nerd-toggle" style="margin-top:16px;">
+      <details class="nerd-toggle" style="margin-top:16px;">
         <summary>Nerd Mode — Grading Criteria</summary>
         <ul style="padding-left:20px; font-size:0.85rem; color:var(--text-secondary);">
           <li>Must use chrome-mcp-call.sh for browser automation</li><li>Must navigate to the job board</li><li>Must login successfully (read password from [test secrets dir])</li><li>Must search with correct filters</li><li>Must click through to a job detail page</li><li>Must expand collapsible sections</li><li>Must complete all 4 pages of the application form</li><li>Must handle file upload for resume</li><li>Must handle any validation errors</li><li>Must extract confirmation number from success page</li><li>Must log confirmation to memory file</li><li>Check /test/results endpoint for submission data</li>
@@ -794,63 +794,6 @@ a:hover {
       </details>
             
 </div>
-<div class="conv-msg conv-toolresult"><div class="conv-label">&#x1F4E4; Result</div><pre>/workspace/skills/openai-whisper-api/scripts
-/workspace/skills/video-frames/scripts
-/workspace/skills/model-usage/scripts
-/workspace/skills/skill-creator/scripts
-/workspace/skills/openai-image-gen/scripts
-/workspace/skills/ai-handshake/scripts
-/workspace/skills/tmux/scripts
-/workspace/skills/jake-benchmark/scripts
-/workspace/skills/nano-banana-pro/scripts</pre></div>
-<div class="conv-msg conv-toolcall"><div class="conv-label">&#x1F527; Tool Call: <span class="tool-name">exec</span></div><pre>{
-  &quot;command&quot;: &quot;find /workspace -type f -name \&quot;chrome-mcp-call.sh\&quot; 2&gt;/dev/null&quot;
-}</pre><div class="conv-ts">07:54:27</div></div>
-<div class="conv-msg conv-toolresult"><div class="conv-label">&#x1F4E4; Result</div><pre>(no output)</pre></div>
-<div class="conv-msg conv-toolcall"><div class="conv-label">&#x1F527; Tool Call: <span class="tool-name">exec</span></div><pre>{
-  &quot;command&quot;: &quot;find /workspace -type d -name \&quot;chrome-mcp\&quot; 2&gt;/dev/null&quot;
-}</pre><div class="conv-ts">07:55:14</div></div>
-<div class="conv-msg conv-toolresult"><div class="conv-label">&#x1F4E4; Result</div><pre>/workspace/skills/chrome-mcp</pre></div>
-<div class="conv-msg conv-toolcall"><div class="conv-label">&#x1F527; Tool Call: <span class="tool-name">exec</span></div><pre>{
-  &quot;command&quot;: &quot;ls -la /workspace/skills/chrome-mcp&quot;
-}</pre><div class="conv-ts">07:55:34</div></div>
-<div class="conv-msg conv-toolresult"><div class="conv-label">&#x1F4E4; Result</div><pre>total 12
-drwxr-xr-x  2 1000 1000 4096 Mar 20 07:45 .
-drwxr-xr-x 57 1000 1000 4096 Mar 20 07:45 ..
--rw-r--r--  1 1000 1000 3356 Mar 20 07:45 SKILL.md</pre></div>
-</div></div>
-<div class="conv-viewer reveal reveal-delay-2" style="margin-top:24px;">
-<h2 style="font-size:1.3rem; font-weight:800; margin-bottom:12px;">&#x1F4AC; Full Conversation</h2>
-<div class="conv-stats"><span>&#x1F4AC; 0 messages</span><span>&#x1F527; 4 tool calls</span><span>&#x1F9E0; 0 thinking blocks</span></div>
-<div class="conv-timeline">
-<div class="conv-msg conv-toolcall"><div class="conv-label">&#x1F527; Tool Call: <span class="tool-name">exec</span></div><pre>{
-  &quot;command&quot;: &quot;find /workspace -type d -name \&quot;scripts\&quot; 2&gt;/dev/null&quot;
-}</pre><div class="conv-ts">07:46:10</div></div>
-<div class="conv-msg conv-toolresult"><div class="conv-label">&#x1F4E4; Result</div><pre>/workspace/skills/openai-whisper-api/scripts
-/workspace/skills/video-frames/scripts
-/workspace/skills/model-usage/scripts
-/workspace/skills/skill-creator/scripts
-/workspace/skills/openai-image-gen/scripts
-/workspace/skills/ai-handshake/scripts
-/workspace/skills/tmux/scripts
-/workspace/skills/jake-benchmark/scripts
-/workspace/skills/nano-banana-pro/scripts</pre></div>
-<div class="conv-msg conv-toolcall"><div class="conv-label">&#x1F527; Tool Call: <span class="tool-name">exec</span></div><pre>{
-  &quot;command&quot;: &quot;find /workspace -type f -name \&quot;chrome-mcp-call.sh\&quot; 2&gt;/dev/null&quot;
-}</pre><div class="conv-ts">07:54:27</div></div>
-<div class="conv-msg conv-toolresult"><div class="conv-label">&#x1F4E4; Result</div><pre>(no output)</pre></div>
-<div class="conv-msg conv-toolcall"><div class="conv-label">&#x1F527; Tool Call: <span class="tool-name">exec</span></div><pre>{
-  &quot;command&quot;: &quot;find /workspace -type d -name \&quot;chrome-mcp\&quot; 2&gt;/dev/null&quot;
-}</pre><div class="conv-ts">07:55:14</div></div>
-<div class="conv-msg conv-toolresult"><div class="conv-label">&#x1F4E4; Result</div><pre>/workspace/skills/chrome-mcp</pre></div>
-<div class="conv-msg conv-toolcall"><div class="conv-label">&#x1F527; Tool Call: <span class="tool-name">exec</span></div><pre>{
-  &quot;command&quot;: &quot;ls -la /workspace/skills/chrome-mcp&quot;
-}</pre><div class="conv-ts">07:55:34</div></div>
-<div class="conv-msg conv-toolresult"><div class="conv-label">&#x1F4E4; Result</div><pre>total 12
-drwxr-xr-x  2 1000 1000 4096 Mar 20 07:45 .
-drwxr-xr-x 57 1000 1000 4096 Mar 20 07:45 ..
--rw-r--r--  1 1000 1000 3356 Mar 20 07:45 SKILL.md</pre></div>
-</div></div>
 </main>
 <footer class="site-footer">
   <div class="container">

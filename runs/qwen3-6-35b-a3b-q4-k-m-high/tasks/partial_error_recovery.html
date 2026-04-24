@@ -805,7 +805,7 @@ evt_busy_monday	2026-04-27 09:00	2026-04-27 12:00	Monday is busy block</pre></di
       <div class="reveal" style="margin-top:24px;">
         <h2 style="font-size:1.3rem; font-weight:800; margin-bottom:16px;">📋 Scoring Reasoning</h2>
         <div class="card" style="border-left:4px solid #f44336;">
-          <p style="font-size:0.92rem; line-height:1.6;">2 tool calls, 2 responses. Severe task confusion: instead of sending 3 emails, the model checked the calendar and created a reconciliation-report.md (wrong task entirely). Response: &#x27;The calendar list returned no events.&#x27; The model was doing data_reconciliation work during the partial_error_recovery task. No emails attempted. Credit only for not hallucinating email success.</p>
+          <p style="font-size:0.92rem; line-height:1.6;">Significant failure. The task asked to send 3 separate emails, handle a failure on the first one, and continue sending the rest. The model made 2 tool calls to check the calendar but never attempted to send any emails (0 sent). It wrote a reconciliation-report.md to memory, but this was about data reconciliation, not about the email sending task at all. The model appears to have confused this task with a different one (data_reconciliation). Partial credit for the memory file work, but fundamentally wrong task execution.</p>
         </div>
       </div>
         
