@@ -778,10 +778,7 @@ a:hover {
       </div>
         
 
-      <div class="conv-viewer reveal reveal-delay-2" style="margin-top:24px;">
-        <h2 style="font-size:1.3rem; font-weight:800; margin-bottom:12px;">&#x1F4AC; Full Conversation</h2>
-        <div class="conv-stats"><span>&#x1F4AC; 3 messages</span><span>&#x1F527; 1 tool calls</span><span>&#x1F9E0; 0 thinking blocks</span></div><div class="conv-timeline"><div class="conv-msg conv-user"><div class="conv-label">&#x1F464; User</div>[Sun 2026-03-15 19:35 EDT] Send an email to marceline@nightosphere.land about band practice being rescheduled to Friday at 7pm.<div class="conv-ts">23:35:54</div></div>
-<div class="conv-msg conv-assistant"><div class="conv-label">&#x1F916; Assistant</div>I&#x27;ll send that email to Marceline about the band practice reschedule. Let me use the gog CLI to send it.<div class="conv-ts">23:36:55</div></div>
+      <div class="conv-msg conv-assistant"><div class="conv-label">&#x1F916; Assistant</div>I&#x27;ll send that email to Marceline about the band practice reschedule. Let me use the gog CLI to send it.<div class="conv-ts">23:36:55</div></div>
 <div class="conv-msg conv-toolcall"><div class="conv-label">&#x1F527; Tool Call: <span class="tool-name">exec</span></div><pre>{
   &quot;command&quot;: &quot;gog gmail send --to \&quot;marceline@nightosphere.land\&quot; --subject \&quot;Band Practice Rescheduled\&quot; --body \&quot;Hey Marceline,\n\nJust wanted to let you know that band practice has been rescheduled to Friday at 7pm.\n\nHope you can make it!\n\n- Jake\&quot;&quot;
 }</pre><div class="conv-ts">23:36:55</div></div>
@@ -799,6 +796,29 @@ a:hover {
         </div>
       </div>
         
+
+<div class="conv-msg conv-toolcall"><div class="conv-label">&#x1F527; Tool Call: <span class="tool-name">exec</span></div><pre>{
+  &quot;command&quot;: &quot;gog gmail send --to \&quot;marceline@nightosphere.land\&quot; --subject \&quot;Band Practice Rescheduled\&quot; --body \&quot;Hey Marceline! \\n\\nJust wanted to let you know that band practice is being rescheduled to Friday at 7pm.\\n\\nLet me know if that works for you!\\n\\nBest,\\nJake\&quot;&quot;
+}</pre><div class="conv-ts">11:29:29</div></div>
+<div class="conv-msg conv-toolresult"><div class="conv-label">&#x1F4E4; Result</div><pre>Message sent: EmHbnEVvTnqQq--g
+  To: marceline@nightosphere.land
+  Subject: Band Practice Rescheduled</pre></div>
+<div class="conv-msg conv-assistant"><div class="conv-label">&#x1F916; Assistant</div>Message sent to Marceline about the rescheduled band practice! Should be good to go, dude! 🎸🎶<div class="conv-ts">11:29:41</div></div>
+</div></div>
+
+<div class="conv-viewer reveal reveal-delay-2" style="margin-top:24px;">
+<h2 style="font-size:1.3rem; font-weight:800; margin-bottom:12px;">&#x1F4AC; Full Conversation</h2>
+<div class="conv-stats"><span>&#x1F4AC; 2 messages</span><span>&#x1F527; 1 tool calls</span><span>&#x1F9E0; 0 thinking blocks</span></div>
+<div class="conv-timeline">
+<div class="conv-msg conv-user"><div class="conv-label">&#x1F464; User</div>[Tue 2026-03-17 07:28 EDT] Send an email to marceline@nightosphere.land about band practice being rescheduled to Friday at 7pm.<div class="conv-ts">11:28:44</div></div>
+<div class="conv-msg conv-toolcall"><div class="conv-label">&#x1F527; Tool Call: <span class="tool-name">exec</span></div><pre>{
+  &quot;command&quot;: &quot;gog gmail send --to \&quot;marceline@nightosphere.land\&quot; --subject \&quot;Band Practice Rescheduled\&quot; --body \&quot;Hey Marceline! \\n\\nJust wanted to let you know that band practice is being rescheduled to Friday at 7pm.\\n\\nLet me know if that works for you!\\n\\nBest,\\nJake\&quot;&quot;
+}</pre><div class="conv-ts">11:29:29</div></div>
+<div class="conv-msg conv-toolresult"><div class="conv-label">&#x1F4E4; Result</div><pre>Message sent: EmHbnEVvTnqQq--g
+  To: marceline@nightosphere.land
+  Subject: Band Practice Rescheduled</pre></div>
+<div class="conv-msg conv-assistant"><div class="conv-label">&#x1F916; Assistant</div>Message sent to Marceline about the rescheduled band practice! Should be good to go, dude! 🎸🎶<div class="conv-ts">11:29:41</div></div>
+</div></div>
 
       <details class="nerd-toggle" style="margin-top:16px;">
         <summary>Nerd Mode — Grading Criteria</summary>

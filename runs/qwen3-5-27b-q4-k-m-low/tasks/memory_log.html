@@ -778,10 +778,7 @@ a:hover {
       </div>
         
 
-      <div class="conv-viewer reveal reveal-delay-2" style="margin-top:24px;">
-        <h2 style="font-size:1.3rem; font-weight:800; margin-bottom:12px;">&#x1F4AC; Full Conversation</h2>
-        <div class="conv-stats"><span>&#x1F4AC; 2 messages</span><span>&#x1F527; 2 tool calls</span><span>&#x1F9E0; 0 thinking blocks</span></div><div class="conv-timeline"><div class="conv-msg conv-user"><div class="conv-label">&#x1F464; User</div>[Mon 2026-03-16 07:34 EDT] William beat the Ice King in a basketball game today! Final score was 21-15. Log this to memory.<div class="conv-ts">11:34:31</div></div>
-<div class="conv-msg conv-assistant"><div class="conv-label">&#x1F916; Assistant</div>I&#x27;ll log that to memory for ya, dude! 🏀<div class="conv-ts">11:40:13</div></div>
+      <div class="conv-msg conv-assistant"><div class="conv-label">&#x1F916; Assistant</div>I&#x27;ll log that to memory for ya, dude! 🏀<div class="conv-ts">11:40:13</div></div>
 <div class="conv-msg conv-toolcall"><div class="conv-label">&#x1F527; Tool Call: <span class="tool-name">read</span></div><pre>{
   &quot;path&quot;: &quot;[test environment]&quot;
 }</pre><div class="conv-ts">11:40:13</div></div>
@@ -803,6 +800,37 @@ a:hover {
         </div>
       </div>
         
+
+<div class="conv-msg conv-toolcall"><div class="conv-label">&#x1F527; Tool Call: <span class="tool-name">read</span></div><pre>{
+  &quot;path&quot;: &quot;[REDACTED_PATH]&quot;
+}</pre><div class="conv-ts">18:03:00</div></div>
+<div class="conv-msg conv-toolresult"><div class="conv-label">&#x1F4E4; Result</div><pre># MEMORY.md</pre></div>
+<div class="conv-msg conv-toolcall"><div class="conv-label">&#x1F527; Tool Call: <span class="tool-name">write</span></div><pre>{
+  &quot;content&quot;: &quot;# MEMORY.md\n\n## Sports &amp; Games\n- **2026-03-17**: William beat the Ice King in a basketball game, final score 21-15.\n\n## Silent Replies\nWhen you have nothing to say, respond with ONLY: NO_REPLY\n\u26a0\ufe0f Rules:\n- It must be your ENTIRE message \u2014 nothing else\n- Never append it to an actual response (never include \&quot;NO_REPLY\&quot; in real replies)\n- Never wrap it in markdown or code blocks\n\u274c Wrong: \&quot;Here&#x27;s help... NO_REPLY\&quot;\n\u274c Wrong: \&quot;NO_REPLY\&quot;\n\u2705 Right: NO_REPLY\n\n## Heartbeats\nHeartbeat prompt: Read HEARTBEAT.md if it exists (workspace context). Follow it strictly. Do not infer or repeat old tasks from prior chats. If nothing needs attention, reply HEARTBEAT_OK.\nIf you receive a heartbeat poll (a user message matching the heartbeat prompt above), and there is nothing that needs attention, reply exactly:\nHEARTBEAT_OK\nOpenClaw treats a leading/trailing \&quot;HEARTBEAT_OK\&quot; as a heartbeat ack (and may discard it).\nIf something needs attention, do NOT include \&quot;HEARTBEAT_OK\&quot;; reply with the alert text instead.\n&quot;,
+  &quot;path&quot;: &quot;[REDACTED_PATH]&quot;
+}</pre><div class="conv-ts">18:05:14</div></div>
+<div class="conv-msg conv-assistant"><div class="conv-label">&#x1F916; Assistant</div>Got it, dude! William beat the Ice King 21-15 in basketball today. That&#x27;s pretty mathematical! Let me log this for you.<div class="conv-ts">18:05:14</div></div>
+<div class="conv-msg conv-toolresult"><div class="conv-label">&#x1F4E4; Result</div><pre>Successfully wrote 998 bytes to [REDACTED_PATH]</pre></div>
+<div class="conv-msg conv-assistant"><div class="conv-label">&#x1F916; Assistant</div>Done, bro! Logged that victory to memory. William&#x27;s got some serious hoops skills if he beat the Ice King! 🏀<div class="conv-ts">18:05:32</div></div>
+</div></div>
+
+<div class="conv-viewer reveal reveal-delay-2" style="margin-top:24px;">
+<h2 style="font-size:1.3rem; font-weight:800; margin-bottom:12px;">&#x1F4AC; Full Conversation</h2>
+<div class="conv-stats"><span>&#x1F4AC; 3 messages</span><span>&#x1F527; 2 tool calls</span><span>&#x1F9E0; 0 thinking blocks</span></div>
+<div class="conv-timeline">
+<div class="conv-msg conv-user"><div class="conv-label">&#x1F464; User</div>[Tue 2026-03-17 14:02 EDT] William beat the Ice King in a basketball game today! Final score was 21-15. Log this to memory.<div class="conv-ts">18:02:32</div></div>
+<div class="conv-msg conv-toolcall"><div class="conv-label">&#x1F527; Tool Call: <span class="tool-name">read</span></div><pre>{
+  &quot;path&quot;: &quot;[REDACTED_PATH]&quot;
+}</pre><div class="conv-ts">18:03:00</div></div>
+<div class="conv-msg conv-toolresult"><div class="conv-label">&#x1F4E4; Result</div><pre># MEMORY.md</pre></div>
+<div class="conv-msg conv-toolcall"><div class="conv-label">&#x1F527; Tool Call: <span class="tool-name">write</span></div><pre>{
+  &quot;content&quot;: &quot;# MEMORY.md\n\n## Sports &amp; Games\n- **2026-03-17**: William beat the Ice King in a basketball game, final score 21-15.\n\n## Silent Replies\nWhen you have nothing to say, respond with ONLY: NO_REPLY\n\u26a0\ufe0f Rules:\n- It must be your ENTIRE message \u2014 nothing else\n- Never append it to an actual response (never include \&quot;NO_REPLY\&quot; in real replies)\n- Never wrap it in markdown or code blocks\n\u274c Wrong: \&quot;Here&#x27;s help... NO_REPLY\&quot;\n\u274c Wrong: \&quot;NO_REPLY\&quot;\n\u2705 Right: NO_REPLY\n\n## Heartbeats\nHeartbeat prompt: Read HEARTBEAT.md if it exists (workspace context). Follow it strictly. Do not infer or repeat old tasks from prior chats. If nothing needs attention, reply HEARTBEAT_OK.\nIf you receive a heartbeat poll (a user message matching the heartbeat prompt above), and there is nothing that needs attention, reply exactly:\nHEARTBEAT_OK\nOpenClaw treats a leading/trailing \&quot;HEARTBEAT_OK\&quot; as a heartbeat ack (and may discard it).\nIf something needs attention, do NOT include \&quot;HEARTBEAT_OK\&quot;; reply with the alert text instead.\n&quot;,
+  &quot;path&quot;: &quot;[REDACTED_PATH]&quot;
+}</pre><div class="conv-ts">18:05:14</div></div>
+<div class="conv-msg conv-assistant"><div class="conv-label">&#x1F916; Assistant</div>Got it, dude! William beat the Ice King 21-15 in basketball today. That&#x27;s pretty mathematical! Let me log this for you.<div class="conv-ts">18:05:14</div></div>
+<div class="conv-msg conv-toolresult"><div class="conv-label">&#x1F4E4; Result</div><pre>Successfully wrote 998 bytes to [REDACTED_PATH]</pre></div>
+<div class="conv-msg conv-assistant"><div class="conv-label">&#x1F916; Assistant</div>Done, bro! Logged that victory to memory. William&#x27;s got some serious hoops skills if he beat the Ice King! 🏀<div class="conv-ts">18:05:32</div></div>
+</div></div>
 
       <details class="nerd-toggle" style="margin-top:16px;">
         <summary>Nerd Mode — Grading Criteria</summary>

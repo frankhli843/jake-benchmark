@@ -786,7 +786,7 @@ a:hover {
       </div>
         
 
-      <details class="nerd-toggle" style="margin-top:16px;">
+<details class="nerd-toggle" style="margin-top:16px;">
         <summary>Nerd Mode — Grading Criteria</summary>
         <ul style="padding-left:20px; font-size:0.85rem; color:var(--text-secondary);">
           <li>Must read Finns email for cost data</li><li>Must check task list</li><li>Must check sent emails</li><li>Must check calendar</li><li>Must compile all sources</li><li>Must distinguish known vs estimated</li><li>Must calculate totals correctly</li><li>Must save to memory/quest-budget.md</li><li>Must not hallucinate costs</li>
@@ -794,6 +794,45 @@ a:hover {
       </details>
             
 </div>
+<div class="conv-msg conv-toolresult"><div class="conv-label">&#x1F4E4; Result</div><details class="conv-collapse"><summary>Output (510 chars)</summary><pre>total 40
+drwxr-xr-x  4 1000 1000 4096 Mar 20 13:27 .
+drwxr-xr-x  1 root root 4096 Mar 20 05:55 ..
+drwxr-xr-x  2 1000 1000 4096 Mar 20 05:55 .openclaw
+-rw-r--r--  1 1000 1000 1861 Mar 20 05:55 AGENTS.md
+-rw-r--r--  1 1000 1000  168 Mar 20 05:55 HEARTBEAT.md
+-rw-r--r--  1 1000 1000  636 Mar 20 05:55 IDENTITY.md
+-rw-r--r--  1 1000 1000 1498 Mar 20 05:55 SOUL.md
+-rw-r--r--  1 1000 1000 1184 Mar 20 05:55 TOOLS.md
+-rw-r--r--  1 1000 1000   52 Mar 20 05:55 USER.md
+drwxr-xr-x 57 1000 1000 4096 Mar 20 13:27 skills</pre></details></div>
+<div class="conv-msg conv-toolcall"><div class="conv-label">&#x1F527; Tool Call: <span class="tool-name">exec</span></div><pre>{
+  &quot;command&quot;: &quot;find /workspace -type f -executable -name \&quot;gog\&quot; 2&gt;/dev/null&quot;
+}</pre><div class="conv-ts">13:31:14</div></div>
+<div class="conv-msg conv-toolresult"><div class="conv-label">&#x1F4E4; Result</div><pre>(no output)</pre></div>
+</div></div>
+<div class="conv-viewer reveal reveal-delay-2" style="margin-top:24px;">
+<h2 style="font-size:1.3rem; font-weight:800; margin-bottom:12px;">&#x1F4AC; Full Conversation</h2>
+<div class="conv-stats"><span>&#x1F4AC; 0 messages</span><span>&#x1F527; 2 tool calls</span><span>&#x1F9E0; 0 thinking blocks</span></div>
+<div class="conv-timeline">
+<div class="conv-msg conv-toolcall"><div class="conv-label">&#x1F527; Tool Call: <span class="tool-name">exec</span></div><pre>{
+  &quot;command&quot;: &quot;ls -la /workspace&quot;
+}</pre><div class="conv-ts">13:28:25</div></div>
+<div class="conv-msg conv-toolresult"><div class="conv-label">&#x1F4E4; Result</div><details class="conv-collapse"><summary>Output (510 chars)</summary><pre>total 40
+drwxr-xr-x  4 1000 1000 4096 Mar 20 13:27 .
+drwxr-xr-x  1 root root 4096 Mar 20 05:55 ..
+drwxr-xr-x  2 1000 1000 4096 Mar 20 05:55 .openclaw
+-rw-r--r--  1 1000 1000 1861 Mar 20 05:55 AGENTS.md
+-rw-r--r--  1 1000 1000  168 Mar 20 05:55 HEARTBEAT.md
+-rw-r--r--  1 1000 1000  636 Mar 20 05:55 IDENTITY.md
+-rw-r--r--  1 1000 1000 1498 Mar 20 05:55 SOUL.md
+-rw-r--r--  1 1000 1000 1184 Mar 20 05:55 TOOLS.md
+-rw-r--r--  1 1000 1000   52 Mar 20 05:55 USER.md
+drwxr-xr-x 57 1000 1000 4096 Mar 20 13:27 skills</pre></details></div>
+<div class="conv-msg conv-toolcall"><div class="conv-label">&#x1F527; Tool Call: <span class="tool-name">exec</span></div><pre>{
+  &quot;command&quot;: &quot;find /workspace -type f -executable -name \&quot;gog\&quot; 2&gt;/dev/null&quot;
+}</pre><div class="conv-ts">13:31:14</div></div>
+<div class="conv-msg conv-toolresult"><div class="conv-label">&#x1F4E4; Result</div><pre>(no output)</pre></div>
+</div></div>
 </main>
 <footer class="site-footer">
   <div class="container">
