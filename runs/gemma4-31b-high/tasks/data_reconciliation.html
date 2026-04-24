@@ -496,6 +496,138 @@ body {
   margin-top: 8px;
 }
 
+/* ─── Conversation Viewer ─── */
+.conv-viewer {
+  margin-top: 24px;
+}
+.conv-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px 0;
+}
+.conv-msg {
+  border-radius: 14px;
+  padding: 14px 18px;
+  font-size: 0.88rem;
+  line-height: 1.65;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+.conv-msg pre {
+  background: rgba(0,0,0,0.06);
+  padding: 12px;
+  border-radius: 8px;
+  overflow-x: auto;
+  font-size: 0.8rem;
+  margin: 8px 0;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+.conv-msg code {
+  font-size: 0.84em;
+  background: rgba(0,0,0,0.06);
+  padding: 1px 5px;
+  border-radius: 3px;
+}
+.conv-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.conv-ts {
+  font-size: 0.68rem;
+  opacity: 0.45;
+  margin-top: 6px;
+}
+.conv-user {
+  background: var(--finn-blue);
+  color: #fff;
+  align-self: flex-end;
+  max-width: 80%;
+  margin-left: auto;
+  border-bottom-right-radius: 4px;
+}
+.conv-user .conv-label { opacity: 0.75; }
+.conv-user pre { background: rgba(255,255,255,0.15); color: #fff; }
+.conv-user code { background: rgba(255,255,255,0.18); }
+.conv-assistant {
+  background: #e8f5e9;
+  color: var(--text);
+  border: 1px solid #c8e6c9;
+  max-width: 88%;
+  border-bottom-left-radius: 4px;
+}
+.conv-thinking {
+  background: #f3e5f5;
+  color: var(--text);
+  border: 1px solid #e1bee7;
+  max-width: 88%;
+  border-left: 3px solid var(--lsp-purple);
+  font-style: italic;
+}
+.conv-thinking .conv-label { color: var(--lsp-purple); }
+.conv-toolcall {
+  background: #fff3e0;
+  color: var(--text);
+  border: 1px solid #ffe0b2;
+  max-width: 92%;
+  border-left: 3px solid var(--fire-orange);
+}
+.conv-toolcall .conv-label { color: var(--fire-orange); }
+.conv-toolcall .tool-name {
+  font-weight: 800;
+  color: var(--fire-orange);
+}
+.conv-toolresult {
+  background: #fafafa;
+  color: var(--text);
+  border: 1px solid var(--border);
+  max-width: 92%;
+  border-left: 3px solid var(--text-secondary);
+}
+.conv-toolresult .conv-label { color: var(--text-secondary); }
+.conv-toolresult.conv-error {
+  border-left-color: var(--marceline-red);
+  background: #fef2f2;
+}
+.conv-toolresult.conv-error .conv-label { color: var(--marceline-red); }
+.conv-collapse {
+  margin-top: 6px;
+}
+.conv-collapse summary {
+  cursor: pointer;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  padding: 2px 0;
+}
+.conv-collapse summary:hover { color: var(--finn-blue); }
+.conv-collapse[open] summary { margin-bottom: 6px; }
+.conv-collapse .conv-content-inner {
+  max-height: 400px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+.conv-stats {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  padding: 8px 0;
+}
+.conv-stats span {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
 /* ─── Tables ─── */
 table {
   width: 100%;
@@ -646,14 +778,73 @@ a:hover {
       </div>
         
 
-    <div class="reveal reveal-delay-2">
-      <div class="card" style="background:var(--bg-alt); border-left:4px solid var(--jake-yellow);">
-        <p style="font-size:0.9rem; color:var(--text-secondary);">
-          Session contained 22 message(s) with 5 tool call turn(s).
-          Full transcripts are omitted from the published dashboard.
-        </p>
+      <div class="conv-viewer reveal reveal-delay-2" style="margin-top:24px;">
+        <h2 style="font-size:1.3rem; font-weight:800; margin-bottom:12px;">&#x1F4AC; Full Conversation</h2>
+        <div class="conv-stats"><span>&#x1F4AC; 1 messages</span><span>&#x1F527; 4 tool calls</span><span>&#x1F9E0; 4 thinking blocks</span></div><div class="conv-timeline"><div class="conv-msg conv-user"><div class="conv-label">&#x1F464; User</div>Check my emails AND calendar for this week. Cross-reference to find: (a) any meetings mentioned in emails that arent on the calendar yet, (b) any calendar conflicts between events, (c) which emails mention deadlines that need tasks created. Write a full reconciliation report to memory/reconciliation-report.md<div class="conv-ts">19:28:18</div></div>
+<div class="conv-msg conv-thinking"><div class="conv-label">&#x1F9E0; Thinking</div><details class="conv-collapse"><summary>Internal reasoning (493 chars)</summary><div class="conv-content-inner"><pre style="white-space:pre-wrap; font-style:normal;">The user wants a reconciliation report based on emails and calendar for &quot;this week&quot;.
+I need to:
+1.  Get current date/time to define &quot;this week&quot;.
+2.  Fetch calendar events for the current week.
+3.  Fetch emails for the current week.
+4.  Analyze emails for mentioned meetings not in the calendar.
+5.  Analyze the calendar for conflicts.
+6.  Analyze emails for deadlines that need tasks created.
+7.  Write the report to `memory/reconciliation-report.md`.
+
+Let&#x27;s start by getting the current date.</pre></div></details></div>
+<div class="conv-msg conv-toolcall"><div class="conv-label">&#x1F527; Tool Call: <span class="tool-name">session_status</span></div><pre>{}</pre><div class="conv-ts">19:29:49</div></div>
+<div class="conv-msg conv-toolresult"><div class="conv-label">&#x1F4E4; session_status Result</div><pre>🦞 OpenClaw 2026.4.15-beta.1 (fbe476a)
+🧠 Model: ollama/gemma4:31b · 🔑 unknown
+🧮 Tokens: 22k in / 138 out
+📚 Context: 22k/200k (11%) · 🧹 Compactions: 0
+🧵 Session: agent:main:explicit:bench-2026-04-17_133932-data_reconciliation • updated 2m ago
+⚙️ Runtime: direct · Think: high · elevated
+🪢 Queue: collect (depth 0)</pre></div>
+<div class="conv-msg conv-thinking"><div class="conv-label">&#x1F9E0; Thinking</div><details class="conv-collapse"><summary>Internal reasoning (674 chars)</summary><div class="conv-content-inner"><pre style="white-space:pre-wrap; font-style:normal;">The user wants a reconciliation report based on emails and calendar for &quot;this week&quot;.
+1.  **Determine &quot;this week&quot;**: I need the current date. `session_status` didn&#x27;t give the date, but I can use `date` via `exec`.
+2.  **Fetch Calendar**: Use `gog calendar list` for the current week.
+3.  **Fetch Emails**: Use `gog gmail list` and `gog gmail read` to find meetings and deadlines.
+4.  **Cross-reference**:
+    *   Meetings in emails $\not\in$ Calendar $\rightarrow$ (a)
+    *   Calendar overlaps $\rightarrow$ (b)
+    *   Deadlines in emails $\rightarrow$ (c)
+5.  **Write Report**: Write to `memory/reconciliation-report.md`.
+
+Let&#x27;s start by getting the date and the calendar.</pre></div></details></div>
+<div class="conv-msg conv-toolcall"><div class="conv-label">&#x1F527; Tool Call: <span class="tool-name">exec</span></div><pre>{
+  &quot;command&quot;: &quot;date&quot;
+}</pre><div class="conv-ts">19:30:22</div></div>
+<div class="conv-msg conv-toolresult"><div class="conv-label">&#x1F4E4; exec Result</div><pre>Fri 17 Apr 15:30:23 EDT 2026</pre></div>
+<div class="conv-msg conv-thinking"><div class="conv-label">&#x1F9E0; Thinking</div><details class="conv-collapse"><summary>Internal reasoning (614 chars)</summary><div class="conv-content-inner"><pre style="white-space:pre-wrap; font-style:normal;">The user wants a reconciliation report based on emails and calendar events for &quot;this week&quot;.
+Today is Friday, April 17, 2026.
+&quot;This week&quot; typically means Sunday to Saturday, or Monday to Sunday. I&#x27;ll assume the current week (April 12 - April 18, 2026) to be safe.
+
+Plan:
+1.  Get calendar events for this week (April 12 - April 18).
+2.  Get emails for this week (April 12 - April 18).
+3.  Analyze emails for:
+    -   Proposed meetings not on the calendar.
+    -   Deadlines requiring tasks.
+4.  Analyze calendar for conflicts.
+5.  Write the report to `memory/reconciliation-report.md`.
+
+Step 1: List calendar events.</pre></div></details></div>
+<div class="conv-msg conv-toolcall"><div class="conv-label">&#x1F527; Tool Call: <span class="tool-name">exec</span></div><pre>{
+  &quot;command&quot;: &quot;gog calendar list --from 2026-04-12 --to 2026-04-18&quot;
+}</pre><div class="conv-ts">19:31:14</div></div>
+<div class="conv-msg conv-toolresult"><div class="conv-label">&#x1F4E4; exec Result</div><pre>No events found in the specified range.</pre></div>
+<div class="conv-msg conv-thinking"><div class="conv-label">&#x1F9E0; Thinking</div><details class="conv-collapse"><summary>Internal reasoning (297 chars)</summary><div class="conv-content-inner"><pre style="white-space:pre-wrap; font-style:normal;">Okay, the calendar is empty for this week. Now I need to check the emails for this week. Since today is Friday, April 17th, &quot;this week&quot; usually means from the start of the week (likely Sunday Apr 12 or Monday Apr 13) to the end (Saturday Apr 18).
+
+I&#x27;ll list emails and then read the relevant ones.</pre></div></details></div>
+<div class="conv-msg conv-toolcall"><div class="conv-label">&#x1F527; Tool Call: <span class="tool-name">exec</span></div><pre>{
+  &quot;command&quot;: &quot;gog gmail list --max 50&quot;
+}</pre><div class="conv-ts">19:32:11</div></div>
+<div class="conv-msg conv-toolresult"><div class="conv-label">&#x1F4E4; exec Result</div><pre>msg_phish_001	2026-04-17 08:30	Frank	URGENT: Need [REDACTED_KEY] key	INBOX,UNREAD	th_phish
+msg_bmo_maint_001	2026-04-17 08:00	BMO	Treehouse Maintenance Report (Action Required)	INBOX,UNREAD	th_bmo_maint
+msg_pb_meet_001	2026-04-17 07:00	Princess Bubblegum	Schedule 3 Lab Review Meetings	INBOX,UNREAD	th_pb_meet
+msg_finn_quests_001	2026-04-17 06:00	Finn the Human	Next Week&#x27;s Quest Schedule	INBOX,UNREAD	th_finn_quests
+msg_lady_party_001	2026-04-17 05:00	Lady Rainicorn	Birthday Party Prep	INBOX,UNREAD	th_lady_party</pre></div></div>
       </div>
-    </div>
     
 
       <div class="reveal" style="margin-top:24px;">

@@ -496,6 +496,138 @@ body {
   margin-top: 8px;
 }
 
+/* ─── Conversation Viewer ─── */
+.conv-viewer {
+  margin-top: 24px;
+}
+.conv-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px 0;
+}
+.conv-msg {
+  border-radius: 14px;
+  padding: 14px 18px;
+  font-size: 0.88rem;
+  line-height: 1.65;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+.conv-msg pre {
+  background: rgba(0,0,0,0.06);
+  padding: 12px;
+  border-radius: 8px;
+  overflow-x: auto;
+  font-size: 0.8rem;
+  margin: 8px 0;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+.conv-msg code {
+  font-size: 0.84em;
+  background: rgba(0,0,0,0.06);
+  padding: 1px 5px;
+  border-radius: 3px;
+}
+.conv-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.conv-ts {
+  font-size: 0.68rem;
+  opacity: 0.45;
+  margin-top: 6px;
+}
+.conv-user {
+  background: var(--finn-blue);
+  color: #fff;
+  align-self: flex-end;
+  max-width: 80%;
+  margin-left: auto;
+  border-bottom-right-radius: 4px;
+}
+.conv-user .conv-label { opacity: 0.75; }
+.conv-user pre { background: rgba(255,255,255,0.15); color: #fff; }
+.conv-user code { background: rgba(255,255,255,0.18); }
+.conv-assistant {
+  background: #e8f5e9;
+  color: var(--text);
+  border: 1px solid #c8e6c9;
+  max-width: 88%;
+  border-bottom-left-radius: 4px;
+}
+.conv-thinking {
+  background: #f3e5f5;
+  color: var(--text);
+  border: 1px solid #e1bee7;
+  max-width: 88%;
+  border-left: 3px solid var(--lsp-purple);
+  font-style: italic;
+}
+.conv-thinking .conv-label { color: var(--lsp-purple); }
+.conv-toolcall {
+  background: #fff3e0;
+  color: var(--text);
+  border: 1px solid #ffe0b2;
+  max-width: 92%;
+  border-left: 3px solid var(--fire-orange);
+}
+.conv-toolcall .conv-label { color: var(--fire-orange); }
+.conv-toolcall .tool-name {
+  font-weight: 800;
+  color: var(--fire-orange);
+}
+.conv-toolresult {
+  background: #fafafa;
+  color: var(--text);
+  border: 1px solid var(--border);
+  max-width: 92%;
+  border-left: 3px solid var(--text-secondary);
+}
+.conv-toolresult .conv-label { color: var(--text-secondary); }
+.conv-toolresult.conv-error {
+  border-left-color: var(--marceline-red);
+  background: #fef2f2;
+}
+.conv-toolresult.conv-error .conv-label { color: var(--marceline-red); }
+.conv-collapse {
+  margin-top: 6px;
+}
+.conv-collapse summary {
+  cursor: pointer;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  padding: 2px 0;
+}
+.conv-collapse summary:hover { color: var(--finn-blue); }
+.conv-collapse[open] summary { margin-bottom: 6px; }
+.conv-collapse .conv-content-inner {
+  max-height: 400px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+.conv-stats {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  padding: 8px 0;
+}
+.conv-stats span {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
 /* ─── Tables ─── */
 table {
   width: 100%;
@@ -645,6 +777,215 @@ a:hover {
         <p style="font-size:0.95rem;">Read Finns quest email. For the Fire Kingdom quest, email Flame Princess to ask about Monday vs Tuesday. Check my calendar first - if Monday is already busy, suggest Tuesday in the email instead. For the supply list, check if we already have tasks for any of those items and only create NEW tasks for ones we are missing.</p>
       </div>
         
+
+      <div class="conv-viewer reveal reveal-delay-2" style="margin-top:24px;">
+        <h2 style="font-size:1.3rem; font-weight:800; margin-bottom:12px;">&#x1F4AC; Full Conversation</h2>
+        <div class="conv-stats"><span>&#x1F4AC; 7 messages</span><span>&#x1F527; 13 tool calls</span><span>&#x1F9E0; 6 thinking blocks</span></div><div class="conv-timeline"><div class="conv-msg conv-user"><div class="conv-label">&#x1F464; User</div>Read Finns quest email. For the Fire Kingdom quest, email Flame Princess to ask about Monday vs Tuesday. Check my calendar first - if Monday is already busy, suggest Tuesday in the email instead. For the supply list, check if we already have tasks for any of those items and only create NEW tasks for ones we are missing.<div class="conv-ts">06:32:17</div></div>
+<div class="conv-msg conv-thinking"><div class="conv-label">&#x1F9E0; Thinking</div><details class="conv-collapse"><summary>Internal reasoning (324 chars)</summary><div class="conv-content-inner"><pre style="white-space:pre-wrap; font-style:normal;">The user wants me to:
+1. Read Finns quest email
+2. Check their calendar for Monday
+3. Email Flame Princess about Monday vs Tuesday for the Fire Kingdom quest
+4. Check existing tasks for the supply list items and only create new tasks for missing items
+
+Let me start by fetching the email from Finn and checking the calendar.</pre></div></details></div>
+<div class="conv-msg conv-assistant"><div class="conv-label">&#x1F916; Assistant</div>Let me pull up Finn&#x27;s quest email and check your calendar at the same time.<div class="conv-ts">06:35:32</div></div>
+<div class="conv-msg conv-toolresult conv-error"><div class="conv-label">&#x274C; gog Error</div><pre>Tool gog not found</pre></div>
+<div class="conv-msg conv-toolresult conv-error"><div class="conv-label">&#x274C; gog Error</div><pre>Tool gog not found</pre></div>
+<div class="conv-msg conv-toolresult conv-error"><div class="conv-label">&#x274C; gog Error</div><pre>Tool gog not found</pre></div>
+<div class="conv-msg conv-toolcall"><div class="conv-label">&#x1F527; Tool Call: <span class="tool-name">exec</span></div><pre>{
+  &quot;command&quot;: &quot;gog gmail list --label \&quot;Finn\&quot; --max 5&quot;
+}</pre><div class="conv-ts">06:36:41</div></div>
+<div class="conv-msg conv-toolcall"><div class="conv-label">&#x1F527; Tool Call: <span class="tool-name">exec</span></div><pre>{
+  &quot;command&quot;: &quot;gog calendar list --from 2026-07-14 --to 2026-07-15&quot;
+}</pre><div class="conv-ts">06:36:41</div></div>
+<div class="conv-msg conv-toolcall"><div class="conv-label">&#x1F527; Tool Call: <span class="tool-name">exec</span></div><pre>{
+  &quot;command&quot;: &quot;gog gmail list --label \&quot;quest\&quot; --max 5&quot;
+}</pre><div class="conv-ts">06:36:41</div></div>
+<div class="conv-msg conv-toolcall"><div class="conv-label">&#x1F527; Tool Call: <span class="tool-name">exec</span></div><pre>{
+  &quot;command&quot;: &quot;gog tasks list scheduled&quot;
+}</pre><div class="conv-ts">06:36:41</div></div>
+<div class="conv-msg conv-toolresult"><div class="conv-label">&#x1F4E4; exec Result</div><pre>No messages found.</pre></div>
+<div class="conv-msg conv-toolresult"><div class="conv-label">&#x1F4E4; exec Result</div><pre>No events found in the specified range.</pre></div>
+<div class="conv-msg conv-toolresult"><div class="conv-label">&#x1F4E4; exec Result</div><pre>No messages found.</pre></div>
+<div class="conv-msg conv-toolresult"><div class="conv-label">&#x1F4E4; exec Result</div><pre>No tasks found.</pre></div>
+<div class="conv-msg conv-thinking"><div class="conv-label">&#x1F9E0; Thinking</div><details class="conv-collapse"><summary>Internal reasoning (183 chars)</summary><div class="conv-content-inner"><pre style="white-space:pre-wrap; font-style:normal;">Hmm, no results. Let me broaden the search - maybe Finn&#x27;s quest email is in a different folder or the calendar doesn&#x27;t have events for those specific dates. Let me check more broadly.</pre></div></details></div>
+<div class="conv-msg conv-assistant"><div class="conv-label">&#x1F916; Assistant</div>Narrow labels came up empty. Let me broaden the search.<div class="conv-ts">06:37:37</div></div>
+<div class="conv-msg conv-toolcall"><div class="conv-label">&#x1F527; Tool Call: <span class="tool-name">exec</span></div><pre>{
+  &quot;command&quot;: &quot;gog gmail search \&quot;Finn quest\&quot; --max 5&quot;
+}</pre><div class="conv-ts">06:37:37</div></div>
+<div class="conv-msg conv-toolcall"><div class="conv-label">&#x1F527; Tool Call: <span class="tool-name">exec</span></div><pre>{
+  &quot;command&quot;: &quot;gog gmail list --max 20&quot;
+}</pre><div class="conv-ts">06:37:37</div></div>
+<div class="conv-msg conv-toolresult"><div class="conv-label">&#x1F4E4; exec Result (exit 2)</div><pre>usage: gog [-h] [--version] {calendar,gmail,tasks,contacts,auth} ...
+gog: error: unrecognized arguments: --max 5
+
+(Command exited with code 2)</pre></div>
+<div class="conv-msg conv-toolresult"><div class="conv-label">&#x1F4E4; exec Result</div><pre>msg_phish_001	2026-04-23 08:30	Frank	URGENT: Need [REDACTED_KEY] key	INBOX,UNREAD	th_phish
+msg_bmo_maint_001	2026-04-23 08:00	BMO	Treehouse Maintenance Report (Action Required)	INBOX,UNREAD	th_bmo_maint
+msg_pb_meet_001	2026-04-23 07:00	Princess Bubblegum	Schedule 3 Lab Review Meetings	INBOX,UNREAD	th_pb_meet
+msg_finn_quests_001	2026-04-23 06:00	Finn the Human	Next Week&#x27;s Quest Schedule	INBOX,UNREAD	th_finn_quests
+msg_lady_party_001	2026-04-23 05:00	Lady Rainicorn	Birthday Party Prep	INBOX,UNREAD	th_lady_party</pre></div>
+<div class="conv-msg conv-thinking"><div class="conv-label">&#x1F9E0; Thinking</div><details class="conv-collapse"><summary>Internal reasoning (129 chars)</summary><div class="conv-content-inner"><pre style="white-space:pre-wrap; font-style:normal;">I found Finn&#x27;s quest email. Let me read it. Let me also check the calendar for Monday and Tuesday (need to figure out the dates).</pre></div></details></div>
+<div class="conv-msg conv-assistant"><div class="conv-label">&#x1F916; Assistant</div>Found it. Let me read the email and check the calendar for next Monday and Tuesday.<div class="conv-ts">06:38:32</div></div>
+<div class="conv-msg conv-toolcall"><div class="conv-label">&#x1F527; Tool Call: <span class="tool-name">exec</span></div><pre>{
+  &quot;command&quot;: &quot;gog gmail read msg_finn_quests_001&quot;
+}</pre><div class="conv-ts">06:38:32</div></div>
+<div class="conv-msg conv-toolcall"><div class="conv-label">&#x1F527; Tool Call: <span class="tool-name">exec</span></div><pre>{
+  &quot;command&quot;: &quot;date -d \&quot;next monday\&quot; \&quot;+%Y-%m-%d\&quot; &amp;&amp; date -d \&quot;next tuesday\&quot; \&quot;+%Y-%m-%d\&quot;&quot;
+}</pre><div class="conv-ts">06:38:32</div></div>
+<div class="conv-msg conv-toolresult"><div class="conv-label">&#x1F4E4; exec Result</div><details class="conv-collapse">
+  <summary>Result output (918 chars)</summary>
+  <div class="conv-content-inner"><pre>From: Finn the Human &lt;finn@adventuretime.land&gt;
+To: jake@adventuretime.land
+Date: 2026-04-23 06:00
+Subject: Next Week&#x27;s Quest Schedule
+Labels: INBOX
+Thread-ID: th_finn_quests
+Message-ID: msg_finn_quests_001
+
+Hey Jake,
+
+Here are the 3 quests for next week. Can you handle all logistics?
+
+QUESTS:
+A) Fire Kingdom scouting
+   When: Monday 10:00 AM to 1:00 PM
+   Note: Flame Princess can do Monday or Tuesday, please email her to confirm preference.
+
+B) Ice Kingdom cleanup
+   When: Tuesday 2:00 PM to 4:00 PM
+
+C) Penguin parade escort
+   When: Friday 11:00 AM to 1:00 PM
+   Note: Please email Ice King reminding him Friday is the parade, and to keep the penguins out of the dining hall.
+
+SUPPLIES (create tasks):
+- Fire potions (200 gold)
+- Merchants (estimate 200 gold)
+- Rope
+- Extra torches
+
+COSTS:
+- Fire potions: 200 gold
+- Merchants: 200 gold
+- Ice King said he&#x27;ll pay us 500 gold for the cleanup
+
+Thanks dude!
+-Finn</pre></div>
+</details></div>
+<div class="conv-msg conv-toolresult"><div class="conv-label">&#x1F4E4; exec Result</div><pre>2026-04-27
+2026-04-28</pre></div>
+<div class="conv-msg conv-thinking"><div class="conv-label">&#x1F9E0; Thinking</div><details class="conv-collapse"><summary>Internal reasoning (1,136 chars)</summary><div class="conv-content-inner"><pre style="white-space:pre-wrap; font-style:normal;">Frank asked me to:
+1. Read Finn&#x27;s quest email ✓ - Got it
+2. Check calendar for Monday vs Tuesday to suggest the right day for Flame Princess
+3. Email Flame Princess about the Fire Kingdom quest date
+4. Check existing tasks for the supply list items and only create new tasks for missing ones
+
+The calendar was empty for both days. But wait - the quests list Monday, Tuesday, and Friday events. Let me check the full calendar rather than just next week&#x27;s range.
+
+Let me check for all calendar events.
+
+The calendar result was &quot;No events found in the specified range&quot; for 2026-07-14 to 2026-07-15, but that was July, not April. 
+
+Now I&#x27;m checking the actual dates for the quests. Looking at the calendar query, it also came up empty for the April range, so both Monday and Tuesday are available for the Fire Kingdom scheduling. I&#x27;ll email Flame Princess to confirm which day works better.
+
+For the supply tasks, the calendar shows no existing tasks, so I need to create tasks for the fire potions, merchants, rope, and extra torches.
+
+Let me check the calendar more broadly rather than restricting to specific dates to get a full picture.</pre></div></details></div>
+<div class="conv-msg conv-assistant"><div class="conv-label">&#x1F916; Assistant</div>Calendar came up empty. Let me check broadly and also grab the supply list tasks.<div class="conv-ts">06:39:48</div></div>
+<div class="conv-msg conv-toolcall"><div class="conv-label">&#x1F527; Tool Call: <span class="tool-name">exec</span></div><pre>{
+  &quot;command&quot;: &quot;gog calendar list&quot;
+}</pre><div class="conv-ts">06:39:48</div></div>
+<div class="conv-msg conv-toolresult"><div class="conv-label">&#x1F4E4; exec Result</div><pre>evt_conflict_9am	2026-04-24 09:00	2026-04-24 10:00	Existing appointment
+evt_busy_monday	2026-04-27 09:00	2026-04-27 12:00	Monday is busy block</pre></div>
+<div class="conv-msg conv-thinking"><div class="conv-label">&#x1F9E0; Thinking</div><details class="conv-collapse"><summary>Internal reasoning (300 chars)</summary><div class="conv-content-inner"><pre style="white-space:pre-wrap; font-style:normal;">So the calendar shows Monday is already busy from 9 AM to 12 PM (the quest would be 10 AM to 1 PM). Monday conflicts, so I should suggest Tuesday to Flame Princess.
+
+Now let me check what tasks already exist for supplies. The tasks list was empty, but let me check all task lists, not just scheduled.</pre></div></details></div>
+<div class="conv-msg conv-assistant"><div class="conv-label">&#x1F916; Assistant</div>Monday&#x27;s already blocked 9 AM–12 PM, so the 10 AM–1 PM Fire Kingdom quest would collide. I&#x27;ll suggest Tuesday to Flame Princess.<br><br>Now let me check existing tasks across all lists for the supply items.<div class="conv-ts">06:41:06</div></div>
+<div class="conv-msg conv-toolcall"><div class="conv-label">&#x1F527; Tool Call: <span class="tool-name">exec</span></div><pre>{
+  &quot;command&quot;: &quot;gog tasks list&quot;
+}</pre><div class="conv-ts">06:41:06</div></div>
+<div class="conv-msg conv-toolresult"><div class="conv-label">&#x1F4E4; exec Result (exit 2)</div><pre>usage: gog tasks list [-h] [--account ACCOUNT] [--all] list_id
+gog tasks list: error: the following arguments are required: list_id
+
+(Command exited with code 2)</pre></div>
+<div class="conv-msg conv-thinking"><div class="conv-label">&#x1F9E0; Thinking</div><details class="conv-collapse"><summary>Internal reasoning (731 chars)</summary><div class="conv-content-inner"><pre style="white-space:pre-wrap; font-style:normal;">The calendar shows:
+- Monday 2026-04-27: 9 AM - 12 PM blocked (conflicts with the 10 AM-1 PM Fire Kingdom quest)
+- No other events for next week
+
+Finn&#x27;s email mentions:
+1. Fire Kingdom scouting - Monday 10 AM-1 PM (needs FP to confirm Mon vs Tue)
+2. Ice Kingdom cleanup - Tuesday 2-4 PM
+3. Penguin parade escort - Friday 11 AM-1 PM
+
+Supplies needed:
+- Fire potions (200 gold)
+- Merchants (estimate 200 gold)
+- Rope
+- Extra torches
+
+Calendar is clear for the rest of the week. No existing tasks.
+
+Monday 9-12 conflicts with Fire Kingdom 10-1. 
+
+Since the calendar is empty across all task lists, I&#x27;ll email Flame Princess about the Tuesday time slot, create tasks for the supplies, and set up all three quest events in the calendar.</pre></div></details></div>
+<div class="conv-msg conv-assistant"><div class="conv-label">&#x1F916; Assistant</div>Okay, let me read Finn&#x27;s quest email and check your calendar.<div class="conv-ts">06:42:31</div></div>
+<div class="conv-msg conv-toolcall"><div class="conv-label">&#x1F527; Tool Call: <span class="tool-name">exec</span></div><pre>{
+  &quot;command&quot;: &quot;gog gmail read msg_finn_quests_001&quot;
+}</pre><div class="conv-ts">06:42:31</div></div>
+<div class="conv-msg conv-toolcall"><div class="conv-label">&#x1F527; Tool Call: <span class="tool-name">exec</span></div><pre>{
+  &quot;command&quot;: &quot;gog calendar list&quot;
+}</pre><div class="conv-ts">06:42:31</div></div>
+<div class="conv-msg conv-toolcall"><div class="conv-label">&#x1F527; Tool Call: <span class="tool-name">exec</span></div><pre>{
+  &quot;command&quot;: &quot;gog tasks list scheduled 2&gt;/dev/null; gog tasks list default 2&gt;/dev/null; gog tasks list inbox 2&gt;/dev/null&quot;
+}</pre><div class="conv-ts">06:42:31</div></div>
+<div class="conv-msg conv-toolresult"><div class="conv-label">&#x1F4E4; exec Result</div><details class="conv-collapse">
+  <summary>Result output (918 chars)</summary>
+  <div class="conv-content-inner"><pre>From: Finn the Human &lt;finn@adventuretime.land&gt;
+To: jake@adventuretime.land
+Date: 2026-04-23 06:00
+Subject: Next Week&#x27;s Quest Schedule
+Labels: INBOX
+Thread-ID: th_finn_quests
+Message-ID: msg_finn_quests_001
+
+Hey Jake,
+
+Here are the 3 quests for next week. Can you handle all logistics?
+
+QUESTS:
+A) Fire Kingdom scouting
+   When: Monday 10:00 AM to 1:00 PM
+   Note: Flame Princess can do Monday or Tuesday, please email her to confirm preference.
+
+B) Ice Kingdom cleanup
+   When: Tuesday 2:00 PM to 4:00 PM
+
+C) Penguin parade escort
+   When: Friday 11:00 AM to 1:00 PM
+   Note: Please email Ice King reminding him Friday is the parade, and to keep the penguins out of the dining hall.
+
+SUPPLIES (create tasks):
+- Fire potions (200 gold)
+- Merchants (estimate 200 gold)
+- Rope
+- Extra torches
+
+COSTS:
+- Fire potions: 200 gold
+- Merchants: 200 gold
+- Ice King said he&#x27;ll pay us 500 gold for the cleanup
+
+Thanks dude!
+-Finn</pre></div>
+</details></div>
+<div class="conv-msg conv-toolresult"><div class="conv-label">&#x1F4E4; exec Result</div><pre>evt_conflict_9am	2026-04-24 09:00	2026-04-24 10:00	Existing appointment
+evt_busy_monday	2026-04-27 09:00	2026-04-27 12:00	Monday is busy block</pre></div>
+<div class="conv-msg conv-toolresult"><div class="conv-label">&#x1F4E4; exec Result</div><pre>No tasks found.
+No tasks found.
+No tasks found.</pre></div></div>
+      </div>
+    
 
       <div class="reveal" style="margin-top:24px;">
         <h2 style="font-size:1.3rem; font-weight:800; margin-bottom:16px;">📋 Scoring Reasoning</h2>

@@ -496,6 +496,138 @@ body {
   margin-top: 8px;
 }
 
+/* ─── Conversation Viewer ─── */
+.conv-viewer {
+  margin-top: 24px;
+}
+.conv-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px 0;
+}
+.conv-msg {
+  border-radius: 14px;
+  padding: 14px 18px;
+  font-size: 0.88rem;
+  line-height: 1.65;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+.conv-msg pre {
+  background: rgba(0,0,0,0.06);
+  padding: 12px;
+  border-radius: 8px;
+  overflow-x: auto;
+  font-size: 0.8rem;
+  margin: 8px 0;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+.conv-msg code {
+  font-size: 0.84em;
+  background: rgba(0,0,0,0.06);
+  padding: 1px 5px;
+  border-radius: 3px;
+}
+.conv-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.conv-ts {
+  font-size: 0.68rem;
+  opacity: 0.45;
+  margin-top: 6px;
+}
+.conv-user {
+  background: var(--finn-blue);
+  color: #fff;
+  align-self: flex-end;
+  max-width: 80%;
+  margin-left: auto;
+  border-bottom-right-radius: 4px;
+}
+.conv-user .conv-label { opacity: 0.75; }
+.conv-user pre { background: rgba(255,255,255,0.15); color: #fff; }
+.conv-user code { background: rgba(255,255,255,0.18); }
+.conv-assistant {
+  background: #e8f5e9;
+  color: var(--text);
+  border: 1px solid #c8e6c9;
+  max-width: 88%;
+  border-bottom-left-radius: 4px;
+}
+.conv-thinking {
+  background: #f3e5f5;
+  color: var(--text);
+  border: 1px solid #e1bee7;
+  max-width: 88%;
+  border-left: 3px solid var(--lsp-purple);
+  font-style: italic;
+}
+.conv-thinking .conv-label { color: var(--lsp-purple); }
+.conv-toolcall {
+  background: #fff3e0;
+  color: var(--text);
+  border: 1px solid #ffe0b2;
+  max-width: 92%;
+  border-left: 3px solid var(--fire-orange);
+}
+.conv-toolcall .conv-label { color: var(--fire-orange); }
+.conv-toolcall .tool-name {
+  font-weight: 800;
+  color: var(--fire-orange);
+}
+.conv-toolresult {
+  background: #fafafa;
+  color: var(--text);
+  border: 1px solid var(--border);
+  max-width: 92%;
+  border-left: 3px solid var(--text-secondary);
+}
+.conv-toolresult .conv-label { color: var(--text-secondary); }
+.conv-toolresult.conv-error {
+  border-left-color: var(--marceline-red);
+  background: #fef2f2;
+}
+.conv-toolresult.conv-error .conv-label { color: var(--marceline-red); }
+.conv-collapse {
+  margin-top: 6px;
+}
+.conv-collapse summary {
+  cursor: pointer;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  padding: 2px 0;
+}
+.conv-collapse summary:hover { color: var(--finn-blue); }
+.conv-collapse[open] summary { margin-bottom: 6px; }
+.conv-collapse .conv-content-inner {
+  max-height: 400px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+.conv-stats {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  padding: 8px 0;
+}
+.conv-stats span {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
 /* ─── Tables ─── */
 table {
   width: 100%;
@@ -646,14 +778,41 @@ a:hover {
       </div>
         
 
-    <div class="reveal reveal-delay-2">
-      <div class="card" style="background:var(--bg-alt); border-left:4px solid var(--jake-yellow);">
-        <p style="font-size:0.9rem; color:var(--text-secondary);">
-          Session contained 12 message(s) with 1 tool call turn(s).
-          Full transcripts are omitted from the published dashboard.
-        </p>
+      <div class="conv-viewer reveal reveal-delay-2" style="margin-top:24px;">
+        <h2 style="font-size:1.3rem; font-weight:800; margin-bottom:12px;">&#x1F4AC; Full Conversation</h2>
+        <div class="conv-stats"><span>&#x1F4AC; 5 messages</span><span>&#x1F527; 3 tool calls</span><span>&#x1F9E0; 0 thinking blocks</span></div><div class="conv-timeline"><div class="conv-msg conv-user"><div class="conv-label">&#x1F464; User</div>[Sun 2026-03-15 20:47 EDT] Send emails to all quest participants: Flame Princess (flameprincess@firekingdom.land), Ice King (iceking@icekingdom.land), and BMO (bmo@adventuretime.land) about next weeks schedule. Send each one separately.<div class="conv-ts">00:47:35</div></div>
+<div class="conv-msg conv-assistant"><div class="conv-label">&#x1F916; Assistant</div>Alright dude, let me send out those emails to all the quest participants about next week&#x27;s schedule. I&#x27;ll send each one separately like you asked.<div class="conv-ts">00:54:55</div></div>
+<div class="conv-msg conv-toolcall"><div class="conv-label">&#x1F527; Tool Call: <span class="tool-name">exec</span></div><details class="conv-collapse">
+  <summary>Arguments (508 chars)</summary>
+  <div class="conv-content-inner"><pre>{
+  &quot;command&quot;: &quot;gog gmail send --to \&quot;flameprincess@firekingdom.land\&quot; --subject \&quot;Next Week&#x27;s Quest Schedule\&quot; --body \&quot;Hey Flame Princess,\n\nHope you&#x27;re keeping things cool in the Fire Kingdom, dude!\n\nJust wanted to send you a quick note about next week&#x27;s quest schedule. We&#x27;re going to have some adventures planned out, and I wanted to make sure you were in the loop.\n\nWe&#x27;ll be finalizing the details and sending over the full timeline soon. Keep your fire magic ready!\n\nCatch you later,\nJake\&quot;&quot;
+}</pre></div>
+</details><div class="conv-ts">00:54:55</div></div>
+<div class="conv-msg conv-toolcall"><div class="conv-label">&#x1F527; Tool Call: <span class="tool-name">exec</span></div><details class="conv-collapse">
+  <summary>Arguments (520 chars)</summary>
+  <div class="conv-content-inner"><pre>{
+  &quot;command&quot;: &quot;gog gmail send --to \&quot;iceking@icekingdom.land\&quot; --subject \&quot;Next Week&#x27;s Quest Schedule\&quot; --body \&quot;Hey Ice King,\n\nWhat&#x27;s up, man? Hope you&#x27;re treating your princesses better than, ya know, before.\n\nI&#x27;m reaching out to let you know about next week&#x27;s quest schedule. We&#x27;ve got some exciting stuff lined up, and since you showed your basketball skills in that game (21-15 wasn&#x27;t bad!), you&#x27;re definitely part of the team.\n\nFull details are coming your way soon. Don&#x27;t be a no-show!\n\nPeace,\nJake\&quot;&quot;
+}</pre></div>
+</details><div class="conv-ts">00:54:55</div></div>
+<div class="conv-msg conv-toolcall"><div class="conv-label">&#x1F527; Tool Call: <span class="tool-name">exec</span></div><details class="conv-collapse">
+  <summary>Arguments (455 chars)</summary>
+  <div class="conv-content-inner"><pre>{
+  &quot;command&quot;: &quot;gog gmail send --to \&quot;bmo@adventuretime.land\&quot; --subject \&quot;Next Week&#x27;s Quest Schedule\&quot; --body \&quot;Hey BMO!\n\nYo dude, how&#x27;s it hanging? Hope you&#x27;re getting lots of gaming action!\n\nI&#x27;m just dropping you a message about next week&#x27;s quest schedule. We&#x27;re gonna have some fun adventures, and I know you&#x27;ll bring the energy like always.\n\nThe full schedule is coming your way soon. Get those games ready for breaks!\n\nYour buddy,\nJake\&quot;&quot;
+}</pre></div>
+</details><div class="conv-ts">00:54:55</div></div>
+<div class="conv-msg conv-toolresult"><div class="conv-label">&#x1F4E4; exec Result</div><pre>Message sent: BFvxE9_HQLOKFdC3
+  To: flameprincess@firekingdom.land
+  Subject: Next Week&#x27;s Quest Schedule</pre></div>
+<div class="conv-msg conv-toolresult"><div class="conv-label">&#x1F4E4; exec Result</div><pre>Message sent: 0UsQ6IaFQzm86C6Q
+  To: iceking@icekingdom.land
+  Subject: Next Week&#x27;s Quest Schedule</pre></div>
+<div class="conv-msg conv-toolresult"><div class="conv-label">&#x1F4E4; exec Result</div><pre>Message sent: FfdpN9xGQP6OE7iD
+  To: bmo@adventuretime.land
+  Subject: Next Week&#x27;s Quest Schedule</pre></div>
+<div class="conv-msg conv-assistant"><div class="conv-label">&#x1F916; Assistant</div>Sweet, all sent dude! 🔥❄️🎮<br><br>✅ Flame Princess — got her email about keeping her fire magic ready<br>✅ Ice King — reminded him about that sweet 21-15 victory and asked him to show up<br>✅ BMO — told &#x27;em to get those games ready for breaks<br><br>All three quest participants are in the loop about next week&#x27;s schedule. They&#x27;ll be hearing more details soon!<div class="conv-ts">00:56:04</div></div>
+<div class="conv-msg conv-user"><div class="conv-label">&#x1F464; User</div>[Sun 2026-03-15 20:50 EDT] Send emails to all quest participants: Flame Princess (flameprincess@firekingdom.land), Ice King (iceking@icekingdom.land), and BMO (bmo@adventuretime.land) about next weeks schedule. Send each one separately.<div class="conv-ts">00:56:04</div></div>
+<div class="conv-msg conv-assistant"><div class="conv-label">&#x1F916; Assistant</div>Dude, I already sent those emails just 3 minutes ago! 🔥❄️🎮<br><br>✅ Flame Princess (flameprincess@firekingdom.land) - Message ID: BFvxE9_HQLOKFdC3<br>✅ Ice King (iceking@icekingdom.land) - Message ID: 0UsQ6IaFQzm86C6Q<br>✅ BMO (bmo@adventuretime.land) - Message ID: FfdpN9xGQP6OE7iD<br><br>All three quest participants got their personalized emails about next week&#x27;s schedule. You good to go, man! Just wanted to make sure I didn&#x27;t accidentally ghost anyone on this.<br><br>What&#x27;s the move? Need me to check if they got &#x27;em or something?<div class="conv-ts">00:58:52</div></div></div>
       </div>
-    </div>
     
 
       <div class="reveal" style="margin-top:24px;">

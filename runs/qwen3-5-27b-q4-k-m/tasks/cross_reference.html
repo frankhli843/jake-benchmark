@@ -496,6 +496,138 @@ body {
   margin-top: 8px;
 }
 
+/* ─── Conversation Viewer ─── */
+.conv-viewer {
+  margin-top: 24px;
+}
+.conv-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px 0;
+}
+.conv-msg {
+  border-radius: 14px;
+  padding: 14px 18px;
+  font-size: 0.88rem;
+  line-height: 1.65;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+.conv-msg pre {
+  background: rgba(0,0,0,0.06);
+  padding: 12px;
+  border-radius: 8px;
+  overflow-x: auto;
+  font-size: 0.8rem;
+  margin: 8px 0;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+.conv-msg code {
+  font-size: 0.84em;
+  background: rgba(0,0,0,0.06);
+  padding: 1px 5px;
+  border-radius: 3px;
+}
+.conv-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.conv-ts {
+  font-size: 0.68rem;
+  opacity: 0.45;
+  margin-top: 6px;
+}
+.conv-user {
+  background: var(--finn-blue);
+  color: #fff;
+  align-self: flex-end;
+  max-width: 80%;
+  margin-left: auto;
+  border-bottom-right-radius: 4px;
+}
+.conv-user .conv-label { opacity: 0.75; }
+.conv-user pre { background: rgba(255,255,255,0.15); color: #fff; }
+.conv-user code { background: rgba(255,255,255,0.18); }
+.conv-assistant {
+  background: #e8f5e9;
+  color: var(--text);
+  border: 1px solid #c8e6c9;
+  max-width: 88%;
+  border-bottom-left-radius: 4px;
+}
+.conv-thinking {
+  background: #f3e5f5;
+  color: var(--text);
+  border: 1px solid #e1bee7;
+  max-width: 88%;
+  border-left: 3px solid var(--lsp-purple);
+  font-style: italic;
+}
+.conv-thinking .conv-label { color: var(--lsp-purple); }
+.conv-toolcall {
+  background: #fff3e0;
+  color: var(--text);
+  border: 1px solid #ffe0b2;
+  max-width: 92%;
+  border-left: 3px solid var(--fire-orange);
+}
+.conv-toolcall .conv-label { color: var(--fire-orange); }
+.conv-toolcall .tool-name {
+  font-weight: 800;
+  color: var(--fire-orange);
+}
+.conv-toolresult {
+  background: #fafafa;
+  color: var(--text);
+  border: 1px solid var(--border);
+  max-width: 92%;
+  border-left: 3px solid var(--text-secondary);
+}
+.conv-toolresult .conv-label { color: var(--text-secondary); }
+.conv-toolresult.conv-error {
+  border-left-color: var(--marceline-red);
+  background: #fef2f2;
+}
+.conv-toolresult.conv-error .conv-label { color: var(--marceline-red); }
+.conv-collapse {
+  margin-top: 6px;
+}
+.conv-collapse summary {
+  cursor: pointer;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  padding: 2px 0;
+}
+.conv-collapse summary:hover { color: var(--finn-blue); }
+.conv-collapse[open] summary { margin-bottom: 6px; }
+.conv-collapse .conv-content-inner {
+  max-height: 400px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+.conv-stats {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  padding: 8px 0;
+}
+.conv-stats span {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
 /* ─── Tables ─── */
 table {
   width: 100%;
@@ -646,14 +778,47 @@ a:hover {
       </div>
         
 
-    <div class="reveal reveal-delay-2">
-      <div class="card" style="background:var(--bg-alt); border-left:4px solid var(--jake-yellow);">
-        <p style="font-size:0.9rem; color:var(--text-secondary);">
-          Session contained 4 message(s) with 2 tool call turn(s).
-          Full transcripts are omitted from the published dashboard.
-        </p>
+      <div class="conv-viewer reveal reveal-delay-2" style="margin-top:24px;">
+        <h2 style="font-size:1.3rem; font-weight:800; margin-bottom:12px;">&#x1F4AC; Full Conversation</h2>
+        <div class="conv-stats"><span>&#x1F4AC; 1 messages</span><span>&#x1F527; 2 tool calls</span><span>&#x1F9E0; 0 thinking blocks</span></div><div class="conv-timeline"><div class="conv-msg conv-toolcall"><div class="conv-label">&#x1F527; Tool Call: <span class="tool-name">exec</span></div><pre>{
+  &quot;command&quot;: &quot;find ~/.openclaw/workspace/ -type f -name \&quot;*.md\&quot; -o -name \&quot;*.txt\&quot; | head -20&quot;
+}</pre><div class="conv-ts">13:29:48</div></div>
+<div class="conv-msg conv-toolresult"><div class="conv-label">&#x1F4E4; exec Result</div><details class="conv-collapse">
+  <summary>Result output (1,975 chars)</summary>
+  <div class="conv-content-inner"><pre>[test environment]
+[test environment]
+[test environment]
+[test environment]
+[test environment]
+[test environment]
+[test environment]
+[test environment]
+[test environment]
+[test environment]
+[test environment]
+[test environment]
+[test environment]
+[test environment]
+[test environment]
+[test environment]
+[test environment]
+[test environment]
+[test environment]
+[test environment]</pre></div>
+</details></div>
+<div class="conv-msg conv-assistant"><div class="conv-label">&#x1F916; Assistant</div>I see some <code>weekly-plan.md</code> files in the benchmark results. Let me check those for Finn&#x27;s quests:<div class="conv-ts">13:31:23</div></div>
+<div class="conv-msg conv-toolcall"><div class="conv-label">&#x1F527; Tool Call: <span class="tool-name">read</span></div><pre>{
+  &quot;path&quot;: &quot;~/.openclaw/workspace/skills/jake-benchmark/results/qwen3.5:27b-q4_K_M/finn_quests/memory/weekly-plan.md&quot;
+}</pre><div class="conv-ts">13:31:23</div></div>
+<div class="conv-msg conv-toolresult"><div class="conv-label">&#x1F4E4; read Result</div><pre># Weekly Plan - Week of March 16, 2026
+
+**Note**: No calendar events found for this week (Mar 16-22, 2026). Looks pretty open, dude! 
+
+---
+
+*Generated: 2026-03-16 08:53 EDT*
+</pre></div></div>
       </div>
-    </div>
     
 
       <div class="reveal" style="margin-top:24px;">

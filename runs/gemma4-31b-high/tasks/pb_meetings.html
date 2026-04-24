@@ -496,6 +496,138 @@ body {
   margin-top: 8px;
 }
 
+/* ─── Conversation Viewer ─── */
+.conv-viewer {
+  margin-top: 24px;
+}
+.conv-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px 0;
+}
+.conv-msg {
+  border-radius: 14px;
+  padding: 14px 18px;
+  font-size: 0.88rem;
+  line-height: 1.65;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+.conv-msg pre {
+  background: rgba(0,0,0,0.06);
+  padding: 12px;
+  border-radius: 8px;
+  overflow-x: auto;
+  font-size: 0.8rem;
+  margin: 8px 0;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+.conv-msg code {
+  font-size: 0.84em;
+  background: rgba(0,0,0,0.06);
+  padding: 1px 5px;
+  border-radius: 3px;
+}
+.conv-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.conv-ts {
+  font-size: 0.68rem;
+  opacity: 0.45;
+  margin-top: 6px;
+}
+.conv-user {
+  background: var(--finn-blue);
+  color: #fff;
+  align-self: flex-end;
+  max-width: 80%;
+  margin-left: auto;
+  border-bottom-right-radius: 4px;
+}
+.conv-user .conv-label { opacity: 0.75; }
+.conv-user pre { background: rgba(255,255,255,0.15); color: #fff; }
+.conv-user code { background: rgba(255,255,255,0.18); }
+.conv-assistant {
+  background: #e8f5e9;
+  color: var(--text);
+  border: 1px solid #c8e6c9;
+  max-width: 88%;
+  border-bottom-left-radius: 4px;
+}
+.conv-thinking {
+  background: #f3e5f5;
+  color: var(--text);
+  border: 1px solid #e1bee7;
+  max-width: 88%;
+  border-left: 3px solid var(--lsp-purple);
+  font-style: italic;
+}
+.conv-thinking .conv-label { color: var(--lsp-purple); }
+.conv-toolcall {
+  background: #fff3e0;
+  color: var(--text);
+  border: 1px solid #ffe0b2;
+  max-width: 92%;
+  border-left: 3px solid var(--fire-orange);
+}
+.conv-toolcall .conv-label { color: var(--fire-orange); }
+.conv-toolcall .tool-name {
+  font-weight: 800;
+  color: var(--fire-orange);
+}
+.conv-toolresult {
+  background: #fafafa;
+  color: var(--text);
+  border: 1px solid var(--border);
+  max-width: 92%;
+  border-left: 3px solid var(--text-secondary);
+}
+.conv-toolresult .conv-label { color: var(--text-secondary); }
+.conv-toolresult.conv-error {
+  border-left-color: var(--marceline-red);
+  background: #fef2f2;
+}
+.conv-toolresult.conv-error .conv-label { color: var(--marceline-red); }
+.conv-collapse {
+  margin-top: 6px;
+}
+.conv-collapse summary {
+  cursor: pointer;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  padding: 2px 0;
+}
+.conv-collapse summary:hover { color: var(--finn-blue); }
+.conv-collapse[open] summary { margin-bottom: 6px; }
+.conv-collapse .conv-content-inner {
+  max-height: 400px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+.conv-stats {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  padding: 8px 0;
+}
+.conv-stats span {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
 /* ─── Tables ─── */
 table {
   width: 100%;
@@ -645,6 +777,632 @@ a:hover {
         <p style="font-size:0.95rem;">Princess Bubblegum sent me an email asking me to schedule 3 lab review meetings. Read her email and do everything she asked — schedule the meetings, check for conflicts, and send the confirmation emails.</p>
       </div>
         
+
+      <div class="conv-viewer reveal reveal-delay-2" style="margin-top:24px;">
+        <h2 style="font-size:1.3rem; font-weight:800; margin-bottom:12px;">&#x1F4AC; Full Conversation</h2>
+        <div class="conv-stats"><span>&#x1F4AC; 1 messages</span><span>&#x1F527; 8 tool calls</span><span>&#x1F9E0; 7 thinking blocks</span></div><div class="conv-timeline"><div class="conv-msg conv-user"><div class="conv-label">&#x1F464; User</div>Princess Bubblegum sent me an email asking me to schedule 3 lab review meetings. Read her email and do everything she asked — schedule the meetings, check for conflicts, and send the confirmation emails.<div class="conv-ts">18:14:59</div></div>
+<div class="conv-msg conv-thinking"><div class="conv-label">&#x1F9E0; Thinking</div><details class="conv-collapse"><summary>Internal reasoning (595 chars)</summary><div class="conv-content-inner"><pre style="white-space:pre-wrap; font-style:normal;">The user wants me to handle an email from Princess Bubblegum regarding scheduling 3 lab review meetings.
+I need to:
+1.  Find and read the email from Princess Bubblegum.
+2.  Identify the requested meetings and their details.
+3.  Check Frank&#x27;s calendar for conflicts.
+4.  Schedule the meetings.
+5.  Send confirmation emails.
+
+Plan:
+1.  Search Gmail for emails from &quot;Princess Bubblegum&quot;.
+2.  Read the email to get the meeting details.
+3.  List current calendar events to check for conflicts.
+4.  Create the calendar events.
+5.  Send the confirmation emails.
+
+Let&#x27;s start by searching for the email.</pre></div></details></div>
+<div class="conv-msg conv-toolcall"><div class="conv-label">&#x1F527; Tool Call: <span class="tool-name">exec</span></div><pre>{
+  &quot;command&quot;: &quot;gog gmail search \&quot;Princess Bubblegum\&quot;&quot;
+}</pre><div class="conv-ts">18:17:22</div></div>
+<div class="conv-msg conv-toolresult"><div class="conv-label">&#x1F4E4; exec Result</div><pre>msg_pb_meet_001	2026-04-17 07:00	Princess Bubblegum	Schedule 3 Lab Review Meetings	INBOX,UNREAD	th_pb_meet</pre></div>
+<div class="conv-msg conv-toolcall"><div class="conv-label">&#x1F527; Tool Call: <span class="tool-name">exec</span></div><pre>{
+  &quot;command&quot;: &quot;gog gmail read msg_pb_meet_001&quot;
+}</pre><div class="conv-ts">18:17:28</div></div>
+<div class="conv-msg conv-toolresult"><div class="conv-label">&#x1F4E4; exec Result</div><details class="conv-collapse">
+  <summary>Result output (723 chars)</summary>
+  <div class="conv-content-inner"><pre>From: Princess Bubblegum &lt;princess.bubblegum@candykingdom.land&gt;
+To: jake@adventuretime.land
+Date: 2026-04-17 07:00
+Subject: Schedule 3 Lab Review Meetings
+Labels: INBOX
+Thread-ID: th_pb_meet
+Message-ID: msg_pb_meet_001
+
+Hi Jake,
+
+Can you schedule three lab review meetings and send confirmations?
+
+1) Chemistry review (this week, morning preferred)
+   Attendees: princess.bubblegum@candykingdom.land, bmo@adventuretime.land
+
+2) Banana Guard review (must be AFTER the chemistry review)
+   Attendees: princess.bubblegum@candykingdom.land, banana.guard@candykingdom.land
+
+3) Infrastructure session (next week, but NOT Monday)
+   Attendees: princess.bubblegum@candykingdom.land, peppermint.butler@candykingdom.land
+
+Thanks!
+-PB</pre></div>
+</details></div>
+<div class="conv-msg conv-thinking"><div class="conv-label">&#x1F9E0; Thinking</div><details class="conv-collapse"><summary>Internal reasoning (420 chars)</summary><div class="conv-content-inner"><pre style="white-space:pre-wrap; font-style:normal;">Okay, I have the email. I need to schedule three meetings:
+1.  **Chemistry review**: This week, morning preferred.
+    *   Attendees: PB, BMO.
+2.  **Banana Guard review**: After the chemistry review.
+    *   Attendees: PB, Banana Guard.
+3.  **Infrastructure session**: Next week, NOT Monday.
+    *   Attendees: PB, Peppermint Butler.
+
+I need to check the current date first to know what &quot;this week&quot; and &quot;next week&quot; mean.</pre></div></details></div>
+<div class="conv-msg conv-toolcall"><div class="conv-label">&#x1F527; Tool Call: <span class="tool-name">session_status</span></div><pre>{}</pre><div class="conv-ts">18:17:49</div></div>
+<div class="conv-msg conv-toolresult"><div class="conv-label">&#x1F4E4; session_status Result</div><pre>🦞 OpenClaw 2026.4.15-beta.1 (fbe476a)
+🧠 Model: ollama/gemma4:31b · 🔑 unknown
+🧮 Tokens: 65k in / 331 out
+📚 Context: 22k/200k (11%) · 🧹 Compactions: 0
+🧵 Session: agent:main:explicit:bench-2026-04-17_133932-pb_meetings • updated 3m ago
+⚙️ Runtime: direct · Think: high · elevated
+🪢 Queue: collect (depth 0)</pre></div>
+<div class="conv-msg conv-thinking"><div class="conv-label">&#x1F9E0; Thinking</div><details class="conv-collapse"><summary>Internal reasoning (1,163 chars)</summary><div class="conv-content-inner"><pre style="white-space:pre-wrap; font-style:normal;">The current date is 2026-04-17 (Friday).
+PB wants 3 meetings:
+1. Chemistry review: This week (which is almost over, since it&#x27;s Friday), morning preferred.
+   Attendees: PB, BMO.
+2. Banana Guard review: Must be AFTER the chemistry review.
+   Attendees: PB, Banana Guard.
+3. Infrastructure session: Next week, but NOT Monday.
+   Attendees: PB, Peppermint Butler.
+
+Since today is Friday, &quot;this week&quot; means today.
+However, usually &quot;this week&quot; on a Friday might be tight. Let&#x27;s check the calendar for today and next week to see what&#x27;s open.
+
+Plan:
+1. Check calendar for today (Friday 2026-04-17) and next week (2026-04-20 to 2026-04-24).
+2. Schedule Chemistry review for today morning (if possible) or maybe she means &quot;this week&quot; including the weekend? No, usually business days. If it&#x27;s already afternoon, I&#x27;ll have to see. Wait, `session_status` didn&#x27;t give the exact time, just the date. I should check the current time.
+3. Schedule Banana Guard review after Chemistry.
+4. Schedule Infrastructure for next week (Tue-Fri).
+5. Send confirmation emails.
+
+Wait, I need to check the current time first to see if &quot;this week, morning preferred&quot; is even possible for today.</pre></div></details></div>
+<div class="conv-msg conv-toolcall"><div class="conv-label">&#x1F527; Tool Call: <span class="tool-name">exec</span></div><pre>{
+  &quot;command&quot;: &quot;date&quot;
+}</pre><div class="conv-ts">18:18:36</div></div>
+<div class="conv-msg conv-toolresult"><div class="conv-label">&#x1F4E4; exec Result</div><pre>Fri 17 Apr 14:18:36 EDT 2026</pre></div>
+<div class="conv-msg conv-thinking"><div class="conv-label">&#x1F9E0; Thinking</div><details class="conv-collapse"><summary>Internal reasoning (1,809 chars)</summary><div class="conv-content-inner"><pre style="white-space:pre-wrap; font-style:normal;">The current date is Friday, April 17, 2026.
+
+PB wants 3 meetings:
+1. **Chemistry review**: This week (Apr 13-19), morning preferred. Attendees: PB, BMO.
+2. **Banana Guard review**: Must be AFTER Chemistry review. Attendees: PB, Banana Guard.
+3. **Infrastructure session**: Next week (Apr 20-26), but NOT Monday (Apr 20). Attendees: PB, Peppermint Butler.
+
+Since today is Friday, &quot;this week&quot; mostly means today (Friday) or the weekend, but usually, business meetings are weekdays. However, PB says &quot;morning preferred&quot; and it&#x27;s already 14:18 (2:18 PM) on Friday. If I schedule it for today, it&#x27;s too late for &quot;morning&quot;. I&#x27;ll check the calendar for today and maybe Monday (though Monday is next week). Actually, if she says &quot;this week&quot;, and it&#x27;s Friday afternoon, maybe she means the coming few days or she&#x27;s okay with the weekend? Or maybe she&#x27;s thinking about the *upcoming* week as &quot;this week&quot; (some people do). But strictly, today is the only weekday left.
+
+Wait, if I can&#x27;t do morning this week (since it&#x27;s Friday afternoon), I should check if there are conflicts for today/weekend or maybe suggest next week? No, she said &quot;this week&quot;. Let me check the calendar first to see if there&#x27;s anything already there that gives a hint or if there&#x27;s space.
+
+Actually, looking at the calendar for the next 14 days will help.
+
+Plan:
+1. List calendar events for the next 2 weeks.
+2. Schedule Chemistry review (hopefully today or Saturday/Sunday if PB is a workaholic, but I&#x27;ll try to find a slot). Given it&#x27;s Friday afternoon, &quot;morning preferred this week&quot; is tricky. Maybe she means *starting* this week? No, usually &quot;this week&quot; means before Sunday.
+3. Schedule Banana Guard review after Chemistry.
+4. Schedule Infrastructure session next week (Tue-Fri).
+5. Send confirmation emails.
+
+Let&#x27;s look at the calendar first.</pre></div></details></div>
+<div class="conv-msg conv-toolcall"><div class="conv-label">&#x1F527; Tool Call: <span class="tool-name">exec</span></div><pre>{
+  &quot;command&quot;: &quot;gog calendar list --from 2026-04-17 --to 2026-04-30&quot;
+}</pre><div class="conv-ts">18:19:42</div></div>
+<div class="conv-msg conv-toolresult"><div class="conv-label">&#x1F4E4; exec Result (exit 1)</div><pre>Traceback (most recent call last):
+  File &quot;[test path]&quot;, line 818, in &lt;module&gt;
+    main()
+  File &quot;[test path]&quot;, line 761, in main
+    cmd_calendar_list(args)
+  File &quot;[test path]&quot;, line 303, in cmd_calendar_list
+    print(f&quot;{e[&#x27;id&#x27;]}\t{_fmt_date(e[&#x27;start&#x27;])}\t{_fmt_date(e[&#x27;end&#x27;])}\t{e[&#x27;summary&#x27;]}&quot;)
+                                                                        ~^^^^^^^^^^^
+KeyError: &#x27;summary&#x27;
+
+(Command exited with code 1)</pre></div>
+<div class="conv-msg conv-thinking"><div class="conv-label">&#x1F9E0; Thinking</div><details class="conv-collapse"><summary>Internal reasoning (935 chars)</summary><div class="conv-content-inner"><pre style="white-space:pre-wrap; font-style:normal;">The `gog calendar list` command failed with a `KeyError: &#x27;summary&#x27;`. This looks like a bug in the `gog` CLI tool itself. However, as Jake, I should try to find a way around it or check if there&#x27;s another way to list events. Since I have full shell access, I can&#x27;t easily fix the `gog` binary unless it&#x27;s a script I can edit, but I can try to see if `gog calendar list` works without dates or if there&#x27;s a way to get the information. Actually, let me try a simpler call or check if it&#x27;s a widespread issue.
+
+Wait, if `gog calendar list` is crashing, I might be able to use `gog` differently or maybe I can just try to create the events and see if they conflict? No, that&#x27;s messy. Let me try to list without the dates first to see if it&#x27;s a date-range issue.
+
+Wait, I see the error is `e[&#x27;summary&#x27;]`. It seems the `gog` tool expects a `summary` key in the event object but it&#x27;s missing.
+
+Let me try `gog calendar list` without any flags.</pre></div></details></div>
+<div class="conv-msg conv-toolcall"><div class="conv-label">&#x1F527; Tool Call: <span class="tool-name">exec</span></div><pre>{
+  &quot;command&quot;: &quot;gog calendar list&quot;
+}</pre><div class="conv-ts">18:20:19</div></div>
+<div class="conv-msg conv-toolresult"><div class="conv-label">&#x1F4E4; exec Result (exit 1)</div><pre>Traceback (most recent call last):
+  File &quot;[test path]&quot;, line 818, in &lt;module&gt;
+    main()
+  File &quot;[test path]&quot;, line 761, in main
+    cmd_calendar_list(args)
+  File &quot;[test path]&quot;, line 303, in cmd_calendar_list
+    print(f&quot;{e[&#x27;id&#x27;]}\t{_fmt_date(e[&#x27;start&#x27;])}\t{_fmt_date(e[&#x27;end&#x27;])}\t{e[&#x27;summary&#x27;]}&quot;)
+                                                                        ~^^^^^^^^^^^
+KeyError: &#x27;summary&#x27;
+
+(Command exited with code 1)</pre></div>
+<div class="conv-msg conv-thinking"><div class="conv-label">&#x1F9E0; Thinking</div><details class="conv-collapse"><summary>Internal reasoning (1,416 chars)</summary><div class="conv-content-inner"><pre style="white-space:pre-wrap; font-style:normal;">The `gog calendar list` command is failing with a `KeyError: &#x27;summary&#x27;`. This looks like a bug in the `gog` CLI tool where it&#x27;s trying to access a &#x27;summary&#x27; key that doesn&#x27;t exist in the event objects.
+
+Since I can&#x27;t fix the CLI tool itself (I don&#x27;t have the source code in the current context, though I could try to find it if it&#x27;s in the workspace, but usually `bin/gog` is a binary or a script in a system path), I should check if there are any other ways to see the calendar or if I can just try to schedule the meetings and see if they clash (though the prompt specifically asked to check for conflicts).
+
+Wait, if `gog calendar list` is broken, I can&#x27;t check for conflicts. I should check if there&#x27;s a way to debug `gog` or if I can use another tool.
+
+Actually, looking at the error:
+`File &quot;[test path]&quot;, line 303, in cmd_calendar_list`
+`print(f&quot;{e[&#x27;id&#x27;]}\t{_fmt_date(e[&#x27;start&#x27;])}\t{_fmt_date(e[&#x27;end&#x27;])}\t{e[&#x27;summary&#x27;]}&quot;)`
+
+It seems the API response changed or the tool is outdated.
+
+Let&#x27;s see if I can find the `gog` script and fix it, or if I should just report it. But the user wants the meetings scheduled.
+
+Wait, I&#x27;m Jake. I should just try to get it done. If the calendar list is broken, maybe I can&#x27;t &quot;check for conflicts&quot; using the tool, but I can try to find a workaround.
+
+Wait, I can try to read the `gog` script if it&#x27;s a python script.
+Path is `[test path]
+
+Let&#x27;s try reading it.</pre></div></details></div>
+<div class="conv-msg conv-toolcall"><div class="conv-label">&#x1F527; Tool Call: <span class="tool-name">read</span></div><pre>{
+  &quot;path&quot;: &quot;[test path]&quot;
+}</pre><div class="conv-ts">18:21:14</div></div>
+<div class="conv-msg conv-toolresult"><div class="conv-label">&#x1F4E4; read Result</div><details class="conv-collapse">
+  <summary>Result output (15,978 chars)</summary>
+  <div class="conv-content-inner"><pre>#!/usr/bin/env python3
+&quot;&quot;&quot;gog - Google Workspace CLI for Gmail, Calendar, Drive, Contacts, Sheets, and Docs.&quot;&quot;&quot;
+
+import argparse
+import json
+import os
+import sys
+import uuid
+import base64
+import random
+import hashlib
+from datetime import datetime, timedelta, timezone
+from pathlib import Path
+
+VERSION = &quot;1.2.0&quot;
+STATE_DIR = Path.home() / &quot;.config&quot; / &quot;gogcli&quot; / &quot;state&quot;
+
+# ─── Utility ──────────────────────────────────────────────────────────────────
+
+def _id():
+    &quot;&quot;&quot;Generate a Google-style base64 ID.&quot;&quot;&quot;
+    raw = uuid.uuid4().bytes[:12]
+    return base64.urlsafe_b64encode(raw).decode().rstrip(&quot;=&quot;)
+
+def _thread_id():
+    return _id()
+
+def _now_iso():
+    return datetime.now().strftime(&quot;%Y-%m-%dT%H:%M:%S&quot;)
+
+def _load(name):
+    p = STATE_DIR / f&quot;{name}.json&quot;
+    if not p.exists():
+        return []
+    with open(p) as f:
+        return json.load(f)
+
+def _save(name, data):
+    STATE_DIR.mkdir(parents=True, exist_ok=True)
+    p = STATE_DIR / f&quot;{name}.json&quot;
+    with open(p, &quot;w&quot;) as f:
+        json.dump(data, f, indent=2)
+
+def _parse_dt(s):
+    &quot;&quot;&quot;Parse flexible datetime string.&quot;&quot;&quot;
+    for fmt in (
+        &quot;%Y-%m-%dT%H:%M:%S&quot;,
+        &quot;%Y-%m-%dT%H:%M&quot;,
+        &quot;%Y-%m-%d %H:%M:%S&quot;,
+        &quot;%Y-%m-%d %H:%M&quot;,
+        &quot;%Y-%m-%d&quot;,
+    ):
+        try:
+            return datetime.strptime(s, fmt)
+        except ValueError:
+            continue
+    raise ValueError(f&quot;Cannot parse date: {s}&quot;)
+
+def _fmt_date(iso_str):
+    &quot;&quot;&quot;Format ISO string for display.&quot;&quot;&quot;
+    try:
+        dt = _parse_dt(iso_str)
+        return dt.strftime(&quot;%Y-%m-%d %H:%M&quot;)
+    except Exception:
+        return iso_str
+
+def _today():
+    return datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)
+
+# ─── Init / Reset (hidden admin commands) ────────────────────────────────────
+
+def _populate_test_data():
+    STATE_DIR.mkdir(parents=True, exist_ok=True)
+    today = _today()
+    tomorrow = today + timedelta(days=1)
+    day_after = today + timedelta(days=2)
+    # Find next Saturday and Sunday
+    days_to_sat = (5 - today.weekday()) % 7
+    if days_to_sat == 0:
+        days_to_sat = 7
+    saturday = today + timedelta(days=days_to_sat)
+    sunday = saturday + timedelta(days=1)
+
+    # Calendar events
+    events = []
+    # Recurring standup for next 7 weekdays
+    for i in range(14):
+        d = today + timedelta(days=i)
+        if d.weekday() &lt; 5:  # Mon-Fri
+            events.append({
+                &quot;id&quot;: _id(),
+                &quot;summary&quot;: &quot;Team standup&quot;,
+                &quot;start&quot;: d.replace(hour=9, minute=0).strftime(&quot;%Y-%m-%dT%H:%M:%S&quot;),
+                &quot;end&quot;: d.replace(hour=9, minute=30).strftime(&quot;%Y-%m-%dT%H:%M:%S&quot;),
+                &quot;description&quot;: &quot;Daily sync with the team&quot;,
+                &quot;location&quot;: &quot;Treehouse Conference Room&quot;,
+                &quot;calendar&quot;: &quot;primary&quot;,
+            })
+    events.append({
+        &quot;id&quot;: _id(),
+        &quot;summary&quot;: &quot;Lunch with BMO&quot;,
+        &quot;start&quot;: tomorrow.replace(hour=12, minute=0).strftime(&quot;%Y-%m-%dT%H:%M:%S&quot;),
+        &quot;end&quot;: tomorrow.replace(hour=13, minute=0).strftime(&quot;%Y-%m-%dT%H:%M:%S&quot;),
+        &quot;description&quot;: &quot;Trying that new ramen place&quot;,
+        &quot;location&quot;: &quot;Noodle Kingdom&quot;,
+        &quot;calendar&quot;: &quot;primary&quot;,
+    })
+    events.append({
+        &quot;id&quot;: _id(),
+        &quot;summary&quot;: &quot;Dentist appointment&quot;,
+        &quot;start&quot;: day_after.replace(hour=14, minute=0).strftime(&quot;%Y-%m-%dT%H:%M:%S&quot;),
+        &quot;end&quot;: day_after.replace(hour=15, minute=0).strftime(&quot;%Y-%m-%dT%H:%M:%S&quot;),
+        &quot;description&quot;: &quot;Regular checkup&quot;,
+        &quot;location&quot;: &quot;Candy Kingdom Dental&quot;,
+        &quot;calendar&quot;: &quot;primary&quot;,
+    })
+    events.append({
+        &quot;id&quot;: _id(),
+        &quot;summary&quot;: &quot;Game night with Finn&quot;,
+        &quot;start&quot;: saturday.replace(hour=19, minute=0).strftime(&quot;%Y-%m-%dT%H:%M:%S&quot;),
+        &quot;end&quot;: saturday.replace(hour=22, minute=0).strftime(&quot;%Y-%m-%dT%H:%M:%S&quot;),
+        &quot;description&quot;: &quot;Card Wars tournament&quot;,
+        &quot;location&quot;: &quot;Finn and Jake&#x27;s Treehouse&quot;,
+        &quot;calendar&quot;: &quot;primary&quot;,
+    })
+    events.append({
+        &quot;id&quot;: _id(),
+        &quot;summary&quot;: &quot;Lady Rainicorn&#x27;s birthday party&quot;,
+        &quot;start&quot;: sunday.replace(hour=15, minute=0).strftime(&quot;%Y-%m-%dT%H:%M:%S&quot;),
+        &quot;end&quot;: sunday.replace(hour=18, minute=0).strftime(&quot;%Y-%m-%dT%H:%M:%S&quot;),
+        &quot;description&quot;: &quot;Don&#x27;t forget the present!&quot;,
+        &quot;location&quot;: &quot;Rainicorn Kingdom&quot;,
+        &quot;calendar&quot;: &quot;primary&quot;,
+    })
+    _save(&quot;calendar&quot;, events)
+
+    # Emails
+    now = datetime.now()
+    thread1, thread2, thread3, thread4, thread5, thread6 = (_thread_id() for _ in range(6))
+    emails = [
+        {
+            &quot;id&quot;: _id(), &quot;threadId&quot;: thread1,
+            &quot;date&quot;: (now - timedelta(hours=2)).strftime(&quot;%Y-%m-%dT%H:%M:%S&quot;),
+            &quot;from&quot;: &quot;finn@adventuretime.land&quot;, &quot;fromName&quot;: &quot;Finn the Human&quot;,
+            &quot;to&quot;: &quot;jake@adventuretime.land&quot;,
+            &quot;subject&quot;: &quot;Dungeon crawl this weekend?&quot;,
+            &quot;body&quot;: &quot;Hey Jake!\n\nWanna hit up that new dungeon in the Ice Kingdom this weekend? I heard there&#x27;s some sweet loot on level 3.\n\nBring your stretchy powers!\n\n- Finn&quot;,
+            &quot;labels&quot;: [&quot;INBOX&quot;, &quot;UNREAD&quot;, &quot;CATEGORY_PERSONAL&quot;],
+            &quot;account&quot;: &quot;jake@adventuretime.land&quot;,
+        },
+        {
+            &quot;id&quot;: _id(), &quot;threadId&quot;: thread2,
+            &quot;date&quot;: (now - timedelta(hours=5)).strftime(&quot;%Y-%m-%dT%H:%M:%S&quot;),
+            &quot;from&quot;: &quot;bmo@adventuretime.land&quot;, &quot;fromName&quot;: &quot;BMO&quot;,
+            &quot;to&quot;: &quot;jake@adventuretime.land&quot;,
+            &quot;subject&quot;: &quot;New game installed!&quot;,
+            &quot;body&quot;: &quot;Jake! Jake! BMO installed a new game called &#x27;Kompy&#x27;s Kastle&#x27;! It has 64 levels and a secret boss. Come play with BMO tonight!\n\n- BMO &lt;3&quot;,
+            &quot;labels&quot;: [&quot;INBOX&quot;, &quot;UNREAD&quot;, &quot;CATEGORY_PERSONAL&quot;],
+            &quot;account&quot;: &quot;jake@adventuretime.land&quot;,
+        },
+        {
+            &quot;id&quot;: _id(), &quot;threadId&quot;: thread3,
+            &quot;date&quot;: (now - timedelta(days=1)).strftime(&quot;%Y-%m-%dT%H:%M:%S&quot;),
+            &quot;from&quot;: &quot;princess.bubblegum@candykingdom.land&quot;, &quot;fromName&quot;: &quot;Princess Bubblegum&quot;,
+            &quot;to&quot;: &quot;jake@adventuretime.land&quot;,
+            &quot;subject&quot;: &quot;Lab results ready&quot;,
+            &quot;body&quot;: &quot;Hi Jake,\n\nYour annual physical results are in. Everything looks good — stretchy powers are within normal parameters. Your bacon cholesterol is slightly elevated but nothing to worry about.\n\nStop by the lab to pick up the full report when you get a chance.\n\nBest,\nPrincess Bubblegum&quot;,
+            &quot;labels&quot;: [&quot;INBOX&quot;, &quot;CATEGORY_PERSONAL&quot;],
+            &quot;account&quot;: &quot;jake@adventuretime.land&quot;,
+        },
+        {
+            &quot;id&quot;: _id(), &quot;threadId&quot;: thread4,
+            &quot;date&quot;: (now - timedelta(days=1, hours=3)).strftime(&quot;%Y-%m-%dT%H:%M:%S&quot;),
+            &quot;from&quot;: &quot;marceline@nightosphere.land&quot;, &quot;fromName&quot;: &quot;Marceline&quot;,
+            &quot;to&quot;: &quot;jake@adventuretime.land&quot;,
+            &quot;subject&quot;: &quot;Band practice cancelled&quot;,
+            &quot;body&quot;: &quot;Hey Jake,\n\nGotta cancel band practice this week. My bass got possessed again and I need to do an exorcism. Should be fixed by next Tuesday.\n\nKeep practicing those drums tho!\n\n- Marcy&quot;,
+            &quot;labels&quot;: [&quot;INBOX&quot;, &quot;CATEGORY_PERSONAL&quot;],
+            &quot;account&quot;: &quot;jake@adventuretime.land&quot;,
+        },
+        {
+            &quot;id&quot;: _id(), &quot;threadId&quot;: thread5,
+            &quot;date&quot;: (now - timedelta(days=2)).strftime(&quot;%Y-%m-%dT%H:%M:%S&quot;),
+            &quot;from&quot;: &quot;iceking@icekingdom.land&quot;, &quot;fromName&quot;: &quot;Ice King&quot;,
+            &quot;to&quot;: &quot;jake@adventuretime.land&quot;,
+            &quot;subject&quot;: &quot;MARRY ME PRINCESS&quot;,
+            &quot;body&quot;: &quot;DEAR JAKE,\n\nCAN YOU PUT IN A GOOD WORD FOR ME WITH PRINCESS BUBBLEGUM? I WROTE HER A POEM:\n\nRoses are blue,\nViolets are also blue,\nEverything is blue,\nI am the Ice King.\n\nPLEASE HELP\n- ICE KING&quot;,
+            &quot;labels&quot;: [&quot;INBOX&quot;, &quot;SPAM&quot;],
+            &quot;account&quot;: &quot;jake@adventuretime.land&quot;,
+        },
+        {
+            &quot;id&quot;: _id(), &quot;threadId&quot;: thread6,
+            &quot;date&quot;: (now - timedelta(hours=8)).strftime(&quot;%Y-%m-%dT%H:%M:%S&quot;),
+            &quot;from&quot;: &quot;hr@treehouse.land&quot;, &quot;fromName&quot;: &quot;Treehouse HR&quot;,
+            &quot;to&quot;: &quot;jake@adventuretime.land&quot;,
+            &quot;subject&quot;: &quot;Benefits enrollment deadline&quot;,
+            &quot;body&quot;: &quot;Dear Jake,\n\nThis is a reminder that the benefits enrollment deadline is this Friday. Please log in to the Treehouse portal to select your health plan.\n\nOptions include:\n- Basic Hero Coverage\n- Premium Adventure Plan (includes dungeon injury)\n- Family Plan (covers Lady Rainicorn + pups)\n\nDon&#x27;t miss the deadline!\n\nTreehouse HR Department&quot;,
+            &quot;labels&quot;: [&quot;INBOX&quot;, &quot;UNREAD&quot;, &quot;IMPORTANT&quot;, &quot;CATEGORY_UPDATES&quot;],
+            &quot;account&quot;: &quot;jake@adventuretime.land&quot;,
+        },
+    ]
+    _save(&quot;emails&quot;, emails)
+
+    # Tasks
+    yesterday = today - timedelta(days=1)
+    tasks = [
+        {
+            &quot;id&quot;: _id(),
+            &quot;listId&quot;: &quot;scheduled&quot;,
+            &quot;title&quot;: &quot;Fix the roof&quot;,
+            &quot;status&quot;: &quot;needsAction&quot;,
+            &quot;due&quot;: tomorrow.strftime(&quot;%Y-%m-%dT00:00:00&quot;),
+            &quot;updated&quot;: (now - timedelta(hours=12)).strftime(&quot;%Y-%m-%dT%H:%M:%S&quot;),
+        },
+        {
+            &quot;id&quot;: _id(),
+            &quot;listId&quot;: &quot;scheduled&quot;,
+            &quot;title&quot;: &quot;Buy bacon&quot;,
+            &quot;status&quot;: &quot;needsAction&quot;,
+            &quot;due&quot;: today.strftime(&quot;%Y-%m-%dT00:00:00&quot;),
+            &quot;updated&quot;: (now - timedelta(hours=6)).strftime(&quot;%Y-%m-%dT%H:%M:%S&quot;),
+        },
+        {
+            &quot;id&quot;: _id(),
+            &quot;listId&quot;: &quot;scheduled&quot;,
+            &quot;title&quot;: &quot;Practice viola&quot;,
+            &quot;status&quot;: &quot;needsAction&quot;,
+            &quot;due&quot;: (today + timedelta(days=3)).strftime(&quot;%Y-%m-%dT00:00:00&quot;),
+            &quot;updated&quot;: (now - timedelta(days=1)).strftime(&quot;%Y-%m-%dT%H:%M:%S&quot;),
+        },
+        {
+            &quot;id&quot;: _id(),
+            &quot;listId&quot;: &quot;scheduled&quot;,
+            &quot;title&quot;: &quot;Return Finn&#x27;s sword&quot;,
+            &quot;status&quot;: &quot;needsAction&quot;,
+            &quot;due&quot;: yesterday.strftime(&quot;%Y-%m-%dT00:00:00&quot;),
+            &quot;updated&quot;: (now - timedelta(days=2)).strftime(&quot;%Y-%m-%dT%H:%M:%S&quot;),
+        },
+    ]
+    _save(&quot;tasks&quot;, tasks)
+
+    # Task lists
+    task_lists = [
+        {&quot;id&quot;: &quot;scheduled&quot;, &quot;title&quot;: &quot;Scheduled&quot;},
+        {&quot;id&quot;: &quot;default&quot;, &quot;title&quot;: &quot;My Tasks&quot;},
+    ]
+    _save(&quot;tasklists&quot;, task_lists)
+
+    # Contacts
+    contacts = [
+        {&quot;name&quot;: &quot;Finn the Human&quot;, &quot;email&quot;: &quot;finn@adventuretime.land&quot;, &quot;phone&quot;: &quot;+1-555-3466&quot;},
+        {&quot;name&quot;: &quot;BMO&quot;, &quot;email&quot;: &quot;bmo@adventuretime.land&quot;, &quot;phone&quot;: &quot;&quot;},
+        {&quot;name&quot;: &quot;Princess Bubblegum&quot;, &quot;email&quot;: &quot;princess.bubblegum@candykingdom.land&quot;, &quot;phone&quot;: &quot;+1-555-7282&quot;},
+        {&quot;name&quot;: &quot;Marceline&quot;, &quot;email&quot;: &quot;marceline@nightosphere.land&quot;, &quot;phone&quot;: &quot;+1-555-6272&quot;},
+        {&quot;name&quot;: &quot;Lady Rainicorn&quot;, &quot;email&quot;: &quot;lady.rainicorn@adventuretime.land&quot;, &quot;phone&quot;: &quot;+1-555-7246&quot;},
+    ]
+    _save(&quot;contacts&quot;, contacts)
+
+    # Auth marker (so gog auth status works)
+    auth = {
+        &quot;accounts&quot;: [
+            {
+                &quot;email&quot;: &quot;jake@adventuretime.land&quot;,
+                &quot;services&quot;: [&quot;gmail&quot;, &quot;calendar&quot;, &quot;drive&quot;, &quot;contacts&quot;, &quot;people&quot;, &quot;tasks&quot;],
+                &quot;status&quot;: &quot;active&quot;,
+                &quot;expires&quot;: (datetime.now() + timedelta(days=365)).strftime(&quot;%Y-%m-%dT%H:%M:%S&quot;),
+            }
+        ]
+    }
+    _save(&quot;auth&quot;, auth)
+
+
+# ─── Calendar Commands ────────────────────────────────────────────────────────
+
+def cmd_calendar_list(args):
+    events = _load(&quot;calendar&quot;)
+    if not events:
+        print(&quot;No events found.&quot;)
+        return
+
+    # Filter by date range
+    if args.from_date:
+        from_dt = _parse_dt(args.from_date)
+        events = [e for e in events if _parse_dt(e[&quot;start&quot;]) &gt;= from_dt]
+    else:
+        # Default: from now
+        events = [e for e in events if _parse_dt(e[&quot;start&quot;]) &gt;= _today()]
+
+    if args.to_date:
+        to_dt = _parse_dt(args.to_date)
+        events = [e for e in events if _parse_dt(e[&quot;start&quot;]) &lt;= to_dt]
+    else:
+        # Default: next 7 days
+        events = [e for e in events if _parse_dt(e[&quot;start&quot;]) &lt;= _today() + timedelta(days=7)]
+
+    events.sort(key=lambda e: e[&quot;start&quot;])
+
+    if not events:
+        print(&quot;No events found in the specified range.&quot;)
+        return
+
+
+⚠️ [... middle content omitted — showing head and tail ...]
+
+    tk_list.add_argument(&quot;list_id&quot;, help=&quot;Task list ID or name&quot;)
+    tk_list.add_argument(&quot;--account&quot;, help=&quot;Account email&quot;)
+    tk_list.add_argument(&quot;--all&quot;, action=&quot;store_true&quot;, help=&quot;Include completed tasks&quot;)
+
+    tk_add = tk_sub.add_parser(&quot;add&quot;, help=&quot;Add a task&quot;)
+    tk_add.add_argument(&quot;list_id&quot;, help=&quot;Task list ID&quot;)
+    tk_add.add_argument(&quot;--title&quot;, required=True, help=&quot;Task title&quot;)
+    tk_add.add_argument(&quot;--due&quot;, help=&quot;Due date (YYYY-MM-DD)&quot;)
+    tk_add.add_argument(&quot;--notes&quot;, help=&quot;Task notes&quot;)
+    tk_add.add_argument(&quot;--account&quot;, help=&quot;Account email&quot;)
+
+    tk_done = tk_sub.add_parser(&quot;done&quot;, help=&quot;Mark a task as complete&quot;)
+    tk_done.add_argument(&quot;list_id&quot;, help=&quot;Task list ID&quot;)
+    tk_done.add_argument(&quot;task_id&quot;, help=&quot;Task ID&quot;)
+
+    # ── Contacts ──
+    ct = subparsers.add_parser(&quot;contacts&quot;, help=&quot;Google Contacts operations&quot;)
+    ct_sub = ct.add_subparsers(dest=&quot;action&quot;)
+
+    ct_list = ct_sub.add_parser(&quot;list&quot;, help=&quot;List contacts&quot;)
+    ct_list.add_argument(&quot;--account&quot;, help=&quot;Account email&quot;)
+
+    ct_search = ct_sub.add_parser(&quot;search&quot;, help=&quot;Search contacts&quot;)
+    ct_search.add_argument(&quot;query&quot;, help=&quot;Search query&quot;)
+
+    # ── Auth ──
+    au = subparsers.add_parser(&quot;auth&quot;, help=&quot;Authentication management&quot;)
+    au_sub = au.add_subparsers(dest=&quot;action&quot;)
+
+    au_status = au_sub.add_parser(&quot;status&quot;, help=&quot;Show auth status&quot;)
+
+    au_add = au_sub.add_parser(&quot;add&quot;, help=&quot;Add/authorize an account&quot;)
+    au_add.add_argument(&quot;email&quot;, help=&quot;Account email&quot;)
+    au_add.add_argument(&quot;--services&quot;, help=&quot;Comma-separated services&quot;)
+    au_add.add_argument(&quot;--force&quot;, action=&quot;store_true&quot;, help=&quot;Force re-authorization&quot;)
+
+    au_tokens = au_sub.add_parser(&quot;tokens&quot;, help=&quot;Token management&quot;)
+    au_tokens_sub = au_tokens.add_subparsers(dest=&quot;tokens_action&quot;)
+    au_export = au_tokens_sub.add_parser(&quot;export&quot;, help=&quot;Export tokens&quot;)
+    au_export.add_argument(&quot;email&quot;, nargs=&quot;?&quot;, help=&quot;Account email&quot;)
+    au_export.add_argument(&quot;--out&quot;, help=&quot;Output file&quot;)
+
+    args = parser.parse_args()
+
+    if not args.service:
+        parser.print_help()
+        return
+
+    # Route to handlers
+    if args.service == &quot;calendar&quot;:
+        if args.action == &quot;list&quot;:
+            cmd_calendar_list(args)
+        elif args.action == &quot;get&quot;:
+            cmd_calendar_get(args)
+        elif args.action == &quot;create&quot;:
+            cmd_calendar_create(args)
+        elif args.action == &quot;delete&quot;:
+            cmd_calendar_delete(args)
+        elif args.action == &quot;update&quot;:
+            cmd_calendar_update(args)
+        else:
+            cal.print_help()
+    elif args.service == &quot;gmail&quot;:
+        if args.action == &quot;list&quot;:
+            cmd_gmail_list(args)
+        elif args.action == &quot;read&quot;:
+            cmd_gmail_read(args)
+        elif args.action == &quot;send&quot;:
+            cmd_gmail_send(args)
+        elif args.action == &quot;search&quot;:
+            cmd_gmail_search(args)
+        else:
+            gm.print_help()
+    elif args.service == &quot;tasks&quot;:
+        if args.action == &quot;lists&quot;:
+            cmd_tasks_lists(args)
+        elif args.action == &quot;list&quot;:
+            cmd_tasks_list(args)
+        elif args.action == &quot;add&quot;:
+            cmd_tasks_add(args)
+        elif args.action == &quot;done&quot;:
+            cmd_tasks_done(args)
+        else:
+            tk.print_help()
+    elif args.service == &quot;contacts&quot;:
+        if args.action == &quot;list&quot;:
+            cmd_contacts_list(args)
+        elif args.action == &quot;search&quot;:
+            cmd_contacts_search(args)
+        else:
+            ct.print_help()
+    elif args.service == &quot;auth&quot;:
+        if args.action == &quot;status&quot;:
+            cmd_auth_status(args)
+        elif args.action == &quot;add&quot;:
+            cmd_auth_add(args)
+        elif args.action == &quot;tokens&quot;:
+            if hasattr(args, &quot;tokens_action&quot;) and args.tokens_action == &quot;export&quot;:
+                cmd_auth_tokens_export(args)
+            else:
+                au_tokens.print_help()
+        else:
+            au.print_help()
+    else:
+        parser.print_help()
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+[... 14209 more characters truncated]</pre></div>
+</details></div>
+<div class="conv-msg conv-thinking"><div class="conv-label">&#x1F9E0; Thinking</div><details class="conv-collapse"><summary>Internal reasoning (1,541 chars)</summary><div class="conv-content-inner"><pre style="white-space:pre-wrap; font-style:normal;">The `gog calendar list` command is failing with a `KeyError: &#x27;summary&#x27;`. Looking at the source code of `[test path] it seems it&#x27;s trying to access `e[&#x27;summary&#x27;]` but the event might not have that key. However, the `_populate_test_data` function *does* set `summary`. This suggests some events in the state file might be malformed or missing the `summary` key.
+
+Wait, I just tried `gog calendar list --from 2026-04-17 --to 2026-04-30` and it crashed.
+And `gog calendar list` (without args) also crashed.
+
+I need to see what&#x27;s in the calendar state to understand why it&#x27;s crashing. The state is stored in `~/.config/gogcli/state/calendar.json`.
+
+Once I fix/understand the calendar, I can:
+1.  **Chemistry review**: This week, morning preferred. (Today is Friday, April 17). Morning of Monday 20th? No, &quot;this week&quot; usually means the current week. Friday morning is gone. Maybe Monday morning? Or maybe she means the *next* few days? Let&#x27;s assume &quot;this week&quot; includes the coming weekend or just the remaining part of the work week. Actually, Friday 14:18 is already afternoon. I&#x27;ll look for a slot on Monday morning (if she considers that &quot;this week&quot; or just the nearest available morning). Wait, usually &quot;this week&quot; means before Sunday. If it&#x27;s Friday afternoon, maybe Saturday or Sunday? But these are lab reviews. Let&#x27;s check the calendar first.
+2.  **Banana Guard review**: After Chemistry review.
+3.  **Infrastructure session**: Next week, not Monday. (April 20-26).
+
+Let&#x27;s check the calendar file directly since the CLI is buggy.</pre></div></details></div>
+<div class="conv-msg conv-toolcall"><div class="conv-label">&#x1F527; Tool Call: <span class="tool-name">exec</span></div><pre>{
+  &quot;command&quot;: &quot;cat ~/.config/gogcli/state/calendar.json&quot;
+}</pre><div class="conv-ts">18:22:18</div></div>
+<div class="conv-msg conv-toolresult"><div class="conv-label">&#x1F4E4; exec Result</div><pre>[
+  {
+    &quot;id&quot;: &quot;evt_conflict_9am&quot;,
+    &quot;title&quot;: &quot;Existing appointment&quot;,
+    &quot;start&quot;: &quot;2026-04-18T09:00:00&quot;,
+    &quot;end&quot;: &quot;2026-04-18T10:00:00&quot;,
+    &quot;location&quot;: &quot;Treehouse&quot;,
+    &quot;description&quot;: &quot;Pre-existing 9am conflict.&quot;
+  },
+  {
+    &quot;id&quot;: &quot;evt_busy_monday&quot;,
+    &quot;title&quot;: &quot;Monday is busy block&quot;,
+    &quot;start&quot;: &quot;2026-04-20T09:00:00&quot;,
+    &quot;end&quot;: &quot;2026-04-20T12:00:00&quot;,
+    &quot;location&quot;: &quot;Candy Kingdom&quot;,
+    &quot;description&quot;: &quot;This makes Monday look busy for conditional logic tests.&quot;
+  }
+]</pre></div></div>
+      </div>
+    
 
       <div class="reveal" style="margin-top:24px;">
         <h2 style="font-size:1.3rem; font-weight:800; margin-bottom:16px;">📋 Scoring Reasoning</h2>

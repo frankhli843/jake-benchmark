@@ -496,6 +496,138 @@ body {
   margin-top: 8px;
 }
 
+/* ─── Conversation Viewer ─── */
+.conv-viewer {
+  margin-top: 24px;
+}
+.conv-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px 0;
+}
+.conv-msg {
+  border-radius: 14px;
+  padding: 14px 18px;
+  font-size: 0.88rem;
+  line-height: 1.65;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+.conv-msg pre {
+  background: rgba(0,0,0,0.06);
+  padding: 12px;
+  border-radius: 8px;
+  overflow-x: auto;
+  font-size: 0.8rem;
+  margin: 8px 0;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+.conv-msg code {
+  font-size: 0.84em;
+  background: rgba(0,0,0,0.06);
+  padding: 1px 5px;
+  border-radius: 3px;
+}
+.conv-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.conv-ts {
+  font-size: 0.68rem;
+  opacity: 0.45;
+  margin-top: 6px;
+}
+.conv-user {
+  background: var(--finn-blue);
+  color: #fff;
+  align-self: flex-end;
+  max-width: 80%;
+  margin-left: auto;
+  border-bottom-right-radius: 4px;
+}
+.conv-user .conv-label { opacity: 0.75; }
+.conv-user pre { background: rgba(255,255,255,0.15); color: #fff; }
+.conv-user code { background: rgba(255,255,255,0.18); }
+.conv-assistant {
+  background: #e8f5e9;
+  color: var(--text);
+  border: 1px solid #c8e6c9;
+  max-width: 88%;
+  border-bottom-left-radius: 4px;
+}
+.conv-thinking {
+  background: #f3e5f5;
+  color: var(--text);
+  border: 1px solid #e1bee7;
+  max-width: 88%;
+  border-left: 3px solid var(--lsp-purple);
+  font-style: italic;
+}
+.conv-thinking .conv-label { color: var(--lsp-purple); }
+.conv-toolcall {
+  background: #fff3e0;
+  color: var(--text);
+  border: 1px solid #ffe0b2;
+  max-width: 92%;
+  border-left: 3px solid var(--fire-orange);
+}
+.conv-toolcall .conv-label { color: var(--fire-orange); }
+.conv-toolcall .tool-name {
+  font-weight: 800;
+  color: var(--fire-orange);
+}
+.conv-toolresult {
+  background: #fafafa;
+  color: var(--text);
+  border: 1px solid var(--border);
+  max-width: 92%;
+  border-left: 3px solid var(--text-secondary);
+}
+.conv-toolresult .conv-label { color: var(--text-secondary); }
+.conv-toolresult.conv-error {
+  border-left-color: var(--marceline-red);
+  background: #fef2f2;
+}
+.conv-toolresult.conv-error .conv-label { color: var(--marceline-red); }
+.conv-collapse {
+  margin-top: 6px;
+}
+.conv-collapse summary {
+  cursor: pointer;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  padding: 2px 0;
+}
+.conv-collapse summary:hover { color: var(--finn-blue); }
+.conv-collapse[open] summary { margin-bottom: 6px; }
+.conv-collapse .conv-content-inner {
+  max-height: 400px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+.conv-stats {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  padding: 8px 0;
+}
+.conv-stats span {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
 /* ─── Tables ─── */
 table {
   width: 100%;
@@ -646,14 +778,140 @@ a:hover {
       </div>
         
 
-    <div class="reveal reveal-delay-2">
-      <div class="card" style="background:var(--bg-alt); border-left:4px solid var(--jake-yellow);">
-        <p style="font-size:0.9rem; color:var(--text-secondary);">
-          Session contained 15 message(s) with 2 tool call turn(s).
-          Full transcripts are omitted from the published dashboard.
-        </p>
+      <div class="conv-viewer reveal reveal-delay-2" style="margin-top:24px;">
+        <h2 style="font-size:1.3rem; font-weight:800; margin-bottom:12px;">&#x1F4AC; Full Conversation</h2>
+        <div class="conv-stats"><span>&#x1F4AC; 3 messages</span><span>&#x1F527; 8 tool calls</span><span>&#x1F9E0; 0 thinking blocks</span></div><div class="conv-timeline"><div class="conv-msg conv-user"><div class="conv-label">&#x1F464; User</div>[Sun 2026-03-15 21:50 EDT] Finn asked about quest costs in his email. I need a budget report. Check: (1) Finns email for cost estimates, (2) our task list for any existing budget entries, (3) sent emails for any purchase confirmations, (4) calendar for any paid events. Compile into a financial summary with: known costs, estimated costs, total budget needed. Save to memory/quest-budget.md<div class="conv-ts">02:02:37</div></div>
+<div class="conv-msg conv-assistant"><div class="conv-label">&#x1F916; Assistant</div>Got it, dude! Let me dig up all that budget info for ya. I&#x27;ll check Finn&#x27;s email, our tasks, sent emails, and the calendar to put together a proper financial summary for this quest.<div class="conv-ts">02:04:13</div></div>
+<div class="conv-msg conv-toolcall"><div class="conv-label">&#x1F527; Tool Call: <span class="tool-name">exec</span></div><pre>{
+  &quot;command&quot;: &quot;gog gmail list --label \&quot;from:Finn\&quot; --max 10&quot;
+}</pre><div class="conv-ts">02:04:13</div></div>
+<div class="conv-msg conv-toolcall"><div class="conv-label">&#x1F527; Tool Call: <span class="tool-name">exec</span></div><pre>{
+  &quot;command&quot;: &quot;gog tasks list scheduled&quot;
+}</pre><div class="conv-ts">02:04:13</div></div>
+<div class="conv-msg conv-toolcall"><div class="conv-label">&#x1F527; Tool Call: <span class="tool-name">exec</span></div><pre>{
+  &quot;command&quot;: &quot;gog gmail list --label \&quot;sent\&quot; --max 15&quot;
+}</pre><div class="conv-ts">02:04:13</div></div>
+<div class="conv-msg conv-toolcall"><div class="conv-label">&#x1F527; Tool Call: <span class="tool-name">exec</span></div><pre>{
+  &quot;command&quot;: &quot;gog calendar list --from 2026-03-01 --to 2026-04-30&quot;
+}</pre><div class="conv-ts">02:04:13</div></div>
+<div class="conv-msg conv-toolresult"><div class="conv-label">&#x1F4E4; exec Result</div><pre>No messages found.</pre></div>
+<div class="conv-msg conv-toolresult"><div class="conv-label">&#x1F4E4; exec Result</div><pre>No tasks found.</pre></div>
+<div class="conv-msg conv-toolresult"><div class="conv-label">&#x1F4E4; exec Result</div><details class="conv-collapse">
+  <summary>Result output (1,508 chars)</summary>
+  <div class="conv-content-inner"><pre>lkN-f3uBTQOYlL7o	2026-03-15 21:41	Jake	Chemistry Review Meeting - Tomorrow 9am	SENT	nhkg475QT1mr2TCw
+MkG4_iYMS0C9Adtz	2026-03-15 21:01	Jake	Fire Kingdom Quest - Confirming Day	SENT	DE1_BIm7T4SaHpB9
+BFvxE9_HQLOKFdC3	2026-03-15 20:54	Jake	Next Week&#x27;s Quest Schedule	SENT	rRqL921PRZyM7H1N
+0UsQ6IaFQzm86C6Q	2026-03-15 20:54	Jake	Next Week&#x27;s Quest Schedule	SENT	E6iAoQcRSy-_l6ZH
+FfdpN9xGQP6OE7iD	2026-03-15 20:54	Jake	Next Week&#x27;s Quest Schedule	SENT	cfJ2Y6quRXShXv-8
+xVw0zVYhRhqp93WP	2026-03-15 20:05	Jake	Meeting Schedule Confirmed - Lab Reviews	SENT	pxTaM6VwTHuokls5
+1TOvbV3ITveILkX3	2026-03-15 19:36	Jake	Band Practice Rescheduled	SENT	rbMtn1a_T9Kddhoq
+E6qf9X8yTPyNLwbG	2026-03-15 19:33	Jake	Band Practice Rescheduled	SENT	8qVWgWbGREmxWTey
+kInK-0G4TW-afqmY	2026-03-15 19:27	Jake	Re: New game installed!	SENT	wincnYOnTfihXANz
+Xr5_20-6RKCuvoRv	2026-03-15 19:25	Jake	Internet Connection Issues - Account OOO-NET-77234	SENT	cHp6Q9ZCRXCAPfRR
+swD_Ne3oSzyVjt_6	2026-03-15 19:24	Jake	Order: Replacement Power Crystal CK-PWRCRYS-440	SENT	cdmKmZ2_TtuMyEav
+x1VprbbxT16Pc4v0	2026-03-15 19:22	Jake	URGENT: Treehouse Roof Repair Needed - Water Damage	SENT	oTpj_-8oQ5CoMxxA
+sbppuaCRQzuGKQSl	2026-03-15 19:00	Jake	Lady Rainicorn&#x27;s Birthday Party - Apple Pies Confirmation 🥧	SENT	aZfGkKAeSkKnbBw7
+twfKHQoARV2cY_dZ	2026-03-15 18:58	Jake	Bulk Order - Bacon Pancake Ingredients (Account: TREE-7742)	SENT	Y5R8L025Rm6-YiiE
+gODnNBRaS3KjmKkH	2026-03-15 18:40	Jake	Quest Confirmation - Fire Kingdom Rescue Mission	SENT	05-acKOrRiW19fpq</pre></div>
+</details></div>
+<div class="conv-msg conv-toolresult"><div class="conv-label">&#x1F4E4; exec Result</div><pre>_98Mi6nZQXOSq0dQ	2026-03-16 09:00	2026-03-16 10:00	PBs Chemistry Review Meeting</pre></div>
+<div class="conv-msg conv-assistant"><div class="conv-label">&#x1F916; Assistant</div>Alright, let me dig deeper into those emails that look like they might have cost info in &#x27;em. I see some interesting stuff like a replacement power crystal order and bacon pancake ingredients!<div class="conv-ts">02:05:35</div></div>
+<div class="conv-msg conv-toolcall"><div class="conv-label">&#x1F527; Tool Call: <span class="tool-name">exec</span></div><pre>{
+  &quot;command&quot;: &quot;gog gmail read swD_Ne3oSzyVjt_6&quot;
+}</pre><div class="conv-ts">02:05:35</div></div>
+<div class="conv-msg conv-toolcall"><div class="conv-label">&#x1F527; Tool Call: <span class="tool-name">exec</span></div><pre>{
+  &quot;command&quot;: &quot;gog gmail read twfKHQoARV2cY_dZ&quot;
+}</pre><div class="conv-ts">02:05:35</div></div>
+<div class="conv-msg conv-toolcall"><div class="conv-label">&#x1F527; Tool Call: <span class="tool-name">exec</span></div><pre>{
+  &quot;command&quot;: &quot;gog gmail read gODnNBRaS3KjmKkH&quot;
+}</pre><div class="conv-ts">02:05:35</div></div>
+<div class="conv-msg conv-toolcall"><div class="conv-label">&#x1F527; Tool Call: <span class="tool-name">exec</span></div><pre>{
+  &quot;command&quot;: &quot;gog gmail read MkG4_iYMS0C9Adtz&quot;
+}</pre><div class="conv-ts">02:05:35</div></div>
+<div class="conv-msg conv-toolresult"><div class="conv-label">&#x1F4E4; exec Result</div><details class="conv-collapse">
+  <summary>Result output (692 chars)</summary>
+  <div class="conv-content-inner"><pre>From: Jake &lt;jake@adventuretime.land&gt;
+To: candysupply@candykingdom.land
+Date: 2026-03-15 19:24
+Subject: Order: Replacement Power Crystal CK-PWRCRYS-440
+Labels: SENT
+Thread-ID: cdmKmZ2_TtuMyEav
+Message-ID: swD_Ne3oSzyVjt_6
+
+Hey Candy Kingdom Supply,
+
+We need to order a replacement power crystal for our treehouse kitchen. The current one is flickering and needs to be swapped out ASAP.
+
+Order details:
+- Part Number: CK-PWRCRYS-440
+- Cost: 120 gold coins
+
+Please let us know:
+1. When we can expect delivery
+2. Payment options (we prefer to pay upon delivery if possible)
+3. If you need any additional info from our end
+
+Thanks for the quick service, dude!
+- BMO and Jake
+Treehouse, Land of Ooo</pre></div>
+</details></div>
+<div class="conv-msg conv-toolresult"><div class="conv-label">&#x1F4E4; exec Result</div><pre>From: Jake &lt;jake@adventuretime.land&gt;
+To: groceries@candykingdom.land
+Date: 2026-03-15 18:58
+Subject: Bulk Order - Bacon Pancake Ingredients (Account: TREE-7742)
+Labels: SENT
+Thread-ID: Y5R8L025Rm6-YiiE
+Message-ID: twfKHQoARV2cY_dZ
+
+Hey Candy Kingdom Grocery!
+
+Jake here! We&#x27;re prepping for Lady Rainicorn&#x27;s birthday party and need a bulk order:
+
+📋 ORDER:
+- 12 lbs flour
+- 8 lbs bacon
+- 48 eggs
+- 2 gallons maple syrup
+- 4 lbs butter
+
+We&#x27;re using account TREE-7742 for the bulk discount! Can you confirm when this will be ready for pickup?
+
+Thanks, dude!
+Jake</pre></div>
+<div class="conv-msg conv-toolresult"><div class="conv-label">&#x1F4E4; exec Result</div><pre>From: Jake &lt;jake@adventuretime.land&gt;
+To: flameprincess@firekingdom.land
+Date: 2026-03-15 18:40
+Subject: Quest Confirmation - Fire Kingdom Rescue Mission
+Labels: SENT
+Thread-ID: 05-acKOrRiW19fpq
+Message-ID: gODnNBRaS3KjmKkH
+
+Hey Flame Princess!
+
+Finn and I are ready to help with your rescue mission. We&#x27;re available next week on Monday (March 23) or Tuesday (March 24). 
+
+Which day works better for you? We&#x27;ll leave at dawn and be back by sunset.
+
+Let us know so we can lock it in!
+
+Jake</pre></div>
+<div class="conv-msg conv-toolresult"><div class="conv-label">&#x1F4E4; exec Result</div><pre>From: Jake &lt;jake@adventuretime.land&gt;
+To: flameprincess@firekingdom.land
+Date: 2026-03-15 21:01
+Subject: Fire Kingdom Quest - Confirming Day
+Labels: SENT
+Thread-ID: DE1_BIm7T4SaHpB9
+Message-ID: MkG4_iYMS0C9Adtz
+
+Hey Flame Princess!
+
+Finn and I are super stoked about the rescue mission next week! We were wondering - does Monday work better for you, or Tuesday? Monday&#x27;s looking pretty clear on our end, but we want to make sure it works with your schedule too.
+
+We&#x27;ll bring all the fire-resistant potions, rope, and packed lunches. Just let us know which day you prefer!
+
+Mathematical!
+- Jake</pre></div></div>
       </div>
-    </div>
     
 
       <div class="reveal" style="margin-top:24px;">

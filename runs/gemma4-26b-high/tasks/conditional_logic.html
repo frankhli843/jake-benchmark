@@ -496,6 +496,138 @@ body {
   margin-top: 8px;
 }
 
+/* ─── Conversation Viewer ─── */
+.conv-viewer {
+  margin-top: 24px;
+}
+.conv-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px 0;
+}
+.conv-msg {
+  border-radius: 14px;
+  padding: 14px 18px;
+  font-size: 0.88rem;
+  line-height: 1.65;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+.conv-msg pre {
+  background: rgba(0,0,0,0.06);
+  padding: 12px;
+  border-radius: 8px;
+  overflow-x: auto;
+  font-size: 0.8rem;
+  margin: 8px 0;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+.conv-msg code {
+  font-size: 0.84em;
+  background: rgba(0,0,0,0.06);
+  padding: 1px 5px;
+  border-radius: 3px;
+}
+.conv-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.conv-ts {
+  font-size: 0.68rem;
+  opacity: 0.45;
+  margin-top: 6px;
+}
+.conv-user {
+  background: var(--finn-blue);
+  color: #fff;
+  align-self: flex-end;
+  max-width: 80%;
+  margin-left: auto;
+  border-bottom-right-radius: 4px;
+}
+.conv-user .conv-label { opacity: 0.75; }
+.conv-user pre { background: rgba(255,255,255,0.15); color: #fff; }
+.conv-user code { background: rgba(255,255,255,0.18); }
+.conv-assistant {
+  background: #e8f5e9;
+  color: var(--text);
+  border: 1px solid #c8e6c9;
+  max-width: 88%;
+  border-bottom-left-radius: 4px;
+}
+.conv-thinking {
+  background: #f3e5f5;
+  color: var(--text);
+  border: 1px solid #e1bee7;
+  max-width: 88%;
+  border-left: 3px solid var(--lsp-purple);
+  font-style: italic;
+}
+.conv-thinking .conv-label { color: var(--lsp-purple); }
+.conv-toolcall {
+  background: #fff3e0;
+  color: var(--text);
+  border: 1px solid #ffe0b2;
+  max-width: 92%;
+  border-left: 3px solid var(--fire-orange);
+}
+.conv-toolcall .conv-label { color: var(--fire-orange); }
+.conv-toolcall .tool-name {
+  font-weight: 800;
+  color: var(--fire-orange);
+}
+.conv-toolresult {
+  background: #fafafa;
+  color: var(--text);
+  border: 1px solid var(--border);
+  max-width: 92%;
+  border-left: 3px solid var(--text-secondary);
+}
+.conv-toolresult .conv-label { color: var(--text-secondary); }
+.conv-toolresult.conv-error {
+  border-left-color: var(--marceline-red);
+  background: #fef2f2;
+}
+.conv-toolresult.conv-error .conv-label { color: var(--marceline-red); }
+.conv-collapse {
+  margin-top: 6px;
+}
+.conv-collapse summary {
+  cursor: pointer;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  padding: 2px 0;
+}
+.conv-collapse summary:hover { color: var(--finn-blue); }
+.conv-collapse[open] summary { margin-bottom: 6px; }
+.conv-collapse .conv-content-inner {
+  max-height: 400px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+.conv-stats {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  padding: 8px 0;
+}
+.conv-stats span {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
 /* ─── Tables ─── */
 table {
   width: 100%;
@@ -645,6 +777,98 @@ a:hover {
         <p style="font-size:0.95rem;">Read Finns quest email. For the Fire Kingdom quest, email Flame Princess to ask about Monday vs Tuesday. Check my calendar first - if Monday is already busy, suggest Tuesday in the email instead. For the supply list, check if we already have tasks for any of those items and only create NEW tasks for ones we are missing.</p>
       </div>
         
+
+      <div class="conv-viewer reveal reveal-delay-2" style="margin-top:24px;">
+        <h2 style="font-size:1.3rem; font-weight:800; margin-bottom:12px;">&#x1F4AC; Full Conversation</h2>
+        <div class="conv-stats"><span>&#x1F4AC; 1 messages</span><span>&#x1F527; 0 tool calls</span><span>&#x1F9E0; 4 thinking blocks</span></div><div class="conv-timeline"><div class="conv-msg conv-user"><div class="conv-label">&#x1F464; User</div>Read Finns quest email. For the Fire Kingdom quest, email Flame Princess to ask about Monday vs Tuesday. Check my calendar first - if Monday is already busy, suggest Tuesday in the email instead. For the supply list, check if we already have tasks for any of those items and only create NEW tasks for ones we are missing.<div class="conv-ts">10:19:24</div></div>
+<div class="conv-msg conv-thinking"><div class="conv-label">&#x1F9E0; Thinking</div><details class="conv-collapse"><summary>Internal reasoning (1,131 chars)</summary><div class="conv-content-inner"><pre style="white-space:pre-wrap; font-style:normal;">The user wants me to perform a series of tasks involving email reading, calendar checking, and task creation.
+
+Here&#x27;s the plan:
+1.  **Read Finn&#x27;s quest email**: I need to search for an email from Finn regarding a &quot;quest&quot;. I&#x27;ll use `gog gmail search` to find it.
+2.  **Identify the Fire Kingdom quest details**: Once the email is found, I&#x27;ll read it to find the specific question about Monday vs Tuesday for the Fire Kingdom quest and the &quot;supply list&quot;.
+3.  **Check my calendar**: I&#x27;ll use `gog calendar list` to see if Monday is busy. I&#x27;ll need to determine what &quot;Monday&quot; refers to (the upcoming Monday).
+4.  **Draft/Send email to Flame Princess**:
+    *   If Monday is busy, the email will suggest Tuesday.
+      * If Monday is free, the email will ask about Monday vs Tuesday.
+    * I&#x27;ll use `gog gmail send` to send this.
+5.  **Process the supply list**:
+    *   Extract the supply list from the email.
+    *   Check existing tasks using `gog tasks list scheduled`.
+    *   Identify which items are missing.
+    *   Create new tasks for the missing items using `gog tasks add scheduled`.
+
+Let&#x27;s start by searching for the email.</pre></div></details></div>
+<div class="conv-msg conv-toolresult conv-error"><div class="conv-label">&#x274C; gog:gmail Error</div><pre>Tool gog:gmail not found</pre></div>
+<div class="conv-msg conv-thinking"><div class="conv-label">&#x1F9E0; Thinking</div><details class="conv-collapse"><summary>Internal reasoning (940 chars)</summary><div class="conv-content-inner"><pre style="white-space:pre-wrap; font-style:normal;">The user wants me to perform a multi-step task:
+1.  **Read Finn&#x27;s quest email**: I&#x27;ll need to search for an email from &quot;Finn&quot; or regarding a &quot;quest&quot; using the `gog` tool.
+2.  **Analyze the email**: Extract the &quot;Fire Kingdom quest&quot; details and the &quot;supply list&quot;.
+3.  **Check Calendar**: See if Monday is busy.
+4.  **Draft/Send Email to Flame Princess**:
+    *   Ask about Monday vs Tuesday.
+    *   If Monday is busy, suggest Tuesday.
+5.  **Manage Tasks**:
+    *   For each item in the supply list, check if a task already exists in Google Tasks.
+    *   Create new tasks only for missing items.
+
+Plan:
+1.  Search Gmail for &quot;Finn&quot; or &quot;quest&quot;.
+2.  Read the relevant email.
+3.  Check Google Calendar for Monday (I&#x27;ll need to determine what &quot;Monday&quot; refers to, likely the upcoming Monday).
+4.  Check Google Tasks for existing items from the supply list.
+5.  Send the email to Flame Princess.
+6.  Create any missing tasks.
+
+Step 1: Search Gmail.</pre></div></details></div>
+<div class="conv-msg conv-toolresult conv-error"><div class="conv-label">&#x274C; gog Error</div><pre>Tool gog not found</pre></div>
+<div class="conv-msg conv-thinking"><div class="conv-label">&#x1F9E0; Thinking</div><details class="conv-collapse"><summary>Internal reasoning (1,239 chars)</summary><div class="conv-content-inner"><pre style="white-space:pre-wrap; font-style:normal;">The user wants me to perform a multi-step task involving reading an email, checking a calendar, and managing tasks.
+
+1.  **Read Finn&#x27;s quest email**: I need to find and read an email from &quot;Finn&quot; about a &quot;quest&quot;. I&#x27;ll start by searching Gmail for emails from &quot;Finn&quot;.
+2.  **Identify &quot;Fire Kingdom quest&quot; details**: Once I find the email, I need to identify what it says about the Fire Kingdom quest, specifically the mention of &quot;Monday vs Tuesday&quot;.
+3.  **Check Calendar**: I need to check my calendar for the upcoming Monday and Tuesday to see if Monday is &quot;busy&quot;.
+4.  **Draft/Send Email to Flame Princess**:
+    *   If Monday is free, I&#x27;ll ask about Monday vs Tuesday.
+    *   If Monday is busy, I&#x27;ll suggest Tuesday.
+5.  **Supply List Processing**:
+    *   Extract a &quot;supply list&quot; from the same email.
+    *   Check existing tasks in Google Tasks to see if any of these supplies are already listed as tasks.
+    *   Create *new* tasks only for the items that are *not* already present in the task list.
+
+Let&#x27;const
+- `gog` (for Gmail, Calendar, and Tasks)
+- `memory_search` (to see if there&#x27;s any existing context about &quot;Finn&#x27;s quest&quot; or &quot;Flame Princess&quot; in memory, though unlikely if it&#x27;s a new email)
+
+**Step 1: Search for Finn&#x27;s email.**</pre></div></details></div>
+<div class="conv-msg conv-toolresult conv-error"><div class="conv-label">&#x274C; gog Error</div><pre>Tool gog not found</pre></div>
+<div class="conv-msg conv-thinking"><div class="conv-label">&#x1F9E0; Thinking</div><details class="conv-collapse"><summary>Internal reasoning (1,401 chars)</summary><div class="conv-content-inner"><pre style="white-space:pre-wrap; font-style:normal;">The user wants me to perform several tasks:
+1.  **Read Finn&#x27;s quest email**: I need to find an email from Finn about a &quot;quest&quot;. I&#x27;ll start by searching Gmail.
+2.  **Process the Fire Kingdom quest**:
+    *   Identify the question about Monday vs Tuesday.
+    *   Check the user&#x27;s calendar for Monday and Tuesday to see if Monday is busy.
+    *   Draft/send an email to Flame Princess. If Monday is busy, suggest Tuesday instead.
+3.  **Process the supply list**:
+    *   Extract a list of supplies from the email.
+    *   Check if there are already existing tasks for any of these items (likely in Google Tasks).
+    *   Create *new* tasks only for the missing items.
+
+**Step 1: Find the email.**
+I&#x27;ll use `gog gmail search &quot;Finn&quot;` or similar to find emails from Finn. Since I don&#x27;t know the exact subject, I&#x27;ll search for &quot;Finn&quot; and look for &quot;quest&quot;.
+
+**Step 2: Extract info from the email.**
+Once I find the email, I&#x27;ll read its content.
+
+**Step 3: Check Calendar.**
+I&#x27;ll use `gog calendar list` for the relevant dates (Monday and Tuesday of the current week/next week, depending on when the email was sent). I&#x27;ll check the upcoming Monday and Tuesday.
+
+**Step 4: Check Tasks.**
+I&#x27;ll use `gog tasks list scheduled` to see existing tasks and compare them with the supply list from the email.
+
+**Step 5: Send Email.**
+I&#x27;ll use `gog gmail send` to Flame Princess.
+
+Let&#x27;s start by searching for the email.</pre></div></details></div>
+<div style="text-align:center; padding:8px 0; font-size:0.75rem; color:var(--text-secondary); opacity:0.6;">--- context compacted ---</div></div>
+      </div>
+    
 
       <div class="reveal" style="margin-top:24px;">
         <h2 style="font-size:1.3rem; font-weight:800; margin-bottom:16px;">📋 Scoring Reasoning</h2>

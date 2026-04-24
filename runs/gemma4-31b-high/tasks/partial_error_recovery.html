@@ -496,6 +496,138 @@ body {
   margin-top: 8px;
 }
 
+/* ─── Conversation Viewer ─── */
+.conv-viewer {
+  margin-top: 24px;
+}
+.conv-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px 0;
+}
+.conv-msg {
+  border-radius: 14px;
+  padding: 14px 18px;
+  font-size: 0.88rem;
+  line-height: 1.65;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+.conv-msg pre {
+  background: rgba(0,0,0,0.06);
+  padding: 12px;
+  border-radius: 8px;
+  overflow-x: auto;
+  font-size: 0.8rem;
+  margin: 8px 0;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+.conv-msg code {
+  font-size: 0.84em;
+  background: rgba(0,0,0,0.06);
+  padding: 1px 5px;
+  border-radius: 3px;
+}
+.conv-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.conv-ts {
+  font-size: 0.68rem;
+  opacity: 0.45;
+  margin-top: 6px;
+}
+.conv-user {
+  background: var(--finn-blue);
+  color: #fff;
+  align-self: flex-end;
+  max-width: 80%;
+  margin-left: auto;
+  border-bottom-right-radius: 4px;
+}
+.conv-user .conv-label { opacity: 0.75; }
+.conv-user pre { background: rgba(255,255,255,0.15); color: #fff; }
+.conv-user code { background: rgba(255,255,255,0.18); }
+.conv-assistant {
+  background: #e8f5e9;
+  color: var(--text);
+  border: 1px solid #c8e6c9;
+  max-width: 88%;
+  border-bottom-left-radius: 4px;
+}
+.conv-thinking {
+  background: #f3e5f5;
+  color: var(--text);
+  border: 1px solid #e1bee7;
+  max-width: 88%;
+  border-left: 3px solid var(--lsp-purple);
+  font-style: italic;
+}
+.conv-thinking .conv-label { color: var(--lsp-purple); }
+.conv-toolcall {
+  background: #fff3e0;
+  color: var(--text);
+  border: 1px solid #ffe0b2;
+  max-width: 92%;
+  border-left: 3px solid var(--fire-orange);
+}
+.conv-toolcall .conv-label { color: var(--fire-orange); }
+.conv-toolcall .tool-name {
+  font-weight: 800;
+  color: var(--fire-orange);
+}
+.conv-toolresult {
+  background: #fafafa;
+  color: var(--text);
+  border: 1px solid var(--border);
+  max-width: 92%;
+  border-left: 3px solid var(--text-secondary);
+}
+.conv-toolresult .conv-label { color: var(--text-secondary); }
+.conv-toolresult.conv-error {
+  border-left-color: var(--marceline-red);
+  background: #fef2f2;
+}
+.conv-toolresult.conv-error .conv-label { color: var(--marceline-red); }
+.conv-collapse {
+  margin-top: 6px;
+}
+.conv-collapse summary {
+  cursor: pointer;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  padding: 2px 0;
+}
+.conv-collapse summary:hover { color: var(--finn-blue); }
+.conv-collapse[open] summary { margin-bottom: 6px; }
+.conv-collapse .conv-content-inner {
+  max-height: 400px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+.conv-stats {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  padding: 8px 0;
+}
+.conv-stats span {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
 /* ─── Tables ─── */
 table {
   width: 100%;
@@ -646,14 +778,57 @@ a:hover {
       </div>
         
 
-    <div class="reveal reveal-delay-2">
-      <div class="card" style="background:var(--bg-alt); border-left:4px solid var(--jake-yellow);">
-        <p style="font-size:0.9rem; color:var(--text-secondary);">
-          Session contained 10 message(s) with 1 tool call turn(s).
-          Full transcripts are omitted from the published dashboard.
-        </p>
+      <div class="conv-viewer reveal reveal-delay-2" style="margin-top:24px;">
+        <h2 style="font-size:1.3rem; font-weight:800; margin-bottom:12px;">&#x1F4AC; Full Conversation</h2>
+        <div class="conv-stats"><span>&#x1F4AC; 2 messages</span><span>&#x1F527; 2 tool calls</span><span>&#x1F9E0; 3 thinking blocks</span></div><div class="conv-timeline"><div class="conv-msg conv-user"><div class="conv-label">&#x1F464; User</div>Send emails to all quest participants: Flame Princess (flameprincess@firekingdom.land), Ice King (iceking@icekingdom.land), and BMO (bmo@adventuretime.land) about next weeks schedule. Send each one separately.<div class="conv-ts">19:48:29</div></div>
+<div class="conv-msg conv-thinking"><div class="conv-label">&#x1F9E0; Thinking</div><details class="conv-collapse"><summary>Internal reasoning (764 chars)</summary><div class="conv-content-inner"><pre style="white-space:pre-wrap; font-style:normal;">The user wants me to send emails to three different people: Flame Princess, Ice King, and BMO.
+I need to use the `gog` tool for sending emails.
+The emails are about &quot;next weeks schedule&quot;.
+The user specified to send each one separately.
+
+First, I should probably check if there is a &quot;next weeks schedule&quot; already defined in my calendar or memory, so the emails have actual content. If not, I&#x27;ll have to ask or make a general statement.
+Wait, looking at the prompt, it just says &quot;about next weeks schedule&quot;. It doesn&#x27;t provide the schedule.
+I should check the calendar first to see if there&#x27;s anything for next week.
+
+Plan:
+1. Check the calendar for next week&#x27;s events.
+2. Draft a message based on the findings.
+3. Send the emails separately to the three recipients.</pre></div></details></div>
+<div class="conv-msg conv-toolcall"><div class="conv-label">&#x1F527; Tool Call: <span class="tool-name">exec</span></div><pre>{
+  &quot;command&quot;: &quot;gog calendar list --from $(date -d \&quot;next week\&quot; +%Y-%m-%d) --to $(date -d \&quot;next week + 7 days\&quot; +%Y-%m-%d)&quot;
+}</pre><div class="conv-ts">19:50:39</div></div>
+<div class="conv-msg conv-toolresult"><div class="conv-label">&#x1F4E4; exec Result</div><pre>No events found in the specified range.</pre></div>
+<div class="conv-msg conv-thinking"><div class="conv-label">&#x1F9E0; Thinking</div><details class="conv-collapse"><summary>Internal reasoning (552 chars)</summary><div class="conv-content-inner"><pre style="white-space:pre-wrap; font-style:normal;">The user wants me to send emails to three people about next week&#x27;s schedule.
+I checked the calendar for next week, but it&#x27;s empty.
+I should probably tell the user that there&#x27;s nothing on the schedule for next week, or check if there are any &quot;quest&quot; related things in tasks or memory that might constitute a &quot;schedule&quot;.
+Wait, the user says &quot;about next weeks schedule&quot;. If the calendar is empty, maybe I should just say &quot;nothing scheduled yet&quot; or check if there&#x27;s a specific plan I&#x27;m supposed to know about.
+Let me check memory for &quot;quest&quot; or &quot;schedule&quot;.</pre></div></details></div>
+<div class="conv-msg conv-toolcall"><div class="conv-label">&#x1F527; Tool Call: <span class="tool-name">memory_search</span></div><pre>{
+  &quot;query&quot;: &quot;quest schedule&quot;
+}</pre><div class="conv-ts">19:51:50</div></div>
+<div class="conv-msg conv-toolresult"><div class="conv-label">&#x1F4E4; memory_search Result</div><pre>{
+  &quot;results&quot;: [],
+  &quot;provider&quot;: &quot;none&quot;,
+  &quot;citations&quot;: &quot;auto&quot;,
+  &quot;debug&quot;: {
+    &quot;backend&quot;: &quot;builtin&quot;,
+    &quot;effectiveMode&quot;: &quot;n/a&quot;,
+    &quot;searchMs&quot;: 1316,
+    &quot;hits&quot;: 0
+  }
+}</pre></div>
+<div class="conv-msg conv-thinking"><div class="conv-label">&#x1F9E0; Thinking</div><details class="conv-collapse"><summary>Internal reasoning (516 chars)</summary><div class="conv-content-inner"><pre style="white-space:pre-wrap; font-style:normal;">The user wants me to send emails to three specific people about &quot;next week&#x27;s schedule&quot;.
+I checked the calendar for next week and found nothing.
+I searched memory for &quot;quest schedule&quot; and found nothing.
+
+Since I don&#x27;t have the schedule, I can&#x27;t send the emails. I should tell the user and ask for the schedule or where to find it.
+
+Wait, I&#x27;m Jake. I should be chill about it.
+
+But first, let me check if there are any other calendar events or tasks that might be relevant, or maybe search emails for &quot;quest schedule&quot;.</pre></div></details></div>
+<div class="conv-msg conv-assistant"><div class="conv-label">&#x1F916; Assistant</div>I checked the calendar and my memory, but I&#x27;m not seeing a schedule for next week&#x27;s quest. <br><br>Pass me the details and I&#x27;ll get those emails sent out for you.<div class="conv-ts">19:53:16</div></div>
+<div style="text-align:center; padding:8px 0; font-size:0.75rem; color:var(--text-secondary); opacity:0.6;">--- context compacted ---</div></div>
       </div>
-    </div>
     
 
       <div class="reveal" style="margin-top:24px;">

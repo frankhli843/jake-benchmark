@@ -496,6 +496,138 @@ body {
   margin-top: 8px;
 }
 
+/* ─── Conversation Viewer ─── */
+.conv-viewer {
+  margin-top: 24px;
+}
+.conv-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px 0;
+}
+.conv-msg {
+  border-radius: 14px;
+  padding: 14px 18px;
+  font-size: 0.88rem;
+  line-height: 1.65;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+.conv-msg pre {
+  background: rgba(0,0,0,0.06);
+  padding: 12px;
+  border-radius: 8px;
+  overflow-x: auto;
+  font-size: 0.8rem;
+  margin: 8px 0;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+.conv-msg code {
+  font-size: 0.84em;
+  background: rgba(0,0,0,0.06);
+  padding: 1px 5px;
+  border-radius: 3px;
+}
+.conv-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.conv-ts {
+  font-size: 0.68rem;
+  opacity: 0.45;
+  margin-top: 6px;
+}
+.conv-user {
+  background: var(--finn-blue);
+  color: #fff;
+  align-self: flex-end;
+  max-width: 80%;
+  margin-left: auto;
+  border-bottom-right-radius: 4px;
+}
+.conv-user .conv-label { opacity: 0.75; }
+.conv-user pre { background: rgba(255,255,255,0.15); color: #fff; }
+.conv-user code { background: rgba(255,255,255,0.18); }
+.conv-assistant {
+  background: #e8f5e9;
+  color: var(--text);
+  border: 1px solid #c8e6c9;
+  max-width: 88%;
+  border-bottom-left-radius: 4px;
+}
+.conv-thinking {
+  background: #f3e5f5;
+  color: var(--text);
+  border: 1px solid #e1bee7;
+  max-width: 88%;
+  border-left: 3px solid var(--lsp-purple);
+  font-style: italic;
+}
+.conv-thinking .conv-label { color: var(--lsp-purple); }
+.conv-toolcall {
+  background: #fff3e0;
+  color: var(--text);
+  border: 1px solid #ffe0b2;
+  max-width: 92%;
+  border-left: 3px solid var(--fire-orange);
+}
+.conv-toolcall .conv-label { color: var(--fire-orange); }
+.conv-toolcall .tool-name {
+  font-weight: 800;
+  color: var(--fire-orange);
+}
+.conv-toolresult {
+  background: #fafafa;
+  color: var(--text);
+  border: 1px solid var(--border);
+  max-width: 92%;
+  border-left: 3px solid var(--text-secondary);
+}
+.conv-toolresult .conv-label { color: var(--text-secondary); }
+.conv-toolresult.conv-error {
+  border-left-color: var(--marceline-red);
+  background: #fef2f2;
+}
+.conv-toolresult.conv-error .conv-label { color: var(--marceline-red); }
+.conv-collapse {
+  margin-top: 6px;
+}
+.conv-collapse summary {
+  cursor: pointer;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  padding: 2px 0;
+}
+.conv-collapse summary:hover { color: var(--finn-blue); }
+.conv-collapse[open] summary { margin-bottom: 6px; }
+.conv-collapse .conv-content-inner {
+  max-height: 400px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+.conv-stats {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  padding: 8px 0;
+}
+.conv-stats span {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
 /* ─── Tables ─── */
 table {
   width: 100%;
@@ -646,14 +778,82 @@ a:hover {
       </div>
         
 
-    <div class="reveal reveal-delay-2">
-      <div class="card" style="background:var(--bg-alt); border-left:4px solid var(--jake-yellow);">
-        <p style="font-size:0.9rem; color:var(--text-secondary);">
-          Session contained 10 message(s) with 5 tool call turn(s).
-          Full transcripts are omitted from the published dashboard.
-        </p>
+      <div class="conv-viewer reveal reveal-delay-2" style="margin-top:24px;">
+        <h2 style="font-size:1.3rem; font-weight:800; margin-bottom:12px;">&#x1F4AC; Full Conversation</h2>
+        <div class="conv-stats"><span>&#x1F4AC; 4 messages</span><span>&#x1F527; 5 tool calls</span><span>&#x1F9E0; 0 thinking blocks</span></div><div class="conv-timeline"><div class="conv-msg conv-assistant"><div class="conv-label">&#x1F916; Assistant</div>Got it! Found Finn&#x27;s email! Let me read it:<div class="conv-ts">12:55:02</div></div>
+<div class="conv-msg conv-toolcall"><div class="conv-label">&#x1F527; Tool Call: <span class="tool-name">exec</span></div><pre>{
+  &quot;command&quot;: &quot;gog gmail read UD_RTGPTcmZ68mhe&quot;
+}</pre><div class="conv-ts">12:55:02</div></div>
+<div class="conv-msg conv-toolresult"><div class="conv-label">&#x1F4E4; exec Result</div><details class="conv-collapse">
+  <summary>Result output (1,942 chars)</summary>
+  <div class="conv-content-inner"><pre>From: Finn the Human &lt;finn@adventuretime.land&gt;
+To: jake@treehouse.land
+Date: 2026-03-15 11:53
+Subject: Dude can you handle the quest logistics for next week?
+Labels: INBOX, CATEGORY_PERSONAL
+Thread-ID: eEUQRq2SpId8TkjO
+Message-ID: UD_RTGPTcmZ68mhe
+
+Jake bro!
+
+I got THREE quests booked for next week and I need you to handle all the logistics. Here is what we got:
+
+QUEST 1: Rescue mission in the Fire Kingdom
+- Client: Flame Princess
+- When: Needs to happen Monday or Tuesday
+- Duration: Full day (leave at dawn, back by sunset)
+- What we need: 4 fire-resistant potions (order from Choose Goose, he has them at 50 gold each), packed lunch for 2, rope (100ft minimum), the fire sword (it is in the shed)
+- IMPORTANT: Email Flame Princess (flameprincess@firekingdom.land) to confirm which day works for her
+
+QUEST 2: Dungeon exploration — Cryptid Caverns
+- Client: Treasure hunting for ourselves (no client)
+- When: Wednesday or Thursday
+- Duration: Half day (morning only)
+- What we need: Torches x6, BMO for mapping (ask BMO if available), first aid kit, 200 gold for any merchants we encounter
+- Add a task to remind me to sharpen my sword before this one
+
+QUEST 3: Ice King&#x27;s basement cleanup (ugh)
+- Client: Ice King (he is paying 500 gold so we gotta do it)
+- When: Friday (get it over with before the weekend)
+- Duration: 3-4 hours
+- What we need: Cleaning supplies, hazmat gloves (those penguins are nasty), nose plugs
+- Email Ice King (iceking@icekingdom.land) to confirm Friday and ask him to have the penguins OUT of the basement before we arrive
+
+Can you:
+1. Schedule all three on my calendar with the details
+2. Send the emails to Flame Princess and Ice King
+3. Create tasks for the supply lists so we do not forget anything
+4. Check if any of these conflict with existing calendar events
+5. Calculate total estimated cost and check if our savings cover it (ask BMO for current balance)
+
+You are the best bro. Mathematical!
+- Finn</pre></div>
+</details></div>
+<div class="conv-msg conv-assistant"><div class="conv-label">&#x1F916; Assistant</div>Okay dude, Finn&#x27;s got us some work! Let me handle all this step by step. First, let me check the calendar to see what&#x27;s already happening next week and what dates we&#x27;re working with:<div class="conv-ts">12:58:36</div></div>
+<div class="conv-msg conv-toolcall"><div class="conv-label">&#x1F527; Tool Call: <span class="tool-name">exec</span></div><pre>{
+  &quot;command&quot;: &quot;gog calendar list --from 2026-03-17 --to 2026-03-31&quot;
+}</pre><div class="conv-ts">12:58:36</div></div>
+<div class="conv-msg conv-toolresult"><div class="conv-label">&#x1F4E4; exec Result</div><pre>No events found.</pre></div>
+<div class="conv-msg conv-assistant"><div class="conv-label">&#x1F916; Assistant</div>Sweet, calendar&#x27;s clear for next week! Let me figure out what day next week starts. Let me check what today is:<div class="conv-ts">13:00:29</div></div>
+<div class="conv-msg conv-toolcall"><div class="conv-label">&#x1F527; Tool Call: <span class="tool-name">exec</span></div><pre>{
+  &quot;command&quot;: &quot;date&quot;
+}</pre><div class="conv-ts">13:00:29</div></div>
+<div class="conv-msg conv-toolresult"><div class="conv-label">&#x1F4E4; exec Result</div><pre>Mon 16 Mar 09:00:29 EDT 2026</pre></div>
+<div class="conv-msg conv-assistant"><div class="conv-label">&#x1F916; Assistant</div>Perfect! So today is Monday March 16th, which means next week:<br>&bull; Monday: March 23rd<br>&bull; Tuesday: March 24th<br>&bull; Wednesday: March 25th<br>&bull; Thursday: March 26th<br>&bull; Friday: March 27th<br><br>Now let me schedule the three quests:<div class="conv-ts">13:02:43</div></div>
+<div class="conv-msg conv-toolcall"><div class="conv-label">&#x1F527; Tool Call: <span class="tool-name">exec</span></div><details class="conv-collapse">
+  <summary>Arguments (431 chars)</summary>
+  <div class="conv-content-inner"><pre>{
+  &quot;command&quot;: &quot;gog calendar create --title \&quot;Quest 1: Fire Kingdom Rescue Mission\&quot; --start \&quot;2026-03-23T06:00:00\&quot; --end \&quot;2026-03-23T18:00:00\&quot; --description \&quot;Client: Flame Princess | Full day quest | Leave at dawn, back by sunset | Items: 4 fire-resistant potions (50 gold each from Choose Goose), packed lunch for 2, 100ft rope, fire sword (in shed) | Pending: Confirm day with Flame Princess\&quot; --location \&quot;Fire Kingdom\&quot;&quot;
+}</pre></div>
+</details><div class="conv-ts">13:02:43</div></div>
+<div class="conv-msg conv-toolresult"><div class="conv-label">&#x1F4E4; exec Result</div><pre>Event created: e0Q7CzJGRQehMT_o
+  Quest 1: Fire Kingdom Rescue Mission: 2026-03-23 06:00 — 2026-03-23 18:00</pre></div>
+<div class="conv-msg conv-toolcall"><div class="conv-label">&#x1F527; Tool Call: <span class="tool-name">exec</span></div><pre>{
+  &quot;command&quot;: &quot;gog calendar create --title \&quot;Quest 2: Cryptid Caverns Dungeon Exploration\&quot; --start \&quot;2026-03-25T08:00:00\&quot; --end \&quot;2026-03-25T12:00:00\&quot; --description \&quot;Treasure hunting quest | Morning only | Items needed: Torches x6, BMO for mapping (need to ask if available), first aid kit, 200 gold for merchants | Reminder: Sharpen sword before this one\&quot; --location \&quot;Cryptid Caverns\&quot;&quot;
+}</pre><div class="conv-ts">13:03:58</div></div>
+<div class="conv-msg conv-toolresult"><div class="conv-label">&#x1F4E4; exec Result</div><pre>Event created: _MimfKvbSvCZDFeE
+  Quest 2: Cryptid Caverns Dungeon Exploration: 2026-03-25 08:00 — 2026-03-25 12:00</pre></div></div>
       </div>
-    </div>
     
 
       <div class="reveal" style="margin-top:24px;">

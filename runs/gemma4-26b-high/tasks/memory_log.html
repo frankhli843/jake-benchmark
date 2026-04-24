@@ -496,6 +496,138 @@ body {
   margin-top: 8px;
 }
 
+/* ─── Conversation Viewer ─── */
+.conv-viewer {
+  margin-top: 24px;
+}
+.conv-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px 0;
+}
+.conv-msg {
+  border-radius: 14px;
+  padding: 14px 18px;
+  font-size: 0.88rem;
+  line-height: 1.65;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+.conv-msg pre {
+  background: rgba(0,0,0,0.06);
+  padding: 12px;
+  border-radius: 8px;
+  overflow-x: auto;
+  font-size: 0.8rem;
+  margin: 8px 0;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+.conv-msg code {
+  font-size: 0.84em;
+  background: rgba(0,0,0,0.06);
+  padding: 1px 5px;
+  border-radius: 3px;
+}
+.conv-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.conv-ts {
+  font-size: 0.68rem;
+  opacity: 0.45;
+  margin-top: 6px;
+}
+.conv-user {
+  background: var(--finn-blue);
+  color: #fff;
+  align-self: flex-end;
+  max-width: 80%;
+  margin-left: auto;
+  border-bottom-right-radius: 4px;
+}
+.conv-user .conv-label { opacity: 0.75; }
+.conv-user pre { background: rgba(255,255,255,0.15); color: #fff; }
+.conv-user code { background: rgba(255,255,255,0.18); }
+.conv-assistant {
+  background: #e8f5e9;
+  color: var(--text);
+  border: 1px solid #c8e6c9;
+  max-width: 88%;
+  border-bottom-left-radius: 4px;
+}
+.conv-thinking {
+  background: #f3e5f5;
+  color: var(--text);
+  border: 1px solid #e1bee7;
+  max-width: 88%;
+  border-left: 3px solid var(--lsp-purple);
+  font-style: italic;
+}
+.conv-thinking .conv-label { color: var(--lsp-purple); }
+.conv-toolcall {
+  background: #fff3e0;
+  color: var(--text);
+  border: 1px solid #ffe0b2;
+  max-width: 92%;
+  border-left: 3px solid var(--fire-orange);
+}
+.conv-toolcall .conv-label { color: var(--fire-orange); }
+.conv-toolcall .tool-name {
+  font-weight: 800;
+  color: var(--fire-orange);
+}
+.conv-toolresult {
+  background: #fafafa;
+  color: var(--text);
+  border: 1px solid var(--border);
+  max-width: 92%;
+  border-left: 3px solid var(--text-secondary);
+}
+.conv-toolresult .conv-label { color: var(--text-secondary); }
+.conv-toolresult.conv-error {
+  border-left-color: var(--marceline-red);
+  background: #fef2f2;
+}
+.conv-toolresult.conv-error .conv-label { color: var(--marceline-red); }
+.conv-collapse {
+  margin-top: 6px;
+}
+.conv-collapse summary {
+  cursor: pointer;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  padding: 2px 0;
+}
+.conv-collapse summary:hover { color: var(--finn-blue); }
+.conv-collapse[open] summary { margin-bottom: 6px; }
+.conv-collapse .conv-content-inner {
+  max-height: 400px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+.conv-stats {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  padding: 8px 0;
+}
+.conv-stats span {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
 /* ─── Tables ─── */
 table {
   width: 100%;
@@ -645,6 +777,153 @@ a:hover {
         <p style="font-size:0.95rem;">William beat the Ice King in a basketball game today! Final score was 21-15. Log this to memory.</p>
       </div>
         
+
+      <div class="conv-viewer reveal reveal-delay-2" style="margin-top:24px;">
+        <h2 style="font-size:1.3rem; font-weight:800; margin-bottom:12px;">&#x1F4AC; Full Conversation</h2>
+        <div class="conv-stats"><span>&#x1F4AC; 2 messages</span><span>&#x1F527; 6 tool calls</span><span>&#x1F9E0; 4 thinking blocks</span></div><div class="conv-timeline"><div class="conv-msg conv-user"><div class="conv-label">&#x1F464; User</div>William beat the Ice King in a basketball game today! Final score was 21-15. Log this to memory.<div class="conv-ts">09:27:22</div></div>
+<div class="conv-msg conv-thinking"><div class="conv-label">&#x1F9E0; Thinking</div><details class="conv-collapse"><summary>Internal reasoning (515 chars)</summary><div class="conv-content-inner"><pre style="white-space:pre-wrap; font-style:normal;">The user wants to log a specific event: &quot;William beat the Ice King in a basketball game today! Final score was 21-15.&quot;
+I should check where this should be logged based on the instructions in `AGENTS.md`.
+- `MEMORY.md` is for &quot;Decisions, preferences, and durable facts.&quot;
+- `memory/YYYY-MM-DD.md` is for &quot;Day-to-day notes and running context.&quot;
+
+A basketball game score is a day-to-day event. I&#x27;ll log it to today&#x27;s daily log.
+First, I need to know today&#x27;s date. I&#x27;ll use `session_status` to get the current date/time.</pre></div></details></div>
+<div class="conv-msg conv-toolcall"><div class="conv-label">&#x1F527; Tool Call: <span class="tool-name">session_status</span></div><pre>{}</pre><div class="conv-ts">09:28:16</div></div>
+<div class="conv-msg conv-toolresult"><div class="conv-label">&#x1F4E4; session_status Result</div><pre>🦞 OpenClaw 2026.4.15-beta.1 (fbe476a)
+🧠 Model: ollama/gemma4:26b · 🔑 unknown
+🧮 Tokens: 22k in / 164 out
+📚 Context: 22k/200k (11%) · 🧹 Compactions: 0
+🧵 Session: agent:main:explicit:bench-2026-04-18_051145-memory_log • updated 1m ago
+⚙️ Runtime: direct · Think: high · elevated
+🪢 Queue: collect (depth 0)</pre></div>
+<div class="conv-msg conv-toolcall"><div class="conv-label">&#x1F527; Tool Call: <span class="tool-name">memory_search</span></div><pre>{
+  &quot;query&quot;: &quot;William Ice King basketball game&quot;
+}</pre><div class="conv-ts">09:28:19</div></div>
+<div class="conv-msg conv-toolresult"><div class="conv-label">&#x1F4E4; memory_search Result</div><details class="conv-collapse">
+  <summary>Result output (664 chars)</summary>
+  <div class="conv-content-inner"><pre>{
+  &quot;results&quot;: [
+    {
+      &quot;id&quot;: &quot;266fc86d7792f5f24e64d307aecf7212234bf6a3a3ac77d5e72ed4cda2866970&quot;,
+      &quot;path&quot;: &quot;memory.md&quot;,
+      &quot;startLine&quot;: 1,
+      &quot;endLine&quot;: 3,
+      &quot;score&quot;: 0.6855602284660501,
+      &quot;textScore&quot;: 0.000004672910494632539,
+      &quot;snippet&quot;: &quot;[memory.md]\n## Basketball Game - 2026-04-17\nWilliam beat the Ice King in a basketball game. Final score: 21-15.\n\nSource: memory.md#L1-L3&quot;,
+      &quot;source&quot;: &quot;memory&quot;,
+      &quot;citation&quot;: &quot;memory.md#L1-L3&quot;,
+      &quot;corpus&quot;: &quot;memory&quot;
+    }
+  ],
+  &quot;provider&quot;: &quot;none&quot;,
+  &quot;citations&quot;: &quot;auto&quot;,
+  &quot;debug&quot;: {
+    &quot;backend&quot;: &quot;builtin&quot;,
+    &quot;effectiveMode&quot;: &quot;n/a&quot;,
+    &quot;searchMs&quot;: 1295,
+    &quot;hits&quot;: 1
+  }
+}</pre></div>
+</details></div>
+<div class="conv-msg conv-thinking"><div class="conv-label">&#x1F9E0; Thinking</div><details class="conv-collapse"><summary>Internal reasoning (1,377 chars)</summary><div class="conv-content-inner"><pre style="white-space:pre-wrap; font-style:normal;">The user wants me to log a basketball game victory (William beat the Ice King, 21-15) to memory.
+I searched the memory and found that this event is *already* in `memory.md` as of 2026-04-17.
+Wait, the user says &quot;today&quot;. The current session status shows the date/time is around April 2026 (the session ID has `2026-04-18`).
+The memory search result shows: `## Basketball Game - 2026-04-17`.
+If &quot;today&quot; is 2026-04-18, then the user is reporting a game that happened today.
+Wait, let me check the current date from `session_status` or by running a command if needed.
+Actually, the session ID `bench-2026-04-18_051145-memory_log` suggests today is 2026-04-18.
+The memory entry I found is for 2026-04-17.
+The user says &quot;today&quot;.
+It&#x27;s possible they are talking about a game that happened just now, and I should add a new entry for today (2026-04-18) or update the existing one if it was a mistake.
+However, since the user said &quot;Log this to memory&quot;, and it&#x27;s already there for yesterday, I&#x27;ll check if there&#x27;s a daily log for today.
+I&#x27;ll check `memory/2026-04-18.md` if it exists.
+I&#x27;ll also check the current date via `date`.
+
+Wait, the memory search returned:
+`## Basketball Game - 2026-04-17`
+`William beat the Ice King in a basketball game. Final score: 21-15.`
+
+If today is the 18th, and they are saying &quot;today&quot;, I&#x27;ll create/update the daily log for today.
+I&#x27;ll check `date` first.</pre></div></details></div>
+<div class="conv-msg conv-toolcall"><div class="conv-label">&#x1F527; Tool Call: <span class="tool-name">exec</span></div><pre>{
+  &quot;command&quot;: &quot;date&quot;
+}</pre><div class="conv-ts">09:28:27</div></div>
+<div class="conv-msg conv-toolresult"><div class="conv-label">&#x1F4E4; exec Result</div><pre>Sat 18 Apr 05:28:27 EDT 2026</pre></div>
+<div class="conv-msg conv-toolcall"><div class="conv-label">&#x1F527; Tool Call: <span class="tool-name">read</span></div><pre>{
+  &quot;path&quot;: &quot;memory.md&quot;
+}</pre><div class="conv-ts">09:28:29</div></div>
+<div class="conv-msg conv-toolresult"><div class="conv-label">&#x1F4E4; read Result</div><pre>## Basketball Game - 2026-04-17
+William beat the Ice King in a basketball game. Final score: 21-15.
+</pre></div>
+<div class="conv-msg conv-thinking"><div class="conv-label">&#x1F9E0; Thinking</div><details class="conv-collapse"><summary>Internal reasoning (2,072 chars)</summary><div class="conv-content-inner"><pre style="white-space:pre-wrap; font-style:normal;">The user wants me to log a basketball game result.
+The `memory_search` results show an existing entry:
+`## Basketball Game - 2026-04-17`
+`William beat the Ice King in a basketball game. Final score: 21-15.`
+
+The user&#x27;s current request is: &quot;William beat the Ice King in a basketball game **today**! Final score was 21-15.&quot;
+
+Wait, the existing entry in `memory.md` is for `2026-04-17`.
+The current date (from `date` command) is `Sat 18 Apr 05:28:27 EDT 2026`.
+The user says &quot;today&quot;.
+
+Actually, checking the `memory_search` again, it found an entry that looks exactly like what the user is saying, but dated `2026-04-17`.
+If today is `2026-04-18`, then the user is reporting a *new* game, OR they are correcting/re-stating the previous one.
+Actually, the content is identical.
+`William beat the Iceking in a basketball game. Final score: 21-15.`
+The user is saying &quot;today&quot;.
+Maybe they mean today is the 17th? No, `date` says 18th.
+Or maybe the game happened *today* (the 18th) and the entry in memory (the 17th) was a mistake or a different game?
+The content is identical.
+Wait, let me look at the `memory_search` snippet again.
+`## Basketball Game - 2026-04-17`
+`William beat the Ice King in a basketball game. Final score: 21-15.`
+
+The user says: &quot;William beat the Ice King in a basketball game today! Final score was 21-15.&quot;
+Since the score and participants are exactly the same, it&#x27;s highly likely the user is referring to the same event but the date in the memory was slightly off, or they are just re-stating it.
+However, if I&#x27;m logging it &quot;today&quot;, I should probably create a new entry for today&#x27;s date or update the existing one if it&#x27;s clearly a correction.
+Given the text is identical, I&#x27;ll assume they are reporting the game that happened today (the 18th).
+
+I&#x27;ll check if there&#x27;s a daily log for today.
+`date` is `2026-04-18`. I should check `memory/2026-04-18.md`.
+
+Wait, if I&#x27;m an agent, I should just follow the instruction: &quot;Log this to memory.&quot;
+I&#x27;ll append a new entry to `memory.md` for today&#x27;s date.
+But first, I&#x27;ll check if there&#x27;s a `memory/2026-04-18.md`.</pre></div></details></div>
+<div class="conv-msg conv-toolcall"><div class="conv-label">&#x1F527; Tool Call: <span class="tool-name">exec</span></div><pre>{
+  &quot;command&quot;: &quot;ls memory/&quot;
+}</pre><div class="conv-ts">09:28:39</div></div>
+<div class="conv-msg conv-toolresult"><div class="conv-label">&#x1F4E4; exec Result</div><pre>(no output)</pre></div>
+<div class="conv-msg conv-thinking"><div class="conv-label">&#x1F9E0; Thinking</div><details class="conv-collapse"><summary>Internal reasoning (1,431 chars)</summary><div class="conv-content-inner"><pre style="white-space:pre-wrap; font-style:normal;">The user wants to log a basketball game result to memory.
+I searched memory and found an existing entry in `memory.md` dated `2026-04-17`.
+The current date is `Sat 18 Apr 05:28:27 EDT 2026`.
+The user says the game happened &quot;today&quot;.
+Since today is April 18, 2026, and there is already an entry for April 17, 2026, I should create a new entry for today&#x27;s date in a new daily log file or append to `memory.md`.
+However, the standard practice for daily logs is `memory/YYYY-MM-DD.md`.
+I&#x27;ll check if `memory/2026-04-18.md` exists first (though `ls memory/` was empty).
+Actually, I&#x27;ll just create `memory/2026-04-18.md` and put the info there, and also update `memory.md` if appropriate, or just stick to the daily log as that&#x27;s the primary way for day-to-day context.
+The user said &quot;Log this to memory&quot;.
+The existing `memory.md` has a specific event.
+I&#x27;ll create `memory/2026-04-18.md` with the information.
+
+Wait, the `memory.md` entry I found is `## Basketball Game - 2026-04-17`. This suggests `memory.md` is used for significant events.
+I&#x27;ll add it to `memory.md` as well to be safe, or just use the daily log.
+Actually, looking at the `memory_search` result, it seems `memory.md` is being used as a place for specific events.
+I&#x27;ll append the new event to `memory.md` and also create the daily log for today.
+
+Plan:
+1. Create `memory/2026-04-18.md` with the game info.
+2. Append the game info to `memory.md`.
+3. Confirm to the user.</pre></div></details></div>
+<div class="conv-msg conv-toolcall"><div class="conv-label">&#x1F527; Tool Call: <span class="tool-name">write</span></div><pre>{
+  &quot;content&quot;: &quot;## Basketball Game - 2026-04-18\nWilliam beat the Ice King in a basketball game. Final score: 21-15.\n&quot;,
+  &quot;path&quot;: &quot;memory/2026-04-18.md&quot;
+}</pre><div class="conv-ts">09:28:46</div></div>
+<div class="conv-msg conv-toolresult"><div class="conv-label">&#x1F4E4; write Result</div><pre>Successfully wrote 100 bytes to memory/2026-04-18.md</pre></div>
+<div class="conv-msg conv-assistant"><div class="conv-label">&#x1F916; Assistant</div>Logged it to your daily log for today.<div class="conv-ts">09:28:48</div></div>
+<div style="text-align:center; padding:8px 0; font-size:0.75rem; color:var(--text-secondary); opacity:0.6;">--- context compacted ---</div></div>
+      </div>
+    
 
       <div class="reveal" style="margin-top:24px;">
         <h2 style="font-size:1.3rem; font-weight:800; margin-bottom:16px;">📋 Scoring Reasoning</h2>

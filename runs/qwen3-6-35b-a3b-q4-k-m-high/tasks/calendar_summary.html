@@ -496,6 +496,138 @@ body {
   margin-top: 8px;
 }
 
+/* ─── Conversation Viewer ─── */
+.conv-viewer {
+  margin-top: 24px;
+}
+.conv-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px 0;
+}
+.conv-msg {
+  border-radius: 14px;
+  padding: 14px 18px;
+  font-size: 0.88rem;
+  line-height: 1.65;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+.conv-msg pre {
+  background: rgba(0,0,0,0.06);
+  padding: 12px;
+  border-radius: 8px;
+  overflow-x: auto;
+  font-size: 0.8rem;
+  margin: 8px 0;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+.conv-msg code {
+  font-size: 0.84em;
+  background: rgba(0,0,0,0.06);
+  padding: 1px 5px;
+  border-radius: 3px;
+}
+.conv-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.conv-ts {
+  font-size: 0.68rem;
+  opacity: 0.45;
+  margin-top: 6px;
+}
+.conv-user {
+  background: var(--finn-blue);
+  color: #fff;
+  align-self: flex-end;
+  max-width: 80%;
+  margin-left: auto;
+  border-bottom-right-radius: 4px;
+}
+.conv-user .conv-label { opacity: 0.75; }
+.conv-user pre { background: rgba(255,255,255,0.15); color: #fff; }
+.conv-user code { background: rgba(255,255,255,0.18); }
+.conv-assistant {
+  background: #e8f5e9;
+  color: var(--text);
+  border: 1px solid #c8e6c9;
+  max-width: 88%;
+  border-bottom-left-radius: 4px;
+}
+.conv-thinking {
+  background: #f3e5f5;
+  color: var(--text);
+  border: 1px solid #e1bee7;
+  max-width: 88%;
+  border-left: 3px solid var(--lsp-purple);
+  font-style: italic;
+}
+.conv-thinking .conv-label { color: var(--lsp-purple); }
+.conv-toolcall {
+  background: #fff3e0;
+  color: var(--text);
+  border: 1px solid #ffe0b2;
+  max-width: 92%;
+  border-left: 3px solid var(--fire-orange);
+}
+.conv-toolcall .conv-label { color: var(--fire-orange); }
+.conv-toolcall .tool-name {
+  font-weight: 800;
+  color: var(--fire-orange);
+}
+.conv-toolresult {
+  background: #fafafa;
+  color: var(--text);
+  border: 1px solid var(--border);
+  max-width: 92%;
+  border-left: 3px solid var(--text-secondary);
+}
+.conv-toolresult .conv-label { color: var(--text-secondary); }
+.conv-toolresult.conv-error {
+  border-left-color: var(--marceline-red);
+  background: #fef2f2;
+}
+.conv-toolresult.conv-error .conv-label { color: var(--marceline-red); }
+.conv-collapse {
+  margin-top: 6px;
+}
+.conv-collapse summary {
+  cursor: pointer;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  padding: 2px 0;
+}
+.conv-collapse summary:hover { color: var(--finn-blue); }
+.conv-collapse[open] summary { margin-bottom: 6px; }
+.conv-collapse .conv-content-inner {
+  max-height: 400px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+.conv-stats {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  padding: 8px 0;
+}
+.conv-stats span {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
 /* ─── Tables ─── */
 table {
   width: 100%;
@@ -645,6 +777,41 @@ a:hover {
         <p style="font-size:0.95rem;">Check my calendar for this week and write a summary of all events to memory/weekly-plan.md</p>
       </div>
         
+
+      <div class="conv-viewer reveal reveal-delay-2" style="margin-top:24px;">
+        <h2 style="font-size:1.3rem; font-weight:800; margin-bottom:12px;">&#x1F4AC; Full Conversation</h2>
+        <div class="conv-stats"><span>&#x1F4AC; 3 messages</span><span>&#x1F527; 3 tool calls</span><span>&#x1F9E0; 4 thinking blocks</span></div><div class="conv-timeline"><div class="conv-msg conv-user"><div class="conv-label">&#x1F464; User</div>Check my calendar for this week and write a summary of all events to memory/weekly-plan.md<div class="conv-ts">04:43:19</div></div>
+<div class="conv-msg conv-thinking"><div class="conv-label">&#x1F9E0; Thinking</div><details class="conv-collapse"><summary>Internal reasoning (75 chars)</summary><div class="conv-content-inner"><pre style="white-space:pre-wrap; font-style:normal;">Let me check the calendar for this week and then read today&#x27;s date context.</pre></div></details></div>
+<div class="conv-msg conv-toolcall"><div class="conv-label">&#x1F527; Tool Call: <span class="tool-name">exec</span></div><pre>{
+  &quot;command&quot;: &quot;date &#x27;+%Y-%m-%d&#x27;&quot;
+}</pre><div class="conv-ts">04:45:28</div></div>
+<div class="conv-msg conv-toolresult conv-error"><div class="conv-label">&#x274C; gog Error</div><pre>Tool gog not found</pre></div>
+<div class="conv-msg conv-toolresult"><div class="conv-label">&#x1F4E4; exec Result</div><pre>2026-04-23</pre></div>
+<div class="conv-msg conv-thinking"><div class="conv-label">&#x1F9E0; Thinking</div><details class="conv-collapse"><summary>Internal reasoning (213 chars)</summary><div class="conv-content-inner"><pre style="white-space:pre-wrap; font-style:normal;">The current date is Thursday, April 23, 2026. &quot;This week&quot; typically means Monday to Sunday. So I need to check events from Monday, April 20 to Sunday, April 26, 2026.
+
+Let me get the calendar events for this week.</pre></div></details></div>
+<div class="conv-msg conv-toolcall"><div class="conv-label">&#x1F527; Tool Call: <span class="tool-name">exec</span></div><pre>{
+  &quot;command&quot;: &quot;gog calendar list --from 2026-04-20 --to 2026-04-26&quot;
+}</pre><div class="conv-ts">04:45:47</div></div>
+<div class="conv-msg conv-toolresult"><div class="conv-label">&#x1F4E4; exec Result</div><pre>evt_conflict_9am	2026-04-24 09:00	2026-04-24 10:00	Existing appointment</pre></div>
+<div class="conv-msg conv-thinking"><div class="conv-label">&#x1F9E0; Thinking</div><details class="conv-collapse"><summary>Internal reasoning (303 chars)</summary><div class="conv-content-inner"><pre style="white-space:pre-wrap; font-style:normal;">The user wants me to check their calendar for this week and write a summary. Let me check what &quot;this week&quot; means - it&#x27;s Friday April 23, so the current week would be April 20-26, 2026.
+
+There&#x27;s only one event: an existing appointment on April 24 from 9-10am.
+
+Let me write this to memory/weekly-plan.md.</pre></div></details></div>
+<div class="conv-msg conv-assistant"><div class="conv-label">&#x1F916; Assistant</div>There&#x27;s only one event this week. Let me write it up.<div class="conv-ts">04:46:32</div></div>
+<div class="conv-msg conv-toolcall"><div class="conv-label">&#x1F527; Tool Call: <span class="tool-name">write</span></div><details class="conv-collapse">
+  <summary>Arguments (583 chars)</summary>
+  <div class="conv-content-inner"><pre>{
+  &quot;path&quot;: &quot;[test environment]&quot;,
+  &quot;content&quot;: &quot;# Weekly Plan\n\n## Week of April 20\u201326, 2026\n\n### Events\n\n| Day | Time | Event |\n|-----|------|-------|\n| Mon Apr 21 | | *(no events)* |\n| Tue Apr 22 | | *(no events)* |\n| Wed Apr 23 | | *(no events)* |\n| Thu Apr 24 | 9:00\u201310:00 AM | Existing appointment |\n| Fri Apr 25 | | *(no events)* |\n| Sat Apr 26 | | *(no events)* |\n\n### Notes\n\n- Pretty light week. Thursday morning is the only thing on the calendar.\n- You might want to fill in the gaps if you haven&#x27;t already.\n&quot;
+}</pre></div>
+</details><div class="conv-ts">04:46:32</div></div>
+<div class="conv-msg conv-toolresult"><div class="conv-label">&#x1F4E4; write Result</div><pre>Successfully wrote 468 bytes to [test environment]</pre></div>
+<div class="conv-msg conv-thinking"><div class="conv-label">&#x1F9E0; Thinking</div><details class="conv-collapse"><summary>Internal reasoning (68 chars)</summary><div class="conv-content-inner"><pre style="white-space:pre-wrap; font-style:normal;">The user asked me to check their calendar and write a summary. Done.</pre></div></details></div>
+<div class="conv-msg conv-assistant"><div class="conv-label">&#x1F916; Assistant</div>Just one event this week:<br><br>&bull; <strong>Thu Apr 24, 9:00–10:00 AM</strong> — Existing appointment<br><br>Everything else is clear. I wrote it up at <code>memory/weekly-plan.md</code>.<div class="conv-ts">04:46:46</div></div></div>
+      </div>
+    
 
       <div class="reveal" style="margin-top:24px;">
         <h2 style="font-size:1.3rem; font-weight:800; margin-bottom:16px;">📋 Scoring Reasoning</h2>

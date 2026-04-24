@@ -496,6 +496,138 @@ body {
   margin-top: 8px;
 }
 
+/* ─── Conversation Viewer ─── */
+.conv-viewer {
+  margin-top: 24px;
+}
+.conv-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px 0;
+}
+.conv-msg {
+  border-radius: 14px;
+  padding: 14px 18px;
+  font-size: 0.88rem;
+  line-height: 1.65;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+.conv-msg pre {
+  background: rgba(0,0,0,0.06);
+  padding: 12px;
+  border-radius: 8px;
+  overflow-x: auto;
+  font-size: 0.8rem;
+  margin: 8px 0;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+.conv-msg code {
+  font-size: 0.84em;
+  background: rgba(0,0,0,0.06);
+  padding: 1px 5px;
+  border-radius: 3px;
+}
+.conv-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.conv-ts {
+  font-size: 0.68rem;
+  opacity: 0.45;
+  margin-top: 6px;
+}
+.conv-user {
+  background: var(--finn-blue);
+  color: #fff;
+  align-self: flex-end;
+  max-width: 80%;
+  margin-left: auto;
+  border-bottom-right-radius: 4px;
+}
+.conv-user .conv-label { opacity: 0.75; }
+.conv-user pre { background: rgba(255,255,255,0.15); color: #fff; }
+.conv-user code { background: rgba(255,255,255,0.18); }
+.conv-assistant {
+  background: #e8f5e9;
+  color: var(--text);
+  border: 1px solid #c8e6c9;
+  max-width: 88%;
+  border-bottom-left-radius: 4px;
+}
+.conv-thinking {
+  background: #f3e5f5;
+  color: var(--text);
+  border: 1px solid #e1bee7;
+  max-width: 88%;
+  border-left: 3px solid var(--lsp-purple);
+  font-style: italic;
+}
+.conv-thinking .conv-label { color: var(--lsp-purple); }
+.conv-toolcall {
+  background: #fff3e0;
+  color: var(--text);
+  border: 1px solid #ffe0b2;
+  max-width: 92%;
+  border-left: 3px solid var(--fire-orange);
+}
+.conv-toolcall .conv-label { color: var(--fire-orange); }
+.conv-toolcall .tool-name {
+  font-weight: 800;
+  color: var(--fire-orange);
+}
+.conv-toolresult {
+  background: #fafafa;
+  color: var(--text);
+  border: 1px solid var(--border);
+  max-width: 92%;
+  border-left: 3px solid var(--text-secondary);
+}
+.conv-toolresult .conv-label { color: var(--text-secondary); }
+.conv-toolresult.conv-error {
+  border-left-color: var(--marceline-red);
+  background: #fef2f2;
+}
+.conv-toolresult.conv-error .conv-label { color: var(--marceline-red); }
+.conv-collapse {
+  margin-top: 6px;
+}
+.conv-collapse summary {
+  cursor: pointer;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  padding: 2px 0;
+}
+.conv-collapse summary:hover { color: var(--finn-blue); }
+.conv-collapse[open] summary { margin-bottom: 6px; }
+.conv-collapse .conv-content-inner {
+  max-height: 400px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+.conv-stats {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  padding: 8px 0;
+}
+.conv-stats span {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
 /* ─── Tables ─── */
 table {
   width: 100%;
@@ -646,14 +778,28 @@ a:hover {
       </div>
         
 
-    <div class="reveal reveal-delay-2">
-      <div class="card" style="background:var(--bg-alt); border-left:4px solid var(--jake-yellow);">
-        <p style="font-size:0.9rem; color:var(--text-secondary);">
-          Session contained 4 message(s) with 2 tool call turn(s).
-          Full transcripts are omitted from the published dashboard.
-        </p>
+      <div class="conv-viewer reveal reveal-delay-2" style="margin-top:24px;">
+        <h2 style="font-size:1.3rem; font-weight:800; margin-bottom:12px;">&#x1F4AC; Full Conversation</h2>
+        <div class="conv-stats"><span>&#x1F4AC; 1 messages</span><span>&#x1F527; 2 tool calls</span><span>&#x1F9E0; 0 thinking blocks</span></div><div class="conv-timeline"><div class="conv-msg conv-assistant"><div class="conv-label">&#x1F916; Assistant</div>Whoa, okay dude! Lady Rainicorn&#x27;s birthday party is next Sunday and there&#x27;s a lot to handle! Let me break this down:<br><br>1. <strong>Food Orders</strong> - need to email Candy Kingdom Grocery and Tree Trunks<br>2. <strong>Calendar Events</strong> - need to create 4 events<br>3. <strong>Guest Communication</strong> - email all the guests with the party details<br>4. <strong>Budget Check</strong> - check savings and confirm we can afford 800 gold<br><br>Let me start handling all of this! 🎂🌈<br><br><strong>First, the food orders:</strong><div class="conv-ts">13:09:42</div></div>
+<div class="conv-msg conv-toolcall"><div class="conv-label">&#x1F527; Tool Call: <span class="tool-name">exec</span></div><details class="conv-collapse">
+  <summary>Arguments (492 chars)</summary>
+  <div class="conv-content-inner"><pre>{
+  &quot;command&quot;: &quot;gog gmail send --to \&quot;groceries@candykingdom.land\&quot; --subject \&quot;Bulk Order: 6-Tier Bacon Pancake Ingredients (Account: TREE-7742)\&quot; --body \&quot;Hey Candy Kingdom Grocery! \ud83d\udc4b\n\nNeed to place a bulk order for Lady Rainicorn&#x27;s birthday party:\n\n- 12 lbs flour\n- 8 lbs bacon  \n- 48 eggs\n- 2 gallons maple syrup\n- 4 lbs butter\n\nPlease apply the bulk discount for account TREE-7742.\n\nCan you confirm delivery by Wednesday? This is urgent!\n\nThanks dude!\nJake\&quot;&quot;
+}</pre></div>
+</details><div class="conv-ts">13:09:42</div></div>
+<div class="conv-msg conv-toolresult"><div class="conv-label">&#x1F4E4; exec Result</div><pre>Message sent: 3FmUTgpFTL2Pqgp5
+  To: groceries@candykingdom.land
+  Subject: Bulk Order: 6-Tier Bacon Pancake Ingredients (Account: TREE-7742)</pre></div>
+<div class="conv-msg conv-toolcall"><div class="conv-label">&#x1F527; Tool Call: <span class="tool-name">exec</span></div><details class="conv-collapse">
+  <summary>Arguments (478 chars)</summary>
+  <div class="conv-content-inner"><pre>{
+  &quot;command&quot;: &quot;gog gmail send --to \&quot;treetrunks@grasslands.land\&quot; --subject \&quot;Apple Pies Confirmation - Lady Rainicorn&#x27;s Birthday Party \ud83e\udd67\&quot; --body \&quot;Hi Tree Trunks!\n\nHope you&#x27;re doing well! I wanted to confirm that you&#x27;re bringing 3 apple pies to Lady Rainicorn&#x27;s birthday party next Sunday.\n\nAlso, could you possibly bring your famous apple cider to go with the pies? Would be mathematical!\n\nLet me know if you can do that, dude!\n\nThanks so much!\nJake\&quot;&quot;
+}</pre></div>
+</details><div class="conv-ts">13:16:22</div></div>
+<div class="conv-msg conv-toolresult"><div class="conv-label">&#x1F4E4; exec Result</div><pre>Message sent: eIz7505SRE-HS0Tz
+  To: treetrunks@grasslands.land
+  Subject: Apple Pies Confirmation - Lady Rainicorn&#x27;s Birthday Party 🥧</pre></div></div>
       </div>
-    </div>
     
 
       <div class="reveal" style="margin-top:24px;">

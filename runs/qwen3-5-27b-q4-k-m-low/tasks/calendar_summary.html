@@ -496,6 +496,138 @@ body {
   margin-top: 8px;
 }
 
+/* ─── Conversation Viewer ─── */
+.conv-viewer {
+  margin-top: 24px;
+}
+.conv-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px 0;
+}
+.conv-msg {
+  border-radius: 14px;
+  padding: 14px 18px;
+  font-size: 0.88rem;
+  line-height: 1.65;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+.conv-msg pre {
+  background: rgba(0,0,0,0.06);
+  padding: 12px;
+  border-radius: 8px;
+  overflow-x: auto;
+  font-size: 0.8rem;
+  margin: 8px 0;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+.conv-msg code {
+  font-size: 0.84em;
+  background: rgba(0,0,0,0.06);
+  padding: 1px 5px;
+  border-radius: 3px;
+}
+.conv-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.conv-ts {
+  font-size: 0.68rem;
+  opacity: 0.45;
+  margin-top: 6px;
+}
+.conv-user {
+  background: var(--finn-blue);
+  color: #fff;
+  align-self: flex-end;
+  max-width: 80%;
+  margin-left: auto;
+  border-bottom-right-radius: 4px;
+}
+.conv-user .conv-label { opacity: 0.75; }
+.conv-user pre { background: rgba(255,255,255,0.15); color: #fff; }
+.conv-user code { background: rgba(255,255,255,0.18); }
+.conv-assistant {
+  background: #e8f5e9;
+  color: var(--text);
+  border: 1px solid #c8e6c9;
+  max-width: 88%;
+  border-bottom-left-radius: 4px;
+}
+.conv-thinking {
+  background: #f3e5f5;
+  color: var(--text);
+  border: 1px solid #e1bee7;
+  max-width: 88%;
+  border-left: 3px solid var(--lsp-purple);
+  font-style: italic;
+}
+.conv-thinking .conv-label { color: var(--lsp-purple); }
+.conv-toolcall {
+  background: #fff3e0;
+  color: var(--text);
+  border: 1px solid #ffe0b2;
+  max-width: 92%;
+  border-left: 3px solid var(--fire-orange);
+}
+.conv-toolcall .conv-label { color: var(--fire-orange); }
+.conv-toolcall .tool-name {
+  font-weight: 800;
+  color: var(--fire-orange);
+}
+.conv-toolresult {
+  background: #fafafa;
+  color: var(--text);
+  border: 1px solid var(--border);
+  max-width: 92%;
+  border-left: 3px solid var(--text-secondary);
+}
+.conv-toolresult .conv-label { color: var(--text-secondary); }
+.conv-toolresult.conv-error {
+  border-left-color: var(--marceline-red);
+  background: #fef2f2;
+}
+.conv-toolresult.conv-error .conv-label { color: var(--marceline-red); }
+.conv-collapse {
+  margin-top: 6px;
+}
+.conv-collapse summary {
+  cursor: pointer;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  padding: 2px 0;
+}
+.conv-collapse summary:hover { color: var(--finn-blue); }
+.conv-collapse[open] summary { margin-bottom: 6px; }
+.conv-collapse .conv-content-inner {
+  max-height: 400px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+.conv-stats {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  padding: 8px 0;
+}
+.conv-stats span {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
 /* ─── Tables ─── */
 table {
   width: 100%;
@@ -646,14 +778,88 @@ a:hover {
       </div>
         
 
-    <div class="reveal reveal-delay-2">
-      <div class="card" style="background:var(--bg-alt); border-left:4px solid var(--jake-yellow);">
-        <p style="font-size:0.9rem; color:var(--text-secondary);">
-          Session contained 15 message(s) with 5 tool call turn(s).
-          Full transcripts are omitted from the published dashboard.
-        </p>
+      <div class="conv-viewer reveal reveal-delay-2" style="margin-top:24px;">
+        <h2 style="font-size:1.3rem; font-weight:800; margin-bottom:12px;">&#x1F4AC; Full Conversation</h2>
+        <div class="conv-stats"><span>&#x1F4AC; 6 messages</span><span>&#x1F527; 5 tool calls</span><span>&#x1F9E0; 0 thinking blocks</span></div><div class="conv-timeline"><div class="conv-msg conv-user"><div class="conv-label">&#x1F464; User</div>[Mon 2026-03-16 08:09 EDT] Check my calendar for this week and write a summary of all events to memory/weekly-plan.md<div class="conv-ts">12:09:19</div></div>
+<div class="conv-msg conv-assistant"><div class="conv-label">&#x1F916; Assistant</div>I&#x27;ll check your calendar for this week and create a summary in memory/weekly-plan.md.<div class="conv-ts">12:11:17</div></div>
+<div class="conv-msg conv-toolcall"><div class="conv-label">&#x1F527; Tool Call: <span class="tool-name">exec</span></div><pre>{
+  &quot;command&quot;: &quot;gog calendar list --from 2026-03-16 --to 2026-03-22&quot;
+}</pre><div class="conv-ts">12:11:17</div></div>
+<div class="conv-msg conv-toolresult"><div class="conv-label">&#x1F4E4; exec Result</div><pre>No events found.</pre></div>
+<div class="conv-msg conv-assistant"><div class="conv-label">&#x1F916; Assistant</div>Let me try with a different date format:<div class="conv-ts">12:13:51</div></div>
+<div class="conv-msg conv-toolcall"><div class="conv-label">&#x1F527; Tool Call: <span class="tool-name">exec</span></div><pre>{
+  &quot;command&quot;: &quot;gog calendar list --from 2026-03-16T00:00:00-04:00 --to 2026-03-22T23:59:59-04:00&quot;
+}</pre><div class="conv-ts">12:13:51</div></div>
+<div class="conv-msg conv-toolresult"><div class="conv-label">&#x1F4E4; exec Result (exit 1)</div><pre>Traceback (most recent call last):
+  File &quot;/usr/local/bin/gog&quot;, line 818, in &lt;module&gt;
+    main()
+    ~~~~^^
+  File &quot;/usr/local/bin/gog&quot;, line 761, in main
+    cmd_calendar_list(args)
+    ~~~~~~~~~~~~~~~~~^^^^^^
+  File &quot;/usr/local/bin/gog&quot;, line 283, in cmd_calendar_list
+    from_dt = _parse_dt(args.from_date)
+  File &quot;/usr/local/bin/gog&quot;, line 57, in _parse_dt
+    raise ValueError(f&quot;Cannot parse date: {s}&quot;)
+ValueError: Cannot parse date: 2026-03-16T00:00:00-04:00
+
+(Command exited with code 1)</pre></div>
+<div class="conv-msg conv-assistant"><div class="conv-label">&#x1F916; Assistant</div>Let me try without timezone offset:<div class="conv-ts">12:15:53</div></div>
+<div class="conv-msg conv-toolcall"><div class="conv-label">&#x1F527; Tool Call: <span class="tool-name">exec</span></div><pre>{
+  &quot;command&quot;: &quot;gog calendar list --from 2026-03-16T00:00:00 --to 2026-03-22T23:59:59&quot;
+}</pre><div class="conv-ts">12:15:53</div></div>
+<div class="conv-msg conv-toolresult"><div class="conv-label">&#x1F4E4; exec Result (exit 1)</div><pre>Traceback (most recent call last):
+  File &quot;/usr/local/bin/gog&quot;, line 818, in &lt;module&gt;
+    main()
+    ~~~~^^
+  File &quot;/usr/local/bin/gog&quot;, line 761, in main
+    cmd_calendar_list(args)
+    ~~~~~~~~~~~~~~~~~^^^^^^
+  File &quot;/usr/local/bin/gog&quot;, line 284, in cmd_calendar_list
+    events = [e for e in events if _parse_dt(e[&quot;start&quot;]) &gt;= from_dt]
+                                   ~~~~~~~~~^^^^^^^^^^^^
+  File &quot;/usr/local/bin/gog&quot;, line 57, in _parse_dt
+    raise ValueError(f&quot;Cannot parse date: {s}&quot;)
+ValueError: Cannot parse date: 2026-03-18T10:00:00-04:00
+
+(Command exited with code 1)</pre></div>
+<div class="conv-msg conv-assistant"><div class="conv-label">&#x1F916; Assistant</div>Looks like there are events in the calendar but the date parsing is having issues. Let me try without date filters:<div class="conv-ts">12:16:51</div></div>
+<div class="conv-msg conv-toolcall"><div class="conv-label">&#x1F527; Tool Call: <span class="tool-name">exec</span></div><pre>{
+  &quot;command&quot;: &quot;gog calendar list&quot;
+}</pre><div class="conv-ts">12:16:51</div></div>
+<div class="conv-msg conv-toolresult"><div class="conv-label">&#x1F4E4; exec Result (exit 1)</div><pre>Traceback (most recent call last):
+  File &quot;/usr/local/bin/gog&quot;, line 818, in &lt;module&gt;
+    main()
+    ~~~~^^
+  File &quot;/usr/local/bin/gog&quot;, line 761, in main
+    cmd_calendar_list(args)
+    ~~~~~~~~~~~~~~~~~^^^^^^
+  File &quot;/usr/local/bin/gog&quot;, line 287, in cmd_calendar_list
+    events = [e for e in events if _parse_dt(e[&quot;start&quot;]) &gt;= _today()]
+                                   ~~~~~~~~~^^^^^^^^^^^^
+  File &quot;/usr/local/bin/gog&quot;, line 57, in _parse_dt
+    raise ValueError(f&quot;Cannot parse date: {s}&quot;)
+ValueError: Cannot parse date: 2026-03-18T10:00:00-04:00
+
+(Command exited with code 1)</pre></div>
+<div class="conv-msg conv-assistant"><div class="conv-label">&#x1F916; Assistant</div>There&#x27;s a bug in the <code>gog</code> calendar parsing - it can&#x27;t handle timezone offsets. Let me check what the <code>gog</code> source looks like and maybe work around it:<div class="conv-ts">12:18:19</div></div>
+<div class="conv-msg conv-toolcall"><div class="conv-label">&#x1F527; Tool Call: <span class="tool-name">exec</span></div><pre>{
+  &quot;command&quot;: &quot;gog calendar list --from 2026-03-16 --to 2026-03-23 2&gt;&amp;1 | head -50&quot;
+}</pre><div class="conv-ts">12:18:19</div></div>
+<div class="conv-msg conv-toolresult"><div class="conv-label">&#x1F4E4; exec Result</div><pre>Traceback (most recent call last):
+  File &quot;/usr/local/bin/gog&quot;, line 818, in &lt;module&gt;
+    main()
+    ~~~~^^
+  File &quot;/usr/local/bin/gog&quot;, line 761, in main
+    cmd_calendar_list(args)
+    ~~~~~~~~~~~~~~~~~^^^^^^
+  File &quot;/usr/local/bin/gog&quot;, line 284, in cmd_calendar_list
+    events = [e for e in events if _parse_dt(e[&quot;start&quot;]) &gt;= from_dt]
+                                   ~~~~~~~~~^^^^^^^^^^^^
+  File &quot;/usr/local/bin/gog&quot;, line 57, in _parse_dt
+    raise ValueError(f&quot;Cannot parse date: {s}&quot;)
+ValueError: Cannot parse date: 2026-03-18T10:00:00-04:00</pre></div></div>
       </div>
-    </div>
     
 
       <div class="reveal" style="margin-top:24px;">

@@ -496,6 +496,138 @@ body {
   margin-top: 8px;
 }
 
+/* ─── Conversation Viewer ─── */
+.conv-viewer {
+  margin-top: 24px;
+}
+.conv-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px 0;
+}
+.conv-msg {
+  border-radius: 14px;
+  padding: 14px 18px;
+  font-size: 0.88rem;
+  line-height: 1.65;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+.conv-msg pre {
+  background: rgba(0,0,0,0.06);
+  padding: 12px;
+  border-radius: 8px;
+  overflow-x: auto;
+  font-size: 0.8rem;
+  margin: 8px 0;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+.conv-msg code {
+  font-size: 0.84em;
+  background: rgba(0,0,0,0.06);
+  padding: 1px 5px;
+  border-radius: 3px;
+}
+.conv-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.conv-ts {
+  font-size: 0.68rem;
+  opacity: 0.45;
+  margin-top: 6px;
+}
+.conv-user {
+  background: var(--finn-blue);
+  color: #fff;
+  align-self: flex-end;
+  max-width: 80%;
+  margin-left: auto;
+  border-bottom-right-radius: 4px;
+}
+.conv-user .conv-label { opacity: 0.75; }
+.conv-user pre { background: rgba(255,255,255,0.15); color: #fff; }
+.conv-user code { background: rgba(255,255,255,0.18); }
+.conv-assistant {
+  background: #e8f5e9;
+  color: var(--text);
+  border: 1px solid #c8e6c9;
+  max-width: 88%;
+  border-bottom-left-radius: 4px;
+}
+.conv-thinking {
+  background: #f3e5f5;
+  color: var(--text);
+  border: 1px solid #e1bee7;
+  max-width: 88%;
+  border-left: 3px solid var(--lsp-purple);
+  font-style: italic;
+}
+.conv-thinking .conv-label { color: var(--lsp-purple); }
+.conv-toolcall {
+  background: #fff3e0;
+  color: var(--text);
+  border: 1px solid #ffe0b2;
+  max-width: 92%;
+  border-left: 3px solid var(--fire-orange);
+}
+.conv-toolcall .conv-label { color: var(--fire-orange); }
+.conv-toolcall .tool-name {
+  font-weight: 800;
+  color: var(--fire-orange);
+}
+.conv-toolresult {
+  background: #fafafa;
+  color: var(--text);
+  border: 1px solid var(--border);
+  max-width: 92%;
+  border-left: 3px solid var(--text-secondary);
+}
+.conv-toolresult .conv-label { color: var(--text-secondary); }
+.conv-toolresult.conv-error {
+  border-left-color: var(--marceline-red);
+  background: #fef2f2;
+}
+.conv-toolresult.conv-error .conv-label { color: var(--marceline-red); }
+.conv-collapse {
+  margin-top: 6px;
+}
+.conv-collapse summary {
+  cursor: pointer;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  padding: 2px 0;
+}
+.conv-collapse summary:hover { color: var(--finn-blue); }
+.conv-collapse[open] summary { margin-bottom: 6px; }
+.conv-collapse .conv-content-inner {
+  max-height: 400px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+.conv-stats {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  padding: 8px 0;
+}
+.conv-stats span {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
 /* ─── Tables ─── */
 table {
   width: 100%;
@@ -645,6 +777,40 @@ a:hover {
         <p style="font-size:0.95rem;">Schedule a dungeon crawl with Finn for next Wednesday at 10am. It should be 3 hours long at the Cryptid Caverns.</p>
       </div>
         
+
+      <div class="conv-viewer reveal reveal-delay-2" style="margin-top:24px;">
+        <h2 style="font-size:1.3rem; font-weight:800; margin-bottom:12px;">&#x1F4AC; Full Conversation</h2>
+        <div class="conv-stats"><span>&#x1F4AC; 2 messages</span><span>&#x1F527; 3 tool calls</span><span>&#x1F9E0; 5 thinking blocks</span></div><div class="conv-timeline"><div class="conv-msg conv-user"><div class="conv-label">&#x1F464; User</div>Schedule a dungeon crawl with Finn for next Wednesday at 10am. It should be 3 hours long at the Cryptid Caverns.<div class="conv-ts">04:19:15</div></div>
+<div class="conv-msg conv-thinking"><div class="conv-label">&#x1F9E0; Thinking</div><details class="conv-collapse"><summary>Internal reasoning (225 chars)</summary><div class="conv-content-inner"><pre style="white-space:pre-wrap; font-style:normal;">The user wants me to schedule something for next Wednesday at 10am that&#x27;s 3 hours long. Let me figure out the date and create a calendar event.
+
+First, let me check what today&#x27;s date is to figure out when &quot;next Wednesday&quot; is.</pre></div></details></div>
+<div class="conv-msg conv-toolcall"><div class="conv-label">&#x1F527; Tool Call: <span class="tool-name">session_status</span></div><pre>{}</pre><div class="conv-ts">04:21:35</div></div>
+<div class="conv-msg conv-toolresult"><div class="conv-label">&#x1F4E4; session_status Result</div><pre>🦞 OpenClaw 2026.4.15-beta.1 (fbe476a)
+🧠 Model: ollama/qwen3.6:35b-a3b-q4_K_M · 🔑 unknown
+🧮 Tokens: 22k in / 72 out
+📚 Context: 22k/200k (11%) · 🧹 Compactions: 0
+🧵 Session: agent:main:explicit:bench-2026-04-23_000717-calendar_create • updated 3m ago
+⚙️ Runtime: direct · Think: high · elevated
+🪢 Queue: collect (depth 0)</pre></div>
+<div class="conv-msg conv-thinking"><div class="conv-label">&#x1F9E0; Thinking</div><details class="conv-collapse"><summary>Internal reasoning (71 chars)</summary><div class="conv-content-inner"><pre style="white-space:pre-wrap; font-style:normal;">Finn&#x27;s birthday is July 16. He&#x27;d appreciate something fun and creative.</pre></div></details></div>
+<div class="conv-msg conv-toolresult conv-error"><div class="conv-label">&#x274C; gog Error</div><pre>Tool gog not found</pre></div>
+<div class="conv-msg conv-thinking"><div class="conv-label">&#x1F9E0; Thinking</div><details class="conv-collapse"><summary>Internal reasoning (54 chars)</summary><div class="conv-content-inner"><pre style="white-space:pre-wrap; font-style:normal;">Need to check what &quot;next Wednesday&quot; actually is first.</pre></div></details></div>
+<div class="conv-msg conv-toolcall"><div class="conv-label">&#x1F527; Tool Call: <span class="tool-name">exec</span></div><pre>{
+  &quot;command&quot;: &quot;date -d \&quot;next wednesday 2026\&quot; &#x27;+%Y-%m-%d&#x27;&quot;
+}</pre><div class="conv-ts">04:22:16</div></div>
+<div class="conv-msg conv-toolresult"><div class="conv-label">&#x1F4E4; exec Result</div><pre>2026-04-29</pre></div>
+<div class="conv-msg conv-thinking"><div class="conv-label">&#x1F9E0; Thinking</div><details class="conv-collapse"><summary>Internal reasoning (108 chars)</summary><div class="conv-content-inner"><pre style="white-space:pre-wrap; font-style:normal;">April 29th is next Wednesday. So the event is April 29, 2026, 10:00 AM - 1:00 PM EDT at the Cryptid Caverns.</pre></div></details></div>
+<div class="conv-msg conv-toolresult conv-error"><div class="conv-label">&#x274C; gog Error</div><pre>Tool gog not found</pre></div>
+<div class="conv-msg conv-toolresult conv-error"><div class="conv-label">&#x274C; gog Error</div><pre>Tool gog not found</pre></div>
+<div class="conv-msg conv-toolcall"><div class="conv-label">&#x1F527; Tool Call: <span class="tool-name">exec</span></div><pre>{
+  &quot;command&quot;: &quot;gog calendar create --title \&quot;Dungeon Crawl with Finn\&quot; --start \&quot;2026-04-29T10:00:00\&quot; --end \&quot;2026-04-29T13:00:00\&quot; --description \&quot;Cryptid Caverns \u2014 3-hour dungeon crawl session. Bring extra snacks.\&quot;&quot;
+}</pre><div class="conv-ts">04:23:06</div></div>
+<div class="conv-msg conv-toolresult"><div class="conv-label">&#x1F4E4; exec Result</div><pre>Event created: EHrXwcx-SLaqnytK
+  Dungeon Crawl with Finn: 2026-04-29 10:00 — 2026-04-29 13:00</pre></div>
+<div class="conv-msg conv-thinking"><div class="conv-label">&#x1F9E0; Thinking</div><details class="conv-collapse"><summary>Internal reasoning (35 chars)</summary><div class="conv-content-inner"><pre style="white-space:pre-wrap; font-style:normal;">The event was created successfully.</pre></div></details></div>
+<div class="conv-msg conv-assistant"><div class="conv-label">&#x1F916; Assistant</div>Dungeon Crawl with Finn is locked in:<br><br><strong>Wednesday, April 29</strong> | 10:00 AM – 1:00 PM<br>📍 Cryptid Caverns<br><br>3 hours, no complications. You good, bro?<div class="conv-ts">04:23:15</div></div></div>
+      </div>
+    
 
       <div class="reveal" style="margin-top:24px;">
         <h2 style="font-size:1.3rem; font-weight:800; margin-bottom:16px;">📋 Scoring Reasoning</h2>

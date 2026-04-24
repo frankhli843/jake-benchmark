@@ -496,6 +496,138 @@ body {
   margin-top: 8px;
 }
 
+/* ─── Conversation Viewer ─── */
+.conv-viewer {
+  margin-top: 24px;
+}
+.conv-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px 0;
+}
+.conv-msg {
+  border-radius: 14px;
+  padding: 14px 18px;
+  font-size: 0.88rem;
+  line-height: 1.65;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+.conv-msg pre {
+  background: rgba(0,0,0,0.06);
+  padding: 12px;
+  border-radius: 8px;
+  overflow-x: auto;
+  font-size: 0.8rem;
+  margin: 8px 0;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+.conv-msg code {
+  font-size: 0.84em;
+  background: rgba(0,0,0,0.06);
+  padding: 1px 5px;
+  border-radius: 3px;
+}
+.conv-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.conv-ts {
+  font-size: 0.68rem;
+  opacity: 0.45;
+  margin-top: 6px;
+}
+.conv-user {
+  background: var(--finn-blue);
+  color: #fff;
+  align-self: flex-end;
+  max-width: 80%;
+  margin-left: auto;
+  border-bottom-right-radius: 4px;
+}
+.conv-user .conv-label { opacity: 0.75; }
+.conv-user pre { background: rgba(255,255,255,0.15); color: #fff; }
+.conv-user code { background: rgba(255,255,255,0.18); }
+.conv-assistant {
+  background: #e8f5e9;
+  color: var(--text);
+  border: 1px solid #c8e6c9;
+  max-width: 88%;
+  border-bottom-left-radius: 4px;
+}
+.conv-thinking {
+  background: #f3e5f5;
+  color: var(--text);
+  border: 1px solid #e1bee7;
+  max-width: 88%;
+  border-left: 3px solid var(--lsp-purple);
+  font-style: italic;
+}
+.conv-thinking .conv-label { color: var(--lsp-purple); }
+.conv-toolcall {
+  background: #fff3e0;
+  color: var(--text);
+  border: 1px solid #ffe0b2;
+  max-width: 92%;
+  border-left: 3px solid var(--fire-orange);
+}
+.conv-toolcall .conv-label { color: var(--fire-orange); }
+.conv-toolcall .tool-name {
+  font-weight: 800;
+  color: var(--fire-orange);
+}
+.conv-toolresult {
+  background: #fafafa;
+  color: var(--text);
+  border: 1px solid var(--border);
+  max-width: 92%;
+  border-left: 3px solid var(--text-secondary);
+}
+.conv-toolresult .conv-label { color: var(--text-secondary); }
+.conv-toolresult.conv-error {
+  border-left-color: var(--marceline-red);
+  background: #fef2f2;
+}
+.conv-toolresult.conv-error .conv-label { color: var(--marceline-red); }
+.conv-collapse {
+  margin-top: 6px;
+}
+.conv-collapse summary {
+  cursor: pointer;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  padding: 2px 0;
+}
+.conv-collapse summary:hover { color: var(--finn-blue); }
+.conv-collapse[open] summary { margin-bottom: 6px; }
+.conv-collapse .conv-content-inner {
+  max-height: 400px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+.conv-stats {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  padding: 8px 0;
+}
+.conv-stats span {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
 /* ─── Tables ─── */
 table {
   width: 100%;
@@ -645,6 +777,59 @@ a:hover {
         <p style="font-size:0.95rem;">Schedule a dungeon crawl with Finn for next Wednesday at 10am. It should be 3 hours long at the Cryptid Caverns.</p>
       </div>
         
+
+      <div class="conv-viewer reveal reveal-delay-2" style="margin-top:24px;">
+        <h2 style="font-size:1.3rem; font-weight:800; margin-bottom:12px;">&#x1F4AC; Full Conversation</h2>
+        <div class="conv-stats"><span>&#x1F4AC; 4 messages</span><span>&#x1F527; 3 tool calls</span><span>&#x1F9E0; 4 thinking blocks</span></div><div class="conv-timeline"><div class="conv-msg conv-user"><div class="conv-label">&#x1F464; User</div>Schedule a dungeon crawl with Finn for next Wednesday at 10am. It should be 3 hours long at the Cryptid Caverns.<div class="conv-ts">14:40:14</div></div>
+<div class="conv-msg conv-thinking"><div class="conv-label">&#x1F9E0; Thinking</div><details class="conv-collapse"><summary>Internal reasoning (413 chars)</summary><div class="conv-content-inner"><pre style="white-space:pre-wrap; font-style:normal;">The user wants me to schedule a calendar event. Let me use the gog CLI to create a calendar event.
+
+First, let me figure out the date. Next Wednesday from today. I need to know what today&#x27;s date is. Let me check session status or just use exec to figure it out.
+
+Actually, I should use `gog calendar create` to create the event. Let me figure out the date for next Wednesday.
+
+Let me check the current date first.</pre></div></details></div>
+<div class="conv-msg conv-toolcall"><div class="conv-label">&#x1F527; Tool Call: <span class="tool-name">exec</span></div><pre>{
+  &quot;command&quot;: &quot;date -d \&quot;next wednesday\&quot; \&quot;+%Y-%m-%dT%H:%M:%S\&quot;&quot;
+}</pre><div class="conv-ts">14:43:31</div></div>
+<div class="conv-msg conv-toolresult"><div class="conv-label">&#x1F4E4; exec Result</div><pre>2026-04-29T00:00:00</pre></div>
+<div class="conv-msg conv-thinking"><div class="conv-label">&#x1F9E0; Thinking</div><details class="conv-collapse"><summary>Internal reasoning (254 chars)</summary><div class="conv-content-inner"><pre style="white-space:pre-wrap; font-style:normal;">The date output seems odd. Let me check the current date first.
+
+Actually, looking at the timezone, it&#x27;s America/Toronto. Let me figure out what &quot;next Wednesday&quot; means from the current date. I should check the session status to see the current date/time.</pre></div></details></div>
+<div class="conv-msg conv-assistant"><div class="conv-label">&#x1F916; Assistant</div>Let me check what today actually is first.<div class="conv-ts">14:44:10</div></div>
+<div class="conv-msg conv-toolcall"><div class="conv-label">&#x1F527; Tool Call: <span class="tool-name">session_status</span></div><pre>{}</pre><div class="conv-ts">14:44:10</div></div>
+<div class="conv-msg conv-toolresult"><div class="conv-label">&#x1F4E4; session_status Result</div><pre>🦞 OpenClaw 2026.4.15-beta.1 (fbe476a)
+🧠 Model: ollama/qwen3.6:35b · 🔑 unknown
+🧮 Tokens: 45k in / 231 out
+📚 Context: 23k/200k (11%) · 🧹 Compactions: 0
+🧵 Session: agent:main:explicit:bench-2026-04-22_103001-calendar_create • updated 4m ago
+⚙️ Runtime: direct · Think: high · elevated
+🪢 Queue: collect (depth 0)</pre></div>
+<div class="conv-msg conv-thinking"><div class="conv-label">&#x1F9E0; Thinking</div><details class="conv-collapse"><summary>Internal reasoning (154 chars)</summary><div class="conv-content-inner"><pre style="white-space:pre-wrap; font-style:normal;">The session key says &quot;explicit:bench-2026-04-22_103001-calendar_create&quot;, so today is April 22, 2026. Next Wednesday from April 22 would be April 29, 2026.</pre></div></details></div>
+<div class="conv-msg conv-assistant"><div class="conv-label">&#x1F916; Assistant</div>Today is April 22 (Wed). So &quot;next Wednesday&quot; is April 29.<div class="conv-ts">14:44:40</div></div>
+<div class="conv-msg conv-toolcall"><div class="conv-label">&#x1F527; Tool Call: <span class="tool-name">exec</span></div><pre>{
+  &quot;command&quot;: &quot;gog calendar create --title \&quot;Dungeon Crawl with Finn\&quot; --start \&quot;2026-04-29T10:00:00\&quot; --end \&quot;2026-04-29T13:00:00\&quot; --description \&quot;Dungeon crawling session at the Cryptid Caverns. Bring snacks and spare torches.\&quot; --location \&quot;Cryptid Caverns\&quot;&quot;
+}</pre><div class="conv-ts">14:44:40</div></div>
+<div class="conv-msg conv-toolresult"><div class="conv-label">&#x1F4E4; exec Result</div><pre>Event created: Jk173lloQiib9wRg
+  Dungeon Crawl with Finn: 2026-04-29 10:00 — 2026-04-29 13:00</pre></div>
+<div class="conv-msg conv-thinking"><div class="conv-label">&#x1F9E0; Thinking</div><details class="conv-collapse"><summary>Internal reasoning (1,022 chars)</summary><div class="conv-content-inner"><pre style="white-space:pre-wrap; font-style:normal;">The user is asking me to schedule a dungeon crawl event. Looking at the TOOLS.md, I have access to `gog` CLI for Google Workspace integration including calendar. Let me use that to create a calendar event.
+
+I need to figure out the date for &quot;next Wednesday&quot;. The current date from the session status is around April 22, 2026. So &quot;next Wednesday&quot; would be April 29, 2026.
+
+Let me create the event with:
+- Title: Dungeon Crawl with Finn
+- Date: Next Wednesday at 10am
+- Duration: 3 hours (10am - 1pm)
+- Location: Cryptid Caverns
+
+I need to figure out the date first. The session shows it&#x27;s updated 4m ago, and the session name mentions &quot;2026-04-22&quot; - that suggests today is April 22, 2026 which is a Wednesday. But &quot;next Wednesday&quot; could mean this Wednesday (today) or the following Wednesday (April 29).
+
+Given the phrasing &quot;next Wednesday&quot;, it most naturally means the Wednesday of next week, which would be April 29, 2026.
+
+
+I can now construct the event creation command with the April 29 date and the specified details.</pre></div></details></div>
+<div class="conv-msg conv-assistant"><div class="conv-label">&#x1F916; Assistant</div>Done! Scheduled the dungeon crawl for <strong>Wednesday, April 29 at 10:00 AM</strong> — 3 hours at the Cryptid Caverns. Event ID <code>Jk173lloQiib9wRg</code>.<div class="conv-ts">14:45:27</div></div></div>
+      </div>
+    
 
       <div class="reveal" style="margin-top:24px;">
         <h2 style="font-size:1.3rem; font-weight:800; margin-bottom:16px;">📋 Scoring Reasoning</h2>

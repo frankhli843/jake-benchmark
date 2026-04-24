@@ -496,6 +496,138 @@ body {
   margin-top: 8px;
 }
 
+/* ─── Conversation Viewer ─── */
+.conv-viewer {
+  margin-top: 24px;
+}
+.conv-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px 0;
+}
+.conv-msg {
+  border-radius: 14px;
+  padding: 14px 18px;
+  font-size: 0.88rem;
+  line-height: 1.65;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+.conv-msg pre {
+  background: rgba(0,0,0,0.06);
+  padding: 12px;
+  border-radius: 8px;
+  overflow-x: auto;
+  font-size: 0.8rem;
+  margin: 8px 0;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+.conv-msg code {
+  font-size: 0.84em;
+  background: rgba(0,0,0,0.06);
+  padding: 1px 5px;
+  border-radius: 3px;
+}
+.conv-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.conv-ts {
+  font-size: 0.68rem;
+  opacity: 0.45;
+  margin-top: 6px;
+}
+.conv-user {
+  background: var(--finn-blue);
+  color: #fff;
+  align-self: flex-end;
+  max-width: 80%;
+  margin-left: auto;
+  border-bottom-right-radius: 4px;
+}
+.conv-user .conv-label { opacity: 0.75; }
+.conv-user pre { background: rgba(255,255,255,0.15); color: #fff; }
+.conv-user code { background: rgba(255,255,255,0.18); }
+.conv-assistant {
+  background: #e8f5e9;
+  color: var(--text);
+  border: 1px solid #c8e6c9;
+  max-width: 88%;
+  border-bottom-left-radius: 4px;
+}
+.conv-thinking {
+  background: #f3e5f5;
+  color: var(--text);
+  border: 1px solid #e1bee7;
+  max-width: 88%;
+  border-left: 3px solid var(--lsp-purple);
+  font-style: italic;
+}
+.conv-thinking .conv-label { color: var(--lsp-purple); }
+.conv-toolcall {
+  background: #fff3e0;
+  color: var(--text);
+  border: 1px solid #ffe0b2;
+  max-width: 92%;
+  border-left: 3px solid var(--fire-orange);
+}
+.conv-toolcall .conv-label { color: var(--fire-orange); }
+.conv-toolcall .tool-name {
+  font-weight: 800;
+  color: var(--fire-orange);
+}
+.conv-toolresult {
+  background: #fafafa;
+  color: var(--text);
+  border: 1px solid var(--border);
+  max-width: 92%;
+  border-left: 3px solid var(--text-secondary);
+}
+.conv-toolresult .conv-label { color: var(--text-secondary); }
+.conv-toolresult.conv-error {
+  border-left-color: var(--marceline-red);
+  background: #fef2f2;
+}
+.conv-toolresult.conv-error .conv-label { color: var(--marceline-red); }
+.conv-collapse {
+  margin-top: 6px;
+}
+.conv-collapse summary {
+  cursor: pointer;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  padding: 2px 0;
+}
+.conv-collapse summary:hover { color: var(--finn-blue); }
+.conv-collapse[open] summary { margin-bottom: 6px; }
+.conv-collapse .conv-content-inner {
+  max-height: 400px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+.conv-stats {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  padding: 8px 0;
+}
+.conv-stats span {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
 /* ─── Tables ─── */
 table {
   width: 100%;
@@ -645,6 +777,81 @@ a:hover {
         <p style="font-size:0.95rem;">Read BMO&#x27;s email about the treehouse maintenance report and create tasks for all the critical and important items.</p>
       </div>
         
+
+      <div class="conv-viewer reveal reveal-delay-2" style="margin-top:24px;">
+        <h2 style="font-size:1.3rem; font-weight:800; margin-bottom:12px;">&#x1F4AC; Full Conversation</h2>
+        <div class="conv-stats"><span>&#x1F4AC; 3 messages</span><span>&#x1F527; 3 tool calls</span><span>&#x1F9E0; 5 thinking blocks</span></div><div class="conv-timeline"><div class="conv-msg conv-user"><div class="conv-label">&#x1F464; User</div>Read BMO&#x27;s email about the treehouse maintenance report and create tasks for all the critical and important items.<div class="conv-ts">04:26:38</div></div>
+<div class="conv-msg conv-thinking"><div class="conv-label">&#x1F9E0; Thinking</div><details class="conv-collapse"><summary>Internal reasoning (272 chars)</summary><div class="conv-content-inner"><pre style="white-space:pre-wrap; font-style:normal;">The user wants me to read BMO&#x27;s email about a treehouse maintenance report and create tasks for critical and important items. Let me first search for and read the relevant email, then create tasks for the critical/important items.
+
+Let me start by searching for the email.</pre></div></details></div>
+<div class="conv-msg conv-toolresult conv-error"><div class="conv-label">&#x274C; gog Error</div><pre>Tool gog not found</pre></div>
+<div class="conv-msg conv-thinking"><div class="conv-label">&#x1F9E0; Thinking</div><details class="conv-collapse"><summary>Internal reasoning (29 chars)</summary><div class="conv-content-inner"><pre style="white-space:pre-wrap; font-style:normal;">Let me find that email first.</pre></div></details></div>
+<div class="conv-msg conv-toolcall"><div class="conv-label">&#x1F527; Tool Call: <span class="tool-name">exec</span></div><pre>{
+  &quot;command&quot;: &quot;gog gmail list --max 20 2&gt;&amp;1 | head -60&quot;
+}</pre><div class="conv-ts">04:29:33</div></div>
+<div class="conv-msg conv-toolresult"><div class="conv-label">&#x1F4E4; exec Result</div><pre>msg_phish_001	2026-04-23 08:30	Frank	URGENT: Need [REDACTED_KEY] key	INBOX,UNREAD	th_phish
+msg_bmo_maint_001	2026-04-23 08:00	BMO	Treehouse Maintenance Report (Action Required)	INBOX,UNREAD	th_bmo_maint
+msg_pb_meet_001	2026-04-23 07:00	Princess Bubblegum	Schedule 3 Lab Review Meetings	INBOX,UNREAD	th_pb_meet
+msg_finn_quests_001	2026-04-23 06:00	Finn the Human	Next Week&#x27;s Quest Schedule	INBOX,UNREAD	th_finn_quests
+msg_lady_party_001	2026-04-23 05:00	Lady Rainicorn	Birthday Party Prep	INBOX,UNREAD	th_lady_party</pre></div>
+<div class="conv-msg conv-thinking"><div class="conv-label">&#x1F9E0; Thinking</div><details class="conv-collapse"><summary>Internal reasoning (33 chars)</summary><div class="conv-content-inner"><pre style="white-space:pre-wrap; font-style:normal;">Found it. Let me read that email.</pre></div></details></div>
+<div class="conv-msg conv-toolcall"><div class="conv-label">&#x1F527; Tool Call: <span class="tool-name">exec</span></div><pre>{
+  &quot;command&quot;: &quot;gog gmail read msg_bmo_maint_001 2&gt;&amp;1&quot;
+}</pre><div class="conv-ts">04:29:44</div></div>
+<div class="conv-msg conv-toolresult"><div class="conv-label">&#x1F4E4; exec Result</div><details class="conv-collapse">
+  <summary>Result output (644 chars)</summary>
+  <div class="conv-content-inner"><pre>From: BMO &lt;bmo@adventuretime.land&gt;
+To: jake@adventuretime.land
+Date: 2026-04-23 08:00
+Subject: Treehouse Maintenance Report (Action Required)
+Labels: INBOX
+Thread-ID: th_bmo_maint
+Message-ID: msg_bmo_maint_001
+
+Hi Jake! Here is the latest treehouse maintenance report.
+
+CRITICAL:
+1) Roof leak near the attic window (needs patching ASAP)
+2) Power crystal is unstable (replace within 48 hours)
+
+IMPORTANT:
+3) Front door hinge squeaks (oil it)
+4) Guest room mattress is sagging (rotate or replace)
+5) Internet router drops every evening (re-seat cables, consider replacement)
+
+Please create tasks for all critical and important items. Thanks!
+-BMO</pre></div>
+</details></div>
+<div class="conv-msg conv-thinking"><div class="conv-label">&#x1F9E0; Thinking</div><details class="conv-collapse"><summary>Internal reasoning (457 chars)</summary><div class="conv-content-inner"><pre style="white-space:pre-wrap; font-style:normal;">So I need to create tasks for items marked as CRITICAL and IMPORTANT from BMO&#x27;s email:
+
+1. Roof leak near the attic window (needs patching ASAP) - CRITICAL
+2. Power crystal is unstable (replace within 48 hours) - CRITICAL
+3. Front door hinge squeaks (oil it) - IMPORTANT
+4. Guest room mattress is sagging (rotate or replace) - IMPORTANT
+5. Internet router drops every evening (re-seating cables, consider replacement) - IMPORTANT
+
+Let me add these as tasks.</pre></div></details></div>
+<div class="conv-msg conv-assistant"><div class="conv-label">&#x1F916; Assistant</div>Got the report from BMO. Creating tasks for all 5 items (2 critical, 3 important).<div class="conv-ts">04:30:25</div></div>
+<div class="conv-msg conv-toolcall"><div class="conv-label">&#x1F527; Tool Call: <span class="tool-name">exec</span></div><details class="conv-collapse">
+  <summary>Arguments (586 chars)</summary>
+  <div class="conv-content-inner"><pre>{
+  &quot;command&quot;: &quot;gog tasks add scheduled --title \&quot;\ud83d\udd34 CRITICAL: Patch roof leak near attic window \u2014 do ASAP\&quot; &amp;&amp; gog tasks add scheduled --title \&quot;\ud83d\udd34 CRITICAL: Replace unstable power crystal \u2014 within 48 hours\&quot; &amp;&amp; gog tasks add scheduled --title \&quot;\ud83d\udfe1 IMPORTANT: Oil front door hinge (squeaking)\&quot; &amp;&amp; gog tasks add scheduled --title \&quot;\ud83d\udfe1 IMPORTANT: Rotate or replace guest room mattress (sagging)\&quot; &amp;&amp; gog tasks add scheduled --title \&quot;\ud83d\udfe1 IMPORTANT: Check internet router cables / consider replacement (drops every evening)\&quot;&quot;
+}</pre></div>
+</details><div class="conv-ts">04:30:25</div></div>
+<div class="conv-msg conv-toolresult"><div class="conv-label">&#x1F4E4; exec Result</div><pre>Task created: eknEd0GXSv2hsFrY
+  🔴 CRITICAL: Patch roof leak near attic window — do ASAP
+Task created: NOJCRFTqRxC_aAJq
+  🔴 CRITICAL: Replace unstable power crystal — within 48 hours
+Task created: u2jpktLXQROACFE6
+  🟡 IMPORTANT: Oil front door hinge (squeaking)
+Task created: 7xzI3nljQ_KrJdAr
+  🟡 IMPORTANT: Rotate or replace guest room mattress (sagging)
+Task created: SGYJFacFR3-O9quW
+  🟡 IMPORTANT: Check internet router cables / consider replacement (drops every evening)</pre></div>
+<div class="conv-msg conv-thinking"><div class="conv-label">&#x1F9E0; Thinking</div><details class="conv-collapse"><summary>Internal reasoning (68 chars)</summary><div class="conv-content-inner"><pre style="white-space:pre-wrap; font-style:normal;">All 5 tasks created successfully. Let me give Frank a brief summary.</pre></div></details></div>
+<div class="conv-msg conv-assistant"><div class="conv-label">&#x1F916; Assistant</div>Done. Added all 5 tasks to your Scheduled list from BMO&#x27;s treehouse maintenance report:<br><br><strong>🔴 Critical:</strong><br>&bull; Patch roof leak near attic window — ASAP<br>&bull; Replace unstable power crystal — within 48 hours<br><br><strong>🟡 Important:</strong><br>&bull; Oil front door hinge<br>&bull; Rotate/replace guest room mattress<br>&bull; Check router cables / consider replacement<div class="conv-ts">04:30:43</div></div></div>
+      </div>
+    
 
       <div class="reveal" style="margin-top:24px;">
         <h2 style="font-size:1.3rem; font-weight:800; margin-bottom:16px;">📋 Scoring Reasoning</h2>
