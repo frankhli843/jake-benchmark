@@ -1605,25 +1605,31 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-  var observer = new IntersectionObserver(function(entries) {
-    entries.forEach(function(entry) {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-        // Animate score rings
-        var ring = entry.target.querySelector('.ring-fill');
-        if (ring && ring.dataset.offset) {
-          ring.style.strokeDashoffset = ring.dataset.offset;
-        }
-        // Animate progress bars
-        var fills = entry.target.querySelectorAll('.fill[data-width]');
-        fills.forEach(function(f) { f.style.width = f.dataset.width; });
-      }
-    });
-  }, { threshold: 0.15 });
+  function applyFills(el) {
+    el.classList.add('visible');
+    var ring = el.querySelector('.ring-fill');
+    if (ring && ring.dataset.offset) {
+      ring.style.strokeDashoffset = ring.dataset.offset;
+    }
+    var fills = el.querySelectorAll('.fill[data-width]');
+    fills.forEach(function(f) { f.style.width = f.dataset.width; });
+  }
 
-  document.querySelectorAll('.reveal').forEach(function(el) {
-    observer.observe(el);
-  });
+  var revealEls = document.querySelectorAll('.reveal');
+
+  if ('IntersectionObserver' in window) {
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          applyFills(entry.target);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    revealEls.forEach(function(el) { observer.observe(el); });
+  } else {
+    revealEls.forEach(applyFills);
+  }
 });
 </script>
 
