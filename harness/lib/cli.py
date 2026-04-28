@@ -1,10 +1,11 @@
-"""jake-bench CLI: validate, migrate, report, smoke.
+"""jake-bench CLI: validate, migrate, report, smoke, run, matrix, compare.
 
-This is the stable user surface. The heavy `run` subcommand depends on
-the runner abstraction, which is a follow-up subtask. The current
-subcommands are sufficient to validate packs, migrate the legacy
-tasks.json, exercise the MockRunner, and generate sanitized failure
-reports end-to-end.
+This is the stable user surface for the harness. All mutating operations
+go through schema validation. The `run` and `matrix` subcommands route
+through the runner abstraction (`lib.runner`) so the same CLI works for
+mock testing, the OpenClaw adapter, or future runners (gemmaclaw, vllm).
+
+The CLI is the docker entrypoint. Run it without args to see the help.
 """
 
 from __future__ import annotations
@@ -14,7 +15,17 @@ import json
 import sys
 from pathlib import Path
 
-from . import failure_report, migrate, mock_runner, sanitize, validate
+from . import (
+    compare as _compare,
+    failure_report,
+    matrix as _matrix,
+    migrate,
+    mock_runner,
+    sanitize,
+    validate,
+)
+from .model_spec import ModelSpec, expand_matrix, load_matrix_file
+from .runner import build_runner
 
 
 def _cmd_validate(args: argparse.Namespace) -> int:
@@ -105,6 +116,138 @@ def _cmd_sanitize(args: argparse.Namespace) -> int:
     return 0
 
 
+def _cmd_run(args: argparse.Namespace) -> int:
+    """Run a single ModelSpec against a pack via the runner abstraction."""
+
+    pack = json.loads(Path(args.pack).read_text(encoding="utf-8"))
+    pack_errors = validate.validate(pack, "task-pack-v1")
+    if pack_errors and not args.skip_validation:
+        for e in pack_errors:
+            print(f"INVALID pack: {e}", file=sys.stderr)
+        return 1
+
+    spec = _resolve_single_spec(args)
+    out_dir = Path(args.out)
+    out_dir.mkdir(parents=True, exist_ok=True)
+
+    runner = build_runner(
+        args.runner,
+        baseline_config=Path(args.baseline_config) if args.baseline_config else None,
+        baseline_home=Path(args.baseline_home) if args.baseline_home else None,
+        dispatch_cmd=args.dispatch_cmd,
+        timeout_seconds=args.timeout,
+    )
+    ctx = runner.prepare(spec, out_dir / "scratch")
+    artifact = runner.run_pack(pack, spec, ctx, out_dir=out_dir)
+    runner.teardown(ctx)
+
+    (out_dir / "run.json").write_text(
+        json.dumps(artifact, indent=2, ensure_ascii=False) + "\n",
+        encoding="utf-8",
+    )
+    if not args.skip_validation:
+        run_errors = validate.validate(artifact, "run-artifact-v1")
+        if run_errors:
+            for e in run_errors:
+                print(f"INVALID run artifact: {e}", file=sys.stderr)
+            return 1
+
+    print(f"Run OK. wrote {out_dir/'run.json'}")
+    return 0
+
+
+def _cmd_matrix(args: argparse.Namespace) -> int:
+    """Run a matrix file (or expanded matrix) against a pack."""
+
+    pack = json.loads(Path(args.pack).read_text(encoding="utf-8"))
+    if args.matrix:
+        specs = load_matrix_file(args.matrix)
+    elif args.spec:
+        specs = [_resolve_single_spec(args)]
+    else:
+        print("matrix: pass --matrix <file> or --spec <model-id>", file=sys.stderr)
+        return 2
+
+    out_dir = Path(args.out)
+    out_dir.mkdir(parents=True, exist_ok=True)
+
+    def factory(_spec: ModelSpec):
+        return build_runner(
+            args.runner,
+            baseline_config=Path(args.baseline_config) if args.baseline_config else None,
+            baseline_home=Path(args.baseline_home) if args.baseline_home else None,
+            dispatch_cmd=args.dispatch_cmd,
+            timeout_seconds=args.timeout,
+        )
+
+    summary = _matrix.run_matrix(
+        pack=pack,
+        runner_factory=factory,
+        specs=specs,
+        out_dir=out_dir,
+        matrix_file=args.matrix,
+        skip_validation=args.skip_validation,
+        on_progress=lambda s, r: print(
+            f"  [{s.config_hash[:8]}] {s.slug}: "
+            + ("OK" if r.error is None else f"FAILED ({r.error})")
+        ),
+    )
+
+    failed = [r for r in summary.runs if r.error]
+    print(f"Matrix done: {len(summary.runs)} runs, {len(failed)} failed.")
+    print(f"Index: {out_dir/'matrix.json'}")
+    return 1 if failed else 0
+
+
+def _cmd_compare(args: argparse.Namespace) -> int:
+    """Compare two run artifacts."""
+
+    a_path = _resolve_run_path(Path(args.a))
+    b_path = _resolve_run_path(Path(args.b))
+    report = _compare.compare_run_files(a_path, b_path)
+    out_dir = Path(args.out) if args.out else None
+    if out_dir:
+        out_dir.mkdir(parents=True, exist_ok=True)
+        (out_dir / "compare.json").write_text(
+            json.dumps(report.to_dict(), indent=2, ensure_ascii=False) + "\n",
+            encoding="utf-8",
+        )
+        (out_dir / "compare.md").write_text(report.to_markdown(), encoding="utf-8")
+        print(f"Wrote {out_dir/'compare.json'}")
+        print(f"Wrote {out_dir/'compare.md'}")
+    else:
+        print(report.to_markdown())
+    return 1 if report.regressions else 0
+
+
+def _resolve_single_spec(args: argparse.Namespace) -> ModelSpec:
+    if args.spec_json:
+        raw = json.loads(Path(args.spec_json).read_text(encoding="utf-8"))
+        return ModelSpec.from_dict(raw)
+    if not args.spec:
+        raise SystemExit("missing --spec or --spec-json")
+    provider, _, model = args.spec.partition(":")
+    if not model:
+        raise SystemExit(f"--spec must be 'provider:model_id', got {args.spec!r}")
+    options: dict = {}
+    if args.thinking:
+        options["thinking"] = args.thinking
+    if args.context_length:
+        options["context_length"] = int(args.context_length)
+    return ModelSpec(
+        provider=provider,
+        model_id=model,
+        checkpoint_id=args.checkpoint or None,
+        options=options,
+    )
+
+
+def _resolve_run_path(p: Path) -> Path:
+    if p.is_dir():
+        return p / "run.json"
+    return p
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(prog="jake-bench")
     sub = parser.add_subparsers(dest="cmd", required=True)
@@ -147,6 +290,45 @@ def main(argv: list[str] | None = None) -> int:
     )
     p_sanitize.add_argument("--out", default=None)
     p_sanitize.set_defaults(func=_cmd_sanitize)
+
+    p_run = sub.add_parser("run", help="Run a single ModelSpec against a pack.")
+    p_run.add_argument("--pack", required=True)
+    p_run.add_argument("--out", required=True)
+    p_run.add_argument("--runner", choices=["mock", "openclaw"], default="mock")
+    p_run.add_argument("--spec", help="provider:model_id (e.g. ollama:qwen3.5:27b).")
+    p_run.add_argument("--spec-json", help="Path to a JSON ModelSpec file.")
+    p_run.add_argument("--checkpoint", default=None)
+    p_run.add_argument("--thinking", choices=["off", "low", "medium", "high"])
+    p_run.add_argument("--context-length", type=int)
+    p_run.add_argument("--baseline-config", default=None)
+    p_run.add_argument("--baseline-home", default=None)
+    p_run.add_argument("--dispatch-cmd", nargs="*", default=None)
+    p_run.add_argument("--timeout", type=int, default=7200)
+    p_run.add_argument("--skip-validation", action="store_true")
+    p_run.set_defaults(func=_cmd_run)
+
+    p_matrix = sub.add_parser("matrix", help="Run a matrix of ModelSpecs against a pack.")
+    p_matrix.add_argument("--pack", required=True)
+    p_matrix.add_argument("--out", required=True)
+    p_matrix.add_argument("--matrix", help="Path to a matrix file.")
+    p_matrix.add_argument("--runner", choices=["mock", "openclaw"], default="mock")
+    p_matrix.add_argument("--spec", default=None)
+    p_matrix.add_argument("--spec-json", default=None)
+    p_matrix.add_argument("--checkpoint", default=None)
+    p_matrix.add_argument("--thinking", choices=["off", "low", "medium", "high"])
+    p_matrix.add_argument("--context-length", type=int)
+    p_matrix.add_argument("--baseline-config", default=None)
+    p_matrix.add_argument("--baseline-home", default=None)
+    p_matrix.add_argument("--dispatch-cmd", nargs="*", default=None)
+    p_matrix.add_argument("--timeout", type=int, default=7200)
+    p_matrix.add_argument("--skip-validation", action="store_true")
+    p_matrix.set_defaults(func=_cmd_matrix)
+
+    p_compare = sub.add_parser("compare", help="Compare two run artifacts.")
+    p_compare.add_argument("a", help="Path to run.json (or run dir) A")
+    p_compare.add_argument("b", help="Path to run.json (or run dir) B")
+    p_compare.add_argument("--out", default=None, help="Optional dir to write report files.")
+    p_compare.set_defaults(func=_cmd_compare)
 
     args = parser.parse_args(argv)
     return args.func(args)

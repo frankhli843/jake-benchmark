@@ -1,6 +1,9 @@
 # Jake Benchmark Hardening Plan v1
 
-Status: foundation landed on branch `harden/foundation-v1`. Follow-up subtasks remain.
+Status:
+- Foundation landed via PR #3 (commit `5cb152c` on `main`).
+- Milestone 2 (runner abstraction + matrix + CLI run/compare) lands via the
+  `harden/milestone-2-runner-matrix` branch. Polished Google Doc summary follows.
 
 ## 1. Repo + open-source readiness decision
 
@@ -34,54 +37,126 @@ Why a wrapping migration rather than a full reformat: the existing grading types
 
 ## 3. Benchmark CLI entrypoint (docker-friendly)
 
-Status: scaffolded, not finished. The current orchestrator (`run-model-benchmark.sh`) stays as the operational driver because it is what Frank uses today. New CLI surface:
+Status: complete (milestone 2). The current orchestrator
+(`run-model-benchmark.sh`) stays as the operational driver because it is what
+Frank uses today, but the new `jake-bench` CLI is the contract everything else
+talks to. CLI lives at `harness/lib/cli.py`. Subcommands:
 
 ```
-jake-bench validate <pack.json>       # schema validation, exit non-zero on errors
-jake-bench migrate <legacy.json>      # bare-list -> v1 pack
-jake-bench report <run-dir>           # generate report.md + report.json
-jake-bench report <run-dir> --sanitize public   # redact private patterns
-jake-bench compare <run-dir-a> <run-dir-b>      # diff two runs
+jake-bench validate <schema> <file>             # task-pack-v1 / run-artifact-v1 / failure-report-v1
+jake-bench migrate <legacy.json> <out.json>     # bare-list -> v1 pack
+jake-bench report <run-dir> [--sanitize public] # generate report.md + report.json
+jake-bench smoke <pack.json> --out <dir>        # run pack against MockRunner
+jake-bench sanitize <file> [--profile public]   # apply redaction
+jake-bench run --pack <p> --out <dir> \         # one ModelSpec via runner abstraction
+              --runner mock|openclaw \
+              --spec provider:model_id \
+              [--checkpoint X] [--thinking off|low|medium|high] \
+              [--baseline-config <path>] [--baseline-home <path>] \
+              [--dispatch-cmd ...]
+jake-bench matrix --pack <p> --out <dir> \      # run a matrix file (or single spec)
+              --matrix <matrix.json> --runner mock|openclaw
+jake-bench compare <run-dir-a> <run-dir-b>      # diff two runs (regressions + improvements)
+              [--out <dir>]
 ```
 
-CLI lives at `harness/lib/cli.py`. The full `run` subcommand depends on the runner abstraction (subtask 4) and is not landed in this foundation. Existing scripts are unchanged.
+The CLI is wired into `harness/Dockerfile` via the `bench` entrypoint command:
+
+```
+docker run jake-harness bench validate task-pack-v1 tasks-pack-v1.json
+docker run jake-harness bench smoke tasks-pack-v1.json --out /tmp/out
+docker run jake-harness bench run --pack tasks-pack-v1.json --runner mock \
+    --spec mock:smoke --out /tmp/out
+```
+
+Existing scripts are unchanged.
 
 ## 4. Runner abstraction + OpenClaw adapter (no global state mutation)
 
-Status: design only in this foundation. The proposed interface:
+Status: complete (milestone 2). Lives in `harness/lib/runner.py`. The runtime
+shape is:
 
 ```python
 class Runner(Protocol):
-    name: str            # "openclaw", "mock", "gemmaclaw"
+    name: str
     version: str
+    adapter: str
     def prepare(self, model_spec: ModelSpec, workspace: Path) -> RunContext: ...
-    def execute(self, task: Task, ctx: RunContext) -> TaskResult: ...
+    def run_pack(self, pack: dict, model_spec: ModelSpec, ctx: RunContext,
+                 *, out_dir: Path) -> dict: ...
     def teardown(self, ctx: RunContext) -> None: ...
 ```
 
-`RunContext` is a per-run scratch directory. The OpenClaw adapter takes a config overlay path rather than mutating `~/.openclaw/openclaw.json`. It launches the gateway with `OPENCLAW_CONFIG=<overlay>` (verified to be supported in the gateway today), so per-run state isolation is real and reversible. It does not delete `workspace/MEMORY.md` or `workspace/memory/*.md` from the user's home; it points the gateway at a temp workspace seeded from a pristine snapshot.
+`RunContext` is a per-run scratch directory. Two concrete adapters:
 
-Implementing this requires changes to the orchestrator script and a small change in frankclaw to honor `OPENCLAW_CONFIG` if it does not already. That is a separate, larger subtask.
+- `MockRunner` — wraps `lib.mock_runner.run`. Used by CI smoke + dev workflows
+  without GPU hardware. Restamps `runner.name=mock` on the artifact.
+- `OpenclawRunner` — subprocess wrapper around `harness/scripts/run-model-benchmark.sh`
+  (or any caller-supplied `dispatch_cmd`). Isolates per-run state by:
+  1. Creating a scratch `OPENCLAW_HOME` directory under the per-run workspace.
+  2. Optionally seeding it from a baseline `--baseline-home` snapshot
+     (skips `node_modules`, `__pycache__`, `.git`, `logs`, `sessions`).
+  3. Writing the per-run `model-spec.json` and `task-pack.json` into the
+     scratch dir.
+  4. Setting `OPENCLAW_HOME` and `OPENCLAW_CONFIG_PATH` env vars before
+     invoking the dispatch command, so frankclaw resolves all state into the
+     scratch tree (`resolveConfigDir` honors both env vars today;
+     `src/utils.ts:138`). No mutation of `~/.openclaw/openclaw.json`,
+     no deletion of `workspace/MEMORY.md`, no SSH side effects beyond
+     what the dispatch command itself decides to do.
+  5. After dispatch, the adapter reads `<out_dir>/run.json`, restamps the
+     runner identity + hardware probe, and returns the artifact.
 
-A `MockRunner` is included in this foundation (`harness/lib/mock_runner.py`) so the CLI smoke test can run without GPU hardware. It returns deterministic synthetic transcripts and synthetic failures.
+The factory `build_runner(kind, ...)` keeps callers free of import paths and
+makes adding a third runner (e.g. `gemmaclaw`) a one-line registry change.
+
+Tests cover the isolation contract end-to-end: a fake dispatch script asserts
+that the real `~/.openclaw/openclaw.json` is untouched and that the scratch
+home + config env vars are wired through (`harness/lib/tests/test_runner.py::
+test_openclaw_runner_isolation`).
 
 ## 5. Model and checkpoint spec (matrix runs)
 
-Format (`harness/schemas/model-spec-v1.schema.json` planned):
+Status: complete (milestone 2). The `ModelSpec` shape is defined inline in the
+existing `run-artifact-v1.schema.json` ($defs/ModelSpec) and mirrored as a
+typed Python dataclass in `harness/lib/model_spec.py`. Adding a separate
+`model-spec-v1.schema.json` would be redundant since the canonical home for
+the shape is the run artifact.
 
-```yaml
-provider: ollama
-model_id: qwen3.5:27b
-checkpoint_id: q4_K_M
-options:
-  context_length: 32768
-  thinking: medium
-hardware:
-  gpu: rtx-3090
-  vram_gb: 24
+Single spec example:
+
+```json
+{
+  "provider": "ollama",
+  "model_id": "qwen3.5:27b",
+  "checkpoint_id": "q4_K_M",
+  "options": {"context_length": 32768, "thinking": "medium"}
+}
 ```
 
-Matrix runs are a list of `ModelSpec`s. The runner records the full spec and a `config_hash` (sha256 over the canonical JSON of the spec) on every run artifact. The hash is the join key for cross-run comparison. This work depends on the runner abstraction landing first.
+Matrix expansion (`lib.model_spec.expand_matrix` and `jake-bench matrix`):
+
+```json
+{
+  "kind": "matrix",
+  "provider": "ollama",
+  "model_id": "qwen3.5:27b",
+  "checkpoint_ids": ["q4_K_M", "q5_K_M"],
+  "options": {"temperature": 0.0},
+  "options_matrix": {
+    "thinking": ["off", "low", "medium"],
+    "context_length": [8192, 32768]
+  }
+}
+```
+
+The Cartesian product of `checkpoint_ids` x `options_matrix` (merged with the
+fixed `options`) yields 12 specs. The matrix runner writes one
+`<spec_slug>__<config_hash8>/run.json` per spec plus a top-level
+`matrix.json` index that the dashboard / comparator can iterate.
+
+The `config_hash` (sha256 over canonical JSON of the spec) is the join key
+across runs and machines.
 
 ## 6. Shareable failure reports
 
@@ -114,29 +189,63 @@ Tests run a corpus of "should redact" and "should pass" fixtures plus a final re
 
 ## 8. CI: unit tests + smoke benchmark with MockRunner
 
-Foundation: pytest config in `harness/pyproject.toml` (planned, not landed in this slice). Unit tests landed for sanitizer + report generator + migration tool. Smoke benchmark CLI exists via `MockRunner`; wiring into a GitHub Actions workflow is a follow-up.
+Status: complete. Workflow lives at `.github/workflows/harness-ci.yml`.
 
-The smoke workflow shape: install python deps, run `jake-bench validate harness/tasks-pack.json`, run `jake-bench` against `MockRunner` for 2 tasks, assert `run.json` validates, assert `report.md` and `report.json` are generated and pass redaction.
+Coverage on every push / PR touching `harness/`:
+- `pytest` over the full `harness/lib/tests/` suite (61 tests as of milestone 2).
+- `jake-bench validate task-pack-v1` against the committed v1 pack.
+- Migration idempotence check (regenerate the v1 pack from `tasks.json` and
+  diff against the committed copy — fails if drift).
+- `jake-bench smoke` end-to-end (MockRunner -> run.json -> report.md/json,
+  schema-validate both).
+- Redaction audit on the smoke report (regex sweep for emails, IPv4, home
+  paths, anthropic key prefix). Fails the build on any leak that is not a
+  `<REDACTED:...>` token.
+- `jake-bench run` + `matrix` + `compare` integration smoke (added in
+  milestone 2): run twice via MockRunner, expand a 4-spec matrix, compare
+  the two identical runs and assert zero regressions.
+
+The runtime is `python:3.11` on `ubuntu-latest` with a 10 minute timeout.
+Total elapsed on PR #3 was 22 seconds.
 
 ## 9. Docs + summary artifact
 
 This document plus per-script READMEs and the existing `harness/README.md` cover the agent-readable docs. A polished Google Doc summary with screenshots of generated reports and dashboard integration is part of the wrap-up subtask after the rest land.
 
-## What's done in this foundation
+## What's done
 
+Foundation (PR #3, commit `5cb152c`):
 - Versioned JSON Schemas for task pack, run artifact, failure report
 - Migration tool: bare-list tasks.json -> v1 pack (deterministic, idempotent)
 - Failure report generator (markdown + JSON)
 - Sanitization library with golden fixture tests
 - MockRunner for hardware-free smoke testing
+- CI workflow with unit tests + smoke + redaction audit
 - This design note
 
-## Follow-up subtasks (next worker runs)
+Milestone 2 (this branch):
+- Runner abstraction (`lib/runner.py`) with `MockRunner` + `OpenclawRunner`
+- ModelSpec dataclass + matrix expansion (`lib/model_spec.py`)
+- Matrix executor + `matrix.json` index (`lib/matrix.py`)
+- Compare report (regressions / improvements, JSON + Markdown) (`lib/compare.py`)
+- Full `jake-bench` CLI: `run`, `matrix`, `compare` subcommands
+- Docker `bench` entrypoint forwards directly to the python CLI
+- CI extended to exercise run/matrix/compare against MockRunner
 
-1. **Runner abstraction + OpenClaw adapter** that uses `OPENCLAW_CONFIG` overlay rather than mutating user-global config.
-2. **Full CLI** (`jake-bench run`) wired through the runner interface.
-3. **Matrix runs** consuming `ModelSpec` lists, with config-hash join keys.
-4. **CI workflow** running smoke benchmark + redaction tests on every PR.
-5. **Polished public-facing docs** (Google Doc) once the runner abstraction lands.
+## Follow-up
 
-Each is a clean, independently-shippable scope and should be its own todo with its own CC ACP worker.
+These remain explicitly out of scope for milestone 2 because they require
+live Pi hardware or larger product scope:
+
+- Real OpenClaw `dispatch_cmd` running on Frank's Pi end-to-end against
+  `qwen3.5:27b` to validate the OPENCLAW_CONFIG_PATH overlay path under real
+  load. The adapter and isolation contract are tested in CI; the only
+  remaining unknown is whether Pi-side Ollama/gateway interactions need any
+  additional env wiring.
+- Dashboard integration: read `matrix.json` and surface per-spec deltas in
+  the existing `index.html`. Currently the dashboard reads per-model run
+  dirs; the matrix index gives it a richer cross-checkpoint view.
+- Move the schemas + runner Protocol into `gemmaclaw/benchmark-kit` so
+  TypeScript consumers (e.g. the gemmaclaw CLI) can use the same contract.
+  jake-benchmark stays the python implementation and the public benchmark
+  content repo.

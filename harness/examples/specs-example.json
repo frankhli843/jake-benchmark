@@ -1,0 +1,17 @@
+{
+  "kind": "specs",
+  "specs": [
+    {
+      "provider": "ollama",
+      "model_id": "qwen3.5:27b",
+      "checkpoint_id": "q4_K_M",
+      "options": {"context_length": 32768, "thinking": "medium"}
+    },
+    {
+      "provider": "ollama",
+      "model_id": "gemma4:31b",
+      "checkpoint_id": "q4_K_M",
+      "options": {"context_length": 32768, "thinking": "high"}
+    }
+  ]
+}
