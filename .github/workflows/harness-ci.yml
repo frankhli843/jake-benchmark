@@ -1,0 +1,77 @@
+name: Harness CI
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "harness/**"
+      - ".github/workflows/harness-ci.yml"
+  pull_request:
+    paths:
+      - "harness/**"
+      - ".github/workflows/harness-ci.yml"
+  workflow_dispatch: {}
+
+jobs:
+  tests-and-smoke:
+    name: tests + smoke benchmark
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install harness deps
+        run: |
+          python3 -m pip install --upgrade pip
+          python3 -m pip install pytest jsonschema
+
+      - name: Validate v1 task pack
+        run: |
+          python3 -m harness.lib.cli validate task-pack-v1 harness/tasks-pack-v1.json
+
+      - name: Migration is idempotent
+        run: |
+          python3 -m harness.lib.cli migrate harness/tasks.json /tmp/regen-pack.json
+          python3 -c "import json; a=json.load(open('harness/tasks-pack-v1.json')); b=json.load(open('/tmp/regen-pack.json')); assert a==b, 'committed tasks-pack-v1.json is out of sync with the migrator output'"
+
+      - name: pytest
+        run: |
+          python3 -m pytest harness/lib/tests/ -q
+
+      - name: Smoke benchmark with MockRunner
+        run: |
+          python3 -m harness.lib.cli smoke harness/tasks-pack-v1.json --out /tmp/smoke
+          test -f /tmp/smoke/run.json
+          test -f /tmp/smoke/report.json
+          test -f /tmp/smoke/report.md
+          python3 -m harness.lib.cli validate run-artifact-v1 /tmp/smoke/run.json
+          python3 -m harness.lib.cli validate failure-report-v1 /tmp/smoke/report.json
+
+      - name: Redaction audit on smoke report
+        run: |
+          python3 - <<'PY'
+          import json, re, sys
+          report = json.dumps(json.load(open('/tmp/smoke/report.json'))) + open('/tmp/smoke/report.md').read()
+          patterns = {
+              'email':  r'\b[A-Za-z0-9._%+\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}\b',
+              'ipv4':   r'\b(?:\d{1,3}\.){3}\d{1,3}\b',
+              'home':   r'/(?:home|Users|root)/[A-Za-z0-9._\-/]+',
+              'sk_ant': r'sk-ant-[A-Za-z0-9_\-]{20,}',
+          }
+          leaks = []
+          for name, pat in patterns.items():
+              for m in re.finditer(pat, report):
+                  if m.group(0).startswith('<REDACTED:'):
+                      continue
+                  leaks.append((name, m.group(0)))
+          if leaks:
+              print('LEAKS:', leaks, file=sys.stderr)
+              sys.exit(1)
+          print('Audit clean.')
+          PY
