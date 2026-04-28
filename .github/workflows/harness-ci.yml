@@ -53,6 +53,39 @@ jobs:
           python3 -m harness.lib.cli validate run-artifact-v1 /tmp/smoke/run.json
           python3 -m harness.lib.cli validate failure-report-v1 /tmp/smoke/report.json
 
+      - name: jake-bench run + matrix + compare (MockRunner)
+        run: |
+          # `run` against mock smoke spec
+          python3 -m harness.lib.cli run \
+            --pack harness/tasks-pack-v1.json --out /tmp/jb-run-a \
+            --runner mock --spec mock:smoke --thinking off
+          test -f /tmp/jb-run-a/run.json
+          python3 -m harness.lib.cli validate run-artifact-v1 /tmp/jb-run-a/run.json
+
+          # Second run for compare (same spec, identical artifacts).
+          python3 -m harness.lib.cli run \
+            --pack harness/tasks-pack-v1.json --out /tmp/jb-run-b \
+            --runner mock --spec mock:smoke --thinking off
+
+          # Matrix expansion: 2 thinking levels x 2 checkpoints = 4 runs.
+          cat > /tmp/jb-matrix.json <<'JSON'
+          {
+            "kind": "matrix",
+            "provider": "mock",
+            "model_id": "mock:smoke",
+            "checkpoint_ids": ["q4", "q5"],
+            "options_matrix": {"thinking": ["off", "low"]}
+          }
+          JSON
+          python3 -m harness.lib.cli matrix \
+            --pack harness/tasks-pack-v1.json --out /tmp/jb-matrix \
+            --runner mock --matrix /tmp/jb-matrix.json
+          python3 -c "import json; d=json.load(open('/tmp/jb-matrix/matrix.json')); assert len(d['runs'])==4, d; assert all(r['ok'] for r in d['runs']), d"
+
+          # Compare: identical mock runs => 0 regressions => exit 0.
+          python3 -m harness.lib.cli compare /tmp/jb-run-a /tmp/jb-run-b --out /tmp/jb-compare
+          python3 -c "import json; d=json.load(open('/tmp/jb-compare/compare.json')); assert d['regressionCount']==0; assert d['improvementCount']==0"
+
       - name: Redaction audit on smoke report
         run: |
           python3 - <<'PY'

@@ -49,6 +49,18 @@ case "$COMMAND" in
         bash scripts/validate-run.sh "$@"
         ;;
 
+    bench)
+        # Forward all remaining args to the jake-bench python CLI.
+        # Examples:
+        #   docker run jake-harness bench validate task-pack-v1 tasks-pack-v1.json
+        #   docker run jake-harness bench smoke tasks-pack-v1.json --out /tmp/out
+        #   docker run jake-harness bench run --pack tasks-pack-v1.json --runner mock --spec ollama:test --out /tmp/out
+        #   docker run jake-harness bench matrix --pack tasks-pack-v1.json --matrix matrix.json --runner mock --out /tmp/out
+        #   docker run jake-harness bench compare /runs/a /runs/b
+        echo "=== jake-bench: $* ==="
+        exec python3 -m lib.cli "$@"
+        ;;
+
     benchmark)
         # Run benchmark on Pi via SSH
         # Requires: -v ~/.ssh:/root/.ssh:ro -v /path/to/results:/harness/results
@@ -98,6 +110,7 @@ case "$COMMAND" in
         echo "  scan-json      Output scan results as raw JSON"
         echo "  qa             QA smoke test the dashboard site"
         echo "  validate       Validate a benchmark run directory"
+        echo "  bench          Run the jake-bench python CLI (validate/smoke/run/matrix/compare/report/sanitize)"
         echo "  benchmark      Run benchmark on Pi via SSH"
         echo ""
         echo "Examples:"

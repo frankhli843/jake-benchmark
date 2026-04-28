@@ -1,0 +1,13 @@
+{
+  "kind": "matrix",
+  "provider": "ollama",
+  "model_id": "qwen3.5:27b",
+  "checkpoint_ids": ["q4_K_M", "q5_K_M"],
+  "options": {
+    "temperature": 0.0
+  },
+  "options_matrix": {
+    "thinking": ["off", "low", "medium"],
+    "context_length": [8192, 32768]
+  }
+}

@@ -8,11 +8,17 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     jq \
     && rm -rf /var/lib/apt/lists/*
 
+# Python runtime deps for the harness library + CLI.
+RUN pip install --no-cache-dir jsonschema==4.23.0
+
 WORKDIR /harness
 
 # Copy harness files
 COPY scripts/ scripts/
+COPY lib/ lib/
+COPY schemas/ schemas/
 COPY tasks.json .
+COPY tasks-pack-v1.json .
 COPY entrypoint.sh .
 
 # Create state directory for dedup persistence
