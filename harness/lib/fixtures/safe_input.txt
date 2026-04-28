@@ -1,0 +1,6 @@
+The model handled the query about prime numbers correctly.
+It computed sqrt(2) to four decimal places and explained its reasoning.
+The token throughput was 25 tokens per second and the answer cited Wikipedia.
+References: pep8, pep20, RFC 8259, RFC 5321.
+Numbers 1234, 5, 100, 65535 should not be redacted.
+Words like home, root, user, mail, host, frank should not be redacted.

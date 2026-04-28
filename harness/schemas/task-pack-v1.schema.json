@@ -1,0 +1,164 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://jake-benchmark.frankhli843.dev/schemas/task-pack-v1.json",
+  "title": "Benchmark Task Pack v1",
+  "type": "object",
+  "required": ["schemaVersion", "pack", "version", "family", "tasks"],
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": {
+      "const": "1",
+      "description": "Schema major version. Bumped only on breaking changes."
+    },
+    "pack": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[a-z][a-z0-9_-]*$",
+      "description": "Stable pack identifier. Lowercase, dashes/underscores only."
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+(-[a-z0-9.-]+)?$",
+      "description": "Pack content version (semver). Bumped on task additions/removals/edits."
+    },
+    "family": {
+      "enum": ["agent", "tool-free"],
+      "description": "Discriminator. 'agent' = grades a multi-turn agent loop with tool calls (jake-style). 'tool-free' = grades raw model output to a prompt (benchmark-kit core-style)."
+    },
+    "description": { "type": "string" },
+    "tags": {
+      "type": "array",
+      "items": { "type": "string" },
+      "uniqueItems": true
+    },
+    "tasks": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/Task" }
+    }
+  },
+  "$defs": {
+    "Task": {
+      "type": "object",
+      "required": ["id", "prompt", "grading"],
+      "additionalProperties": true,
+      "description": "Tasks may carry pack-specific extension fields beyond the standard ones below. Validators must not reject unknown fields at this level.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]*$",
+          "description": "Stable task id. Used as a join key across runs."
+        },
+        "name": { "type": "string" },
+        "category": { "type": "string" },
+        "difficulty": {
+          "enum": ["easy", "medium", "hard", "very_hard", "expert"]
+        },
+        "prompt": { "type": "string", "minLength": 1 },
+        "system": { "type": "string" },
+        "tags": {
+          "type": "array",
+          "items": { "type": "string" },
+          "uniqueItems": true
+        },
+        "grading": { "$ref": "#/$defs/Grading" },
+        "mock": { "$ref": "#/$defs/Mock" },
+        "experimental": { "type": "boolean" }
+      }
+    },
+    "Grading": {
+      "oneOf": [
+        { "$ref": "#/$defs/AgentGrading" },
+        { "$ref": "#/$defs/ToolFreeGrading" }
+      ]
+    },
+    "AgentGrading": {
+      "type": "object",
+      "required": ["type", "max_score"],
+      "additionalProperties": true,
+      "description": "Agent-loop grading. Permissive: pack-specific config (check_path, setup, fail_conditions, expected_*) is allowed alongside the standard fields.",
+      "properties": {
+        "type": {
+          "enum": [
+            "output_check",
+            "command_check",
+            "artifact_check",
+            "file_check",
+            "multi_check",
+            "security_check",
+            "error_check"
+          ]
+        },
+        "criteria": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "subchecks": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["type", "weight"],
+            "properties": {
+              "type": { "type": "string" },
+              "criteria": {
+                "type": "array",
+                "items": { "type": "string" }
+              },
+              "weight": { "type": "number", "minimum": 0 }
+            }
+          }
+        },
+        "expected_files": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "expected_commands": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "check_path": { "type": "string" },
+        "setup": { "type": "string" },
+        "fail_conditions": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "max_score": { "type": "number", "minimum": 0 }
+      }
+    },
+    "ToolFreeGrading": {
+      "type": "object",
+      "required": ["type", "maxScore"],
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "enum": ["exact_match", "contains_all", "json_structure", "output_quality"]
+        },
+        "expected": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "requiredKeys": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "criteria": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "maxScore": { "type": "number", "minimum": 0 }
+      }
+    },
+    "Mock": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "prompt": { "type": "string" },
+        "expectedOutput": { "type": "string" },
+        "fuzzyMatches": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    }
+  }
+}

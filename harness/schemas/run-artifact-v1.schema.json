@@ -1,0 +1,166 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://jake-benchmark.frankhli843.dev/schemas/run-artifact-v1.json",
+  "title": "Benchmark Run Artifact v1",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "runId",
+    "startedAt",
+    "completedAt",
+    "pack",
+    "modelSpec",
+    "runner",
+    "configHash",
+    "tasks",
+    "summary"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": { "const": "1" },
+    "runId": {
+      "type": "string",
+      "description": "Stable identifier for this run. Recommended format: <pack>-<modelSlug>-<configHash8>-<unixSeconds>."
+    },
+    "startedAt": { "type": "string", "format": "date-time" },
+    "completedAt": { "type": "string", "format": "date-time" },
+    "pack": {
+      "type": "object",
+      "required": ["pack", "version"],
+      "properties": {
+        "pack": { "type": "string" },
+        "version": { "type": "string" },
+        "family": { "enum": ["agent", "tool-free"] }
+      }
+    },
+    "modelSpec": { "$ref": "#/$defs/ModelSpec" },
+    "runner": {
+      "type": "object",
+      "required": ["name", "version"],
+      "properties": {
+        "name": { "type": "string", "examples": ["openclaw", "mock", "gemmaclaw"] },
+        "version": { "type": "string" },
+        "adapter": { "type": "string" }
+      }
+    },
+    "configHash": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$",
+      "description": "sha256 over canonical-JSON(modelSpec). Used as a join key across runs."
+    },
+    "hardware": { "$ref": "#/$defs/Hardware" },
+    "environment": {
+      "type": "object",
+      "additionalProperties": { "type": "string" },
+      "description": "Captured environment metadata. Sanitized before publication."
+    },
+    "tasks": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/TaskResult" }
+    },
+    "summary": { "$ref": "#/$defs/Summary" },
+    "notes": { "type": "string" }
+  },
+  "$defs": {
+    "ModelSpec": {
+      "type": "object",
+      "required": ["provider", "model_id"],
+      "additionalProperties": false,
+      "properties": {
+        "provider": {
+          "type": "string",
+          "examples": ["ollama", "vllm", "anthropic", "openai"]
+        },
+        "model_id": { "type": "string" },
+        "checkpoint_id": { "type": "string" },
+        "options": {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "context_length": { "type": "integer", "minimum": 0 },
+            "thinking": { "enum": ["off", "low", "medium", "high"] },
+            "temperature": { "type": "number" },
+            "top_p": { "type": "number" }
+          }
+        }
+      }
+    },
+    "Hardware": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "gpu": { "type": "string" },
+        "vram_gb": { "type": "number" },
+        "cpu": { "type": "string" },
+        "ram_gb": { "type": "number" },
+        "host_class": {
+          "enum": ["desktop", "server", "pi", "container", "ci", "unknown"]
+        }
+      }
+    },
+    "TaskResult": {
+      "type": "object",
+      "required": ["taskId", "score", "maxScore", "passed", "durationMs"],
+      "additionalProperties": false,
+      "properties": {
+        "taskId": { "type": "string" },
+        "score": { "type": "number" },
+        "maxScore": { "type": "number", "minimum": 0 },
+        "passed": { "type": "boolean" },
+        "durationMs": { "type": "integer", "minimum": 0 },
+        "tokensIn": { "type": "integer", "minimum": 0 },
+        "tokensOut": { "type": "integer", "minimum": 0 },
+        "tokensPerSecond": { "type": "number", "minimum": 0 },
+        "error": {
+          "type": "object",
+          "properties": {
+            "category": {
+              "enum": [
+                "tool_call_missing",
+                "tool_call_wrong",
+                "output_format",
+                "factual_error",
+                "safety_violation",
+                "infra_error",
+                "judge_error",
+                "other"
+              ]
+            },
+            "message": { "type": "string" }
+          }
+        },
+        "transcriptPath": {
+          "type": "string",
+          "description": "Relative path to the canonical transcript file inside the run dir."
+        },
+        "criteriaResults": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["criterion", "passed"],
+            "properties": {
+              "criterion": { "type": "string" },
+              "passed": { "type": "boolean" },
+              "weight": { "type": "number" }
+            }
+          }
+        }
+      }
+    },
+    "Summary": {
+      "type": "object",
+      "required": ["totalScore", "maxScore", "percentage", "tasksPassed", "tasksTotal"],
+      "additionalProperties": false,
+      "properties": {
+        "totalScore": { "type": "number" },
+        "maxScore": { "type": "number", "minimum": 0 },
+        "percentage": { "type": "number", "minimum": 0, "maximum": 100 },
+        "tasksPassed": { "type": "integer", "minimum": 0 },
+        "tasksTotal": { "type": "integer", "minimum": 0 },
+        "tasksErrored": { "type": "integer", "minimum": 0 },
+        "avgTokensPerSecond": { "type": "number" },
+        "totalDurationMs": { "type": "integer", "minimum": 0 }
+      }
+    }
+  }
+}

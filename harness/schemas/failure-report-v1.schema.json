@@ -1,0 +1,96 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://jake-benchmark.frankhli843.dev/schemas/failure-report-v1.json",
+  "title": "Benchmark Failure Report v1",
+  "type": "object",
+  "required": ["schemaVersion", "runId", "generatedAt", "modelSpec", "summary", "failures"],
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": { "const": "1" },
+    "runId": { "type": "string" },
+    "generatedAt": { "type": "string", "format": "date-time" },
+    "modelSpec": { "$ref": "#/$defs/ModelSpec" },
+    "configHash": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "sanitized": {
+      "type": "boolean",
+      "description": "True if redaction has been applied. Reports intended for publication MUST be sanitized."
+    },
+    "sanitizationProfile": {
+      "enum": ["none", "internal", "public"],
+      "description": "Which redaction ruleset was applied. 'public' is the strictest."
+    },
+    "summary": {
+      "type": "object",
+      "required": ["tasksTotal", "tasksFailed", "categoryCounts"],
+      "properties": {
+        "tasksTotal": { "type": "integer", "minimum": 0 },
+        "tasksFailed": { "type": "integer", "minimum": 0 },
+        "categoryCounts": {
+          "type": "object",
+          "additionalProperties": { "type": "integer", "minimum": 0 }
+        },
+        "topCategory": { "type": "string" }
+      }
+    },
+    "failures": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["taskId", "category", "score", "maxScore"],
+        "additionalProperties": false,
+        "properties": {
+          "taskId": { "type": "string" },
+          "name": { "type": "string" },
+          "category": {
+            "enum": [
+              "tool_call_missing",
+              "tool_call_wrong",
+              "output_format",
+              "factual_error",
+              "safety_violation",
+              "infra_error",
+              "judge_error",
+              "other"
+            ]
+          },
+          "score": { "type": "number" },
+          "maxScore": { "type": "number", "minimum": 0 },
+          "errorMessage": { "type": "string" },
+          "criteriaFailed": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "transcriptExcerpt": {
+            "type": "object",
+            "properties": {
+              "offset": { "type": "integer", "minimum": 0 },
+              "length": { "type": "integer", "minimum": 0 },
+              "text": { "type": "string", "maxLength": 4096 }
+            }
+          },
+          "reproCommand": { "type": "string" }
+        }
+      }
+    },
+    "environment": {
+      "type": "object",
+      "additionalProperties": { "type": "string" }
+    }
+  },
+  "$defs": {
+    "ModelSpec": {
+      "type": "object",
+      "required": ["provider", "model_id"],
+      "additionalProperties": false,
+      "properties": {
+        "provider": { "type": "string" },
+        "model_id": { "type": "string" },
+        "checkpoint_id": { "type": "string" },
+        "options": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      }
+    }
+  }
+}
