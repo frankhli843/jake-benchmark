@@ -1,0 +1,12 @@
+User connected from 192.168.1.42 via tailscale 100.108.252.124.
+Email contact: lifrank1994@gmail.com  also wsfccorp@gmail.com.
+Worker host: frankpi  desktop: frank-pc  vps: clawed-nina.
+Path: /home/frank/.openclaw/workspace/code/jake-benchmark/harness/tasks.json
+Path also: /Users/charlotte/Library/Application Support/Foo
+Bearer abcdef1234567890ABCDEF1234567890
+Anthropic key sk-ant-1234567890abcdefghijklmnop
+OpenAI key sk-proj1234567890abcdefghijklmnop
+AWS key AKIAIOSFODNN7EXAMPLE
+Phone +16478023321 mobile (647) 802-3321
+IPv6 fe80::1ff:fe23:4567:890a
+OAuth refresh 1//0gabcdefghijklmnopqrstuvwxyz12345678

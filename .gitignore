@@ -1,2 +1,6 @@
 build-conversations.py
 extracted-sessions.json
+__pycache__/
+*.pyc
+.pytest_cache/
+
