@@ -2,6 +2,8 @@
 
 Test suite for evaluating local LLMs as autonomous AI agents. Tests 22 tasks covering email, calendar, task management, security judgment, error handling, and multi-domain coordination.
 
+Jake Benchmark is part of the [Benchmark Kit](https://github.com/gemmaclaw/gemmaclaw/tree/main/src/gemmaclaw/benchmark-kit) shared harness. Task pack format, scoring methodology, result schema, and config selection algorithm are documented there. This README covers Jake-specific setup and orchestration.
+
 ## Quick Start
 
 ### Docker
