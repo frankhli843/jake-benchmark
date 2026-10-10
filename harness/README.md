@@ -23,7 +23,7 @@ docker run -v $(pwd)/state:/harness/state jake-harness scan --summary
 docker run jake-harness qa
 
 # Run a benchmark on Pi via SSH
-docker run -v ~/.ssh:/root/.ssh:ro jake-harness benchmark qwen3.6:35b high
+docker run -e PI_HOST=user@pi-host -v ~/.ssh:/root/.ssh:ro jake-harness benchmark qwen3.6:35b high
 
 # Validate a completed run
 docker run -v /path/to/runs:/harness/runs jake-harness validate runs/qwen3.6:35b__2026-04-24_180000
@@ -137,6 +137,13 @@ python3 -m harness.lib.cli report runs/<run-dir> --sanitize public
 # Tests
 python3 -m pytest harness/lib/tests/ -q
 ```
+
+The `public` profile redacts private hostnames from runtime config, never from
+source: set `JAKE_BENCH_PRIVATE_HOSTNAMES` (comma separated) or keep one name per
+line in `~/.config/jake-benchmark/private-hostnames.txt` (override the path with
+`JAKE_BENCH_PRIVATE_HOSTNAMES_FILE`; in Docker, mount the file read-only and point
+the variable at it). Without a list it still redacts IPs, paths, emails, phones and
+`*.ts.net` names, and emits a `RuntimeWarning`.
 
 ### Docker
 

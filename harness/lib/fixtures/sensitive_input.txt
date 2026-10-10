@@ -7,6 +7,6 @@ Bearer abcdef1234567890ABCDEF1234567890
 Anthropic key sk-ant-1234567890abcdefghijklmnop
 OpenAI key sk-proj1234567890abcdefghijklmnop
 AWS key AKIAIOSFODNN7EXAMPLE
-Phone +1+15551899912 mobile +15559553227
+Phone +1-555-010-0199 mobile +15559553227
 IPv6 fe80::1ff:fe23:4567:890a
 OAuth refresh 1//0gabcdefghijklmnopqrstuvwxyz12345678

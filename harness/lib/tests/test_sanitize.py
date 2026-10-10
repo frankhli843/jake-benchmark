@@ -77,6 +77,38 @@ def test_public_redacts_internal_hostnames(sensitive_text):
         assert h not in out
 
 
+def test_internal_hostnames_match_case_insensitively():
+    out = sanitize.sanitize("box EXAMPLE-TAILNET-HOST-50A809 up", "public")
+    assert out == "box <REDACTED:hostname> up"
+
+
+def test_hostnames_load_from_file_and_env(monkeypatch, tmp_path):
+    cfg = tmp_path / "hosts.txt"
+    cfg.write_text("# private list\nexample-file-host  # trailing note\n\n", encoding="utf-8")
+    monkeypatch.setenv(sanitize.HOSTNAMES_ENV, "example-env-a, example-env-b")
+    monkeypatch.setenv(sanitize.HOSTNAMES_FILE_ENV, str(cfg))
+    names = sanitize.reload_private_hostnames()
+    assert set(names) == {"example-file-host", "example-env-a", "example-env-b"}
+    out = sanitize.sanitize("example-file-host example-env-b", "public")
+    assert out == "<REDACTED:hostname> <REDACTED:hostname>"
+
+
+def test_no_hostname_config_means_no_hostname_rule(monkeypatch, tmp_path):
+    monkeypatch.delenv(sanitize.HOSTNAMES_ENV, raising=False)
+    monkeypatch.setenv(sanitize.HOSTNAMES_FILE_ENV, str(tmp_path / "absent.txt"))
+    assert sanitize.reload_private_hostnames() == ()
+    assert not sanitize.private_hostnames_configured()
+    assert "internal_hostname" not in sanitize.rule_names("public")
+    with pytest.warns(RuntimeWarning, match="no private hostname list"):
+        out = sanitize.sanitize("example-tailnet-host-50a809", "public")
+    assert out == "example-tailnet-host-50a809"
+
+
+def test_public_redacts_tailnet_dns_names():
+    out = sanitize.sanitize("ssh box-1.tail0000.ts.net now", "public")
+    assert out == "ssh <REDACTED:hostname> now"
+
+
 def test_public_redacts_home_paths(sensitive_text):
     out = sanitize.sanitize(sensitive_text, "public")
     assert "/home/example-user/" not in out
@@ -85,7 +117,7 @@ def test_public_redacts_home_paths(sensitive_text):
 
 def test_public_redacts_phones(sensitive_text):
     out = sanitize.sanitize(sensitive_text, "public")
-    assert "+1+15551899912" not in out
+    assert "555-010-0199" not in out
     assert "+15559553227" not in out
 
 
@@ -127,7 +159,8 @@ def test_audit_finds_no_leaks_after_public_sanitize(sensitive_text):
         if f["rule"] in {
             "anthropic_key", "openai_key", "aws_access_key", "bearer_token",
             "oauth_refresh", "tailscale_ip", "ipv4", "ipv6", "email",
-            "phone_e164", "phone_na", "internal_hostname", "home_path",
+            "phone_e164", "phone_na", "internal_hostname", "tailnet_dns",
+            "home_path",
         }
     ]
     assert leak_rules == [], f"leaks survived public sanitize: {leak_rules}"

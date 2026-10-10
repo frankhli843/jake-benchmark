@@ -8,7 +8,7 @@ SCRIPT_DIR="$HOME/.openclaw/workspace/skills/jake-benchmark/scripts"
 LOG_DIR="$HOME/.openclaw/workspace/skills/jake-benchmark/logs"
 mkdir -p "$LOG_DIR"
 LOG="$LOG_DIR/suite-$(date +%Y%m%d_%H%M%S).log"
-OLLAMA_HOST="http://100.64.0.163:11434"
+OLLAMA_HOST="${JAKE_OLLAMA_URL:?set JAKE_OLLAMA_URL to the Ollama base URL, e.g. http://ollama-host:11434}"
 OPENCLAW_BIN="/home/linuxbrew/.linuxbrew/bin/openclaw"
 CONFIG="$HOME/.openclaw/openclaw.json"
 

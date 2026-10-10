@@ -181,7 +181,7 @@ Library at `harness/lib/sanitize.py` plus tests at `harness/lib/tests/test_sanit
 - IPv4 + IPv6 addresses (incl. Tailscale 100.64.0.0/10 range, called out explicitly)
 - Email addresses
 - Absolute paths under `/home/`, `/Users/`, `/root/`, `/var/lib/`
-- Known internal hostnames (example-tailnet-host-c77ea0, example-tailnet-host-50a809, frank-wsl, clawed-*)
+- Known internal hostnames, read at runtime from `JAKE_BENCH_PRIVATE_HOSTNAMES` or the file in `JAKE_BENCH_PRIVATE_HOSTNAMES_FILE` (default `~/.config/jake-benchmark/private-hostnames.txt`, never committed), plus any Tailscale `*.ts.net` name
 - Phone numbers (E.164 + North American)
 - Bearer tokens, OAuth refresh tokens, AWS keys, Anthropic + OpenAI key prefixes
 
