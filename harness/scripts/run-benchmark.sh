@@ -130,7 +130,7 @@ for i, task in enumerate(tasks):
             "options": {"num_predict": 1}
         }).encode()
         req = urllib.request.Request(
-            "http://100.64.0.163:11434/api/chat",
+            os.environ.get("JAKE_OLLAMA_URL", "http://127.0.0.1:11434").rstrip("/") + "/api/chat",
             data=keepalive_data,
             headers={"Content-Type": "application/json"},
             method="POST"

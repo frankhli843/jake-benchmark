@@ -66,7 +66,7 @@ case "$COMMAND" in
         # Requires: -v ~/.ssh:/root/.ssh:ro -v /path/to/results:/harness/results
         MODEL="${1:?Usage: docker run jake-harness benchmark <model-name> [thinking-level]}"
         THINKING="${2:-off}"
-        PI_HOST="${PI_HOST:-frank@100.64.0.71}"
+        PI_HOST="${PI_HOST:?Set PI_HOST to the ssh target of the Jake Pi: docker run -e PI_HOST=user@pi-host ...}"
 
         echo "=== Jake Benchmark: Remote Run ==="
         echo "Model: $MODEL, Thinking: $THINKING"
@@ -118,7 +118,7 @@ case "$COMMAND" in
         echo "  docker run jake-harness scan --summary"
         echo "  docker run jake-harness qa https://frankhli843.github.io/jake-benchmark/"
         echo "  docker run -v \$(pwd)/state:/harness/state jake-harness scan --summary"
-        echo "  docker run -v ~/.ssh:/root/.ssh:ro jake-harness benchmark qwen3.6:35b high"
+        echo "  docker run -e PI_HOST=user@pi-host -v ~/.ssh:/root/.ssh:ro jake-harness benchmark qwen3.6:35b high"
         ;;
 
     *)

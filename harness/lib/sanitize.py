@@ -13,7 +13,9 @@ The redaction sweep is deterministic and idempotent: redact(redact(x)) == redact
 
 from __future__ import annotations
 
+import os
 import re
+import warnings
 from dataclasses import dataclass
 from typing import Iterable, Pattern
 
@@ -26,21 +28,34 @@ class Rule:
     profiles: frozenset
 
 
-_INTERNAL_HOSTNAMES = (
-    "example-tailnet-host-c77ea0",
-    "frank-wsl",
-    "example-tailnet-host-50a809",
-    "DESKTOP-DDEC81D",
-    "example-private-host-33ba82",
-    "example-private-host-098509",
-    "example-private-host-9a4992",
-    "example-private-host-3fbba7",
-    "example-private-host-f0f7d4",
-    "clawed-wwsa",
-)
+# Private hostnames are runtime config, never source. The public profile reads
+# them from JAKE_BENCH_PRIVATE_HOSTNAMES (comma or whitespace separated) and from
+# the file named by JAKE_BENCH_PRIVATE_HOSTNAMES_FILE (default below; one name
+# per line, '#' starts a comment). Matching is case-insensitive.
+HOSTNAMES_ENV = "JAKE_BENCH_PRIVATE_HOSTNAMES"
+HOSTNAMES_FILE_ENV = "JAKE_BENCH_PRIVATE_HOSTNAMES_FILE"
+DEFAULT_HOSTNAMES_FILE = os.path.join("~", ".config", "jake-benchmark", "private-hostnames.txt")
 
 
-def _build_rules() -> tuple[Rule, ...]:
+def load_private_hostnames() -> tuple[str, ...]:
+    names: list[str] = []
+    names.extend(re.split(r"[,\s]+", os.environ.get(HOSTNAMES_ENV, "")))
+    path = os.path.expanduser(os.environ.get(HOSTNAMES_FILE_ENV) or DEFAULT_HOSTNAMES_FILE)
+    try:
+        with open(path, encoding="utf-8") as fh:
+            for line in fh:
+                names.append(line.split("#", 1)[0].strip())
+    except FileNotFoundError:
+        pass
+    seen: dict[str, str] = {}
+    for n in names:
+        if n and n.lower() not in seen:
+            seen[n.lower()] = n
+    # Longest first so a name that prefixes another cannot cut it short.
+    return tuple(sorted(seen.values(), key=len, reverse=True))
+
+
+def _build_rules(hostnames: tuple[str, ...] = ()) -> tuple[Rule, ...]:
     secret = frozenset({"internal", "public"})
     public_only = frozenset({"public"})
 
@@ -127,21 +142,29 @@ def _build_rules() -> tuple[Rule, ...]:
         # numbers that appear inside identifiers like run-IDs.
         pattern=re.compile(
             r"(?:"
-            r"\(\d{3}\)[\s\-]?\d{3}[\s\-]\d{4}"           # +15559553227 / (647)802-3321
-            r"|\b(?:1[\s\-])?\d{3}[\s\-]\d{3}[\s\-]\d{4}\b"  # +15550655421 / 1-+15550655421
+            r"\(\d{3}\)[\s\-]?\d{3}[\s\-]\d{4}"  # (555) 010-0199 / (555)010-0199
+            r"|\b(?:1[\s\-])?\d{3}[\s\-]\d{3}[\s\-]\d{4}\b"  # 555-010-0199 / 1-555-010-0199
             r")"
         ),
         replacement="<REDACTED:phone>",
         profiles=public_only,
     ))
-    # Internal hostnames. Compile a single alternation, word-bounded.
-    host_alt = "|".join(re.escape(h) for h in _INTERNAL_HOSTNAMES)
+    # Tailscale MagicDNS names (<host>.<tailnet>.ts.net) need no config.
     rules.append(Rule(
-        name="internal_hostname",
-        pattern=re.compile(r"\b(?:" + host_alt + r")\b"),
+        name="tailnet_dns",
+        pattern=re.compile(r"(?i)\b[a-z0-9][a-z0-9\-]*\.[a-z0-9\-]+\.ts\.net\b"),
         replacement="<REDACTED:hostname>",
         profiles=public_only,
     ))
+    # Internal hostnames from runtime config. Single alternation, word-bounded.
+    if hostnames:
+        host_alt = "|".join(re.escape(h) for h in hostnames)
+        rules.append(Rule(
+            name="internal_hostname",
+            pattern=re.compile(r"(?i)\b(?:" + host_alt + r")\b"),
+            replacement="<REDACTED:hostname>",
+            profiles=public_only,
+        ))
     # Absolute home/root paths. Capture the path so we can keep the basename context.
     rules.append(Rule(
         name="home_path",
@@ -153,7 +176,19 @@ def _build_rules() -> tuple[Rule, ...]:
     return tuple(rules)
 
 
-_RULES = _build_rules()
+_RULES = _build_rules(load_private_hostnames())
+
+
+def reload_private_hostnames() -> tuple[str, ...]:
+    """Re-read the hostname config (after the env or file changed)."""
+    global _RULES
+    names = load_private_hostnames()
+    _RULES = _build_rules(names)
+    return names
+
+
+def private_hostnames_configured() -> bool:
+    return any(r.name == "internal_hostname" for r in _RULES)
 
 
 def _select_rules(profile: str) -> Iterable[Rule]:
@@ -172,6 +207,13 @@ def sanitize(text: str, profile: str = "public") -> str:
         raise ValueError(f"unknown profile: {profile!r}")
     if not text:
         return text
+    if profile == "public" and not private_hostnames_configured():
+        warnings.warn(
+            f"public sanitize has no private hostname list; set {HOSTNAMES_ENV} or "
+            f"{HOSTNAMES_FILE_ENV} (default {DEFAULT_HOSTNAMES_FILE})",
+            RuntimeWarning,
+            stacklevel=2,
+        )
     out = text
     for rule in _select_rules(profile):
         out = rule.pattern.sub(rule.replacement, out)
