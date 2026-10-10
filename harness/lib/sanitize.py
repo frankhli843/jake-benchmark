@@ -27,15 +27,15 @@ class Rule:
 
 
 _INTERNAL_HOSTNAMES = (
-    "frank-pc",
+    "example-tailnet-host-c77ea0",
     "frank-wsl",
-    "frankpi",
+    "example-tailnet-host-50a809",
     "DESKTOP-DDEC81D",
-    "clawed-nina",
-    "clawed-peter",
-    "clawed-adamas",
-    "clawed-george",
-    "clawed-jason_wwsa",
+    "example-private-host-33ba82",
+    "example-private-host-098509",
+    "example-private-host-9a4992",
+    "example-private-host-3fbba7",
+    "example-private-host-f0f7d4",
     "clawed-wwsa",
 )
 
@@ -127,8 +127,8 @@ def _build_rules() -> tuple[Rule, ...]:
         # numbers that appear inside identifiers like run-IDs.
         pattern=re.compile(
             r"(?:"
-            r"\(\d{3}\)[\s\-]?\d{3}[\s\-]\d{4}"           # (647) 802-3321 / (647)802-3321
-            r"|\b(?:1[\s\-])?\d{3}[\s\-]\d{3}[\s\-]\d{4}\b"  # 647-802-3321 / 1-647-802-3321
+            r"\(\d{3}\)[\s\-]?\d{3}[\s\-]\d{4}"           # +15559553227 / (647)802-3321
+            r"|\b(?:1[\s\-])?\d{3}[\s\-]\d{3}[\s\-]\d{4}\b"  # +15550655421 / 1-+15550655421
             r")"
         ),
         replacement="<REDACTED:phone>",

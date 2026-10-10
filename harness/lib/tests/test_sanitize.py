@@ -47,7 +47,7 @@ def test_internal_redacts_secrets_only(sensitive_text):
     assert "abcdef1234567890ABCDEF1234567890" not in out
     # But topology kept:
     assert "192.168.1.42" in out
-    assert "frankpi" in out
+    assert "example-tailnet-host-50a809" in out
     assert "lifrank1994@gmail.com" in out
 
 
@@ -67,26 +67,26 @@ def test_public_redacts_ipv4(sensitive_text):
 
 def test_public_redacts_tailscale_ip(sensitive_text):
     out = sanitize.sanitize(sensitive_text, "public")
-    assert "100.108.252.124" not in out
+    assert "100.64.0.71" not in out
     assert "tailscale_ip" in out  # tagged differently from generic ipv4
 
 
 def test_public_redacts_internal_hostnames(sensitive_text):
     out = sanitize.sanitize(sensitive_text, "public")
-    for h in ("frankpi", "frank-pc", "clawed-nina"):
+    for h in ("example-tailnet-host-50a809", "example-tailnet-host-c77ea0", "example-private-host-33ba82"):
         assert h not in out
 
 
 def test_public_redacts_home_paths(sensitive_text):
     out = sanitize.sanitize(sensitive_text, "public")
-    assert "/home/frank/" not in out
+    assert "/home/example-user/" not in out
     assert "/Users/charlotte/" not in out
 
 
 def test_public_redacts_phones(sensitive_text):
     out = sanitize.sanitize(sensitive_text, "public")
-    assert "+16478023321" not in out
-    assert "(647) 802-3321" not in out
+    assert "+1+15551899912" not in out
+    assert "+15559553227" not in out
 
 
 def test_public_redacts_ipv6(sensitive_text):
@@ -139,14 +139,14 @@ def test_audit_finds_no_leaks_after_public_sanitize(sensitive_text):
 def test_sanitize_obj_recurses():
     obj = {
         "a": "user@example.com",
-        "b": ["x@y.io", {"nested": "frankpi rocks"}],
+        "b": ["x@y.io", {"nested": "example-tailnet-host-50a809 rocks"}],
         "c": 42,
         "d": True,
     }
     out = sanitize.sanitize_obj(obj, "public")
     assert "user@example.com" not in out["a"]
     assert "x@y.io" not in out["b"][0]
-    assert "frankpi" not in out["b"][1]["nested"]
+    assert "example-tailnet-host-50a809" not in out["b"][1]["nested"]
     assert out["c"] == 42
     assert out["d"] is True
 

@@ -6,7 +6,7 @@ set -euo pipefail
 
 MODEL="${1:?Usage: run-model-benchmark.sh 'model-name' [thinking-level]}"
 THINKING="${2:-}"  # off, low, medium, high (empty = run all levels)
-PI="frank@100.108.252.124"
+PI="frank@100.64.0.71"
 OPENCLAW="/home/linuxbrew/.linuxbrew/bin/openclaw"
 OPENCLAW_BIN_DIR="$(dirname "$OPENCLAW")"
 
@@ -81,7 +81,7 @@ echo "✅ Ollama pre-warm OK (ctx=$CONTEXT_WINDOW): $OLLAMA_TEXT" | tee -a "$LOG
 echo "Configuring Jake for $MODEL (context=$CONTEXT_WINDOW)..." | tee -a "$LOG"
 ssh "$PI" "python3 << PYEOF
 import json
-with open('/home/frank/.openclaw/openclaw.json') as f:
+with open('/home/example-user/.openclaw/openclaw.json') as f:
     cfg = json.load(f)
 
 cfg['agents']['defaults']['model']['primary'] = 'ollama/$MODEL'
@@ -98,7 +98,7 @@ elif isinstance(ollama_cfg.get('models'), list):
 else:
     ollama_cfg['models'] = [model_entry]
 
-with open('/home/frank/.openclaw/openclaw.json', 'w') as f:
+with open('/home/example-user/.openclaw/openclaw.json', 'w') as f:
     json.dump(cfg, f, indent=2)
 print('Config updated with contextWindow=$CONTEXT_WINDOW')
 PYEOF" >> "$LOG" 2>&1
@@ -158,7 +158,7 @@ echo "✅ Gateway healthy" | tee -a "$LOG"
 # Model is already warm from Step 2 pre-warm, so this should be fast (< 60s).
 echo "Smoke testing Ollama from Pi..." | tee -a "$LOG"
 SMOKE_TEXT=$(timeout 120 ssh -o BatchMode=yes -o ConnectTimeout=8 -o ServerAliveInterval=30 "$PI" \
-  "timeout 90 curl -s http://100.69.102.71:11434/api/chat -d '{\"model\":\"$MODEL\",\"messages\":[{\"role\":\"user\",\"content\":\"Say hello\"}],\"stream\":true,\"think\":true,\"keep_alive\":\"6h\",\"options\":{\"num_predict\":30,\"num_ctx\":$CONTEXT_WINDOW}}'" 2>/dev/null \
+  "timeout 90 curl -s http://100.64.0.163:11434/api/chat -d '{\"model\":\"$MODEL\",\"messages\":[{\"role\":\"user\",\"content\":\"Say hello\"}],\"stream\":true,\"think\":true,\"keep_alive\":\"6h\",\"options\":{\"num_predict\":30,\"num_ctx\":$CONTEXT_WINDOW}}'" 2>/dev/null \
   | python3 -c "
 import json, sys
 tokens = []
@@ -248,7 +248,7 @@ fi
 # Do not rely on remote exit codes, always verify by curling for HTTP 200.
 echo "Ensuring test site is running..." | tee -a "$LOG"
 TEST_URL="http://127.0.0.1:3456/test/job-board"
-REMOTE_START_TEST_SITE_CMD='cd ~/.openclaw/workspace/test-site || exit 1; if [ -x /home/frank/.nvm/versions/node/v24.12.0/bin/node ]; then NODE_BIN=/home/frank/.nvm/versions/node/v24.12.0/bin/node; else NODE_BIN=$(command -v node); fi; nohup "$NODE_BIN" server.js > /dev/null 2>&1 &'
+REMOTE_START_TEST_SITE_CMD='cd ~/.openclaw/workspace/test-site || exit 1; if [ -x /home/example-user/.nvm/versions/node/v24.12.0/bin/node ]; then NODE_BIN=/home/example-user/.nvm/versions/node/v24.12.0/bin/node; else NODE_BIN=$(command -v node); fi; nohup "$NODE_BIN" server.js > /dev/null 2>&1 &'
 
 for attempt in 1 2 3; do
   code=$(ssh -o BatchMode=yes -o ConnectTimeout=8 "$PI" "curl -sS --connect-timeout 2 --max-time 4 -o /dev/null -w '%{http_code}' $TEST_URL 2>/dev/null || true" 2>/dev/null | tr -d '\r\n')

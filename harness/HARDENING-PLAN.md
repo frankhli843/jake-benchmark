@@ -181,7 +181,7 @@ Library at `harness/lib/sanitize.py` plus tests at `harness/lib/tests/test_sanit
 - IPv4 + IPv6 addresses (incl. Tailscale 100.64.0.0/10 range, called out explicitly)
 - Email addresses
 - Absolute paths under `/home/`, `/Users/`, `/root/`, `/var/lib/`
-- Known internal hostnames (frank-pc, frankpi, frank-wsl, clawed-*)
+- Known internal hostnames (example-tailnet-host-c77ea0, example-tailnet-host-50a809, frank-wsl, clawed-*)
 - Phone numbers (E.164 + North American)
 - Bearer tokens, OAuth refresh tokens, AWS keys, Anthropic + OpenAI key prefixes
 

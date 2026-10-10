@@ -66,7 +66,7 @@ case "$COMMAND" in
         # Requires: -v ~/.ssh:/root/.ssh:ro -v /path/to/results:/harness/results
         MODEL="${1:?Usage: docker run jake-harness benchmark <model-name> [thinking-level]}"
         THINKING="${2:-off}"
-        PI_HOST="${PI_HOST:-frank@100.108.252.124}"
+        PI_HOST="${PI_HOST:-frank@100.64.0.71}"
 
         echo "=== Jake Benchmark: Remote Run ==="
         echo "Model: $MODEL, Thinking: $THINKING"
