@@ -48,7 +48,7 @@ def test_internal_redacts_secrets_only(sensitive_text):
     # But topology kept:
     assert "192.168.1.42" in out
     assert "example-tailnet-host-50a809" in out
-    assert "lifrank1994@gmail.com" in out
+    assert "person.one@example.com" in out
 
 
 # --- Public profile redacts everything sensitive ---
@@ -56,8 +56,8 @@ def test_internal_redacts_secrets_only(sensitive_text):
 
 def test_public_redacts_emails(sensitive_text):
     out = sanitize.sanitize(sensitive_text, "public")
-    assert "lifrank1994@gmail.com" not in out
-    assert "wsfccorp@gmail.com" not in out
+    assert "person.one@example.com" not in out
+    assert "ops.account@example.org" not in out
 
 
 def test_public_redacts_ipv4(sensitive_text):

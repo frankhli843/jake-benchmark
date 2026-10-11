@@ -63,7 +63,7 @@ def test_failure_report_passes_sanitization_audit(tmp_path: Path, pack: dict, mo
         path = tmp_path / t["transcriptPath"]
         path.write_text(
             path.read_text(encoding="utf-8")
-            + "\nleak: lifrank1994@gmail.com  192.168.1.42  /home/example-user/secret\n",
+            + "\nleak: person.one@example.com  192.168.1.42  /home/example-user/secret\n",
             encoding="utf-8",
         )
     report = failure_report.build_report(run_artifact, run_dir=tmp_path, sanitize_profile="public")
