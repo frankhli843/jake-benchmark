@@ -1,5 +1,5 @@
 User connected from 192.168.1.42 via tailscale 100.64.0.71.
-Email contact: lifrank1994@gmail.com  also wsfccorp@gmail.com.
+Email contact: person.one@example.com  also ops.account@example.org.
 Worker host: example-tailnet-host-50a809  desktop: example-tailnet-host-c77ea0  vps: example-private-host-33ba82.
 Path: /home/example-user/.openclaw/workspace/code/jake-benchmark/harness/tasks.json
 Path also: /Users/charlotte/Library/Application Support/Foo
